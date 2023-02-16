@@ -12,7 +12,7 @@ To set this up you'll need the following:
 * An appropriate software defined radio USB stick connected to your machine.  I use [this one](https://www.radarbox.com/flightstick1090), but others are available.
 * An appropriate aerial for your software defined radio.  I use [this one](https://www.ebay.co.uk/itm/284156504809), but others are available.
 * [Node.js](https://nodejs.org/) version 14.5.0 or higher (I've tested this with version 16.5.1).
-* A [Redis Stack](https://redis.io/docs/stack/get-started/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)).
+* A [Redis Stack](https://redis.io/docs/stack/get-started/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)) or use the Docker compose file at the root of this repository.
 
 First, configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).  You shouldn't need to change the values for `SBS_HOST` and `SBS_PORT` so long as dump1090 is running on the same machine as this project runs on.
 
