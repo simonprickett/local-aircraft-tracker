@@ -1,0 +1,18 @@
+{
+  "name": "aircraft-tracking-stream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "receiver.js",
+  "scripts": {
+    "start": "node receiver.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "redis": "^4.6.4",
+    "sbs1": "^0.2.5"
+  }
+}
