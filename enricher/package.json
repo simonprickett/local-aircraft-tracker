@@ -1,0 +1,28 @@
+{
+  "name": "enricher",
+  "version": "0.0.1",
+  "description": "Data enricher component for the local aircraft tracker Redis project.",
+  "main": "enricher.js",
+  "scripts": {
+    "start": "node enricher.js"
+  },
+  "type": "module",
+  "author": "Simon Prickett",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonprickett/local-aircraft-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/simonprickett/local-aircraft-tracker/issues"
+  },
+  "homepage": "https://github.com/simonprickett/local-aircraft-tracker#readme",
+  "engines": {
+    "node": ">= 14.5.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.0",
+    "redis": "^4.6.4"
+  }
+}
