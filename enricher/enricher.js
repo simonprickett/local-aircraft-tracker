@@ -1,10 +1,12 @@
 import * as dotenv from 'dotenv';
-import { createClient } from 'redis';
+import { createClient, commandOptions } from 'redis';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const FLIGHTAWARE_API_KEY = process.env.FLIGHTAWARE_API_KEY;
+const FLIGHTAWARE_QUEUE = 'flightawarequeue';
 
 const redisClient = createClient({
   url: REDIS_URL
@@ -12,4 +14,61 @@ const redisClient = createClient({
 
 await redisClient.connect();
 
-// TODO do something!!!!
+// Loop over entries in the queue, and wait when there are none...
+while (true) {
+  const response = await redisClient.brPop(
+    commandOptions({ isolated: true }),
+    FLIGHTAWARE_QUEUE,
+    5
+  );
+
+  if (response) {
+    // TODO decode callsign AND hex ident from the JSON in the list payload
+    const flightIdentifier = response.element;
+    console.log(response);
+    const flightAwareAPIURL = `https://aeroapi.flightaware.com/aeroapi/flights/${flightIdentifier}?max_pages=1`;
+
+    try {
+      const flightAwareResponse = await fetch(flightAwareAPIURL, {
+        headers: {
+          'x-apikey': FLIGHTAWARE_API_KEY,
+          'Accept': 'application/json'
+        }
+      });
+
+      if (flightAwareResponse.status === 200) {
+        const flightData = await flightAwareResponse.json();
+        for (const flight of flightData.flights) {
+          // The response contains an array of recent past, current and
+          // planned future flights with this ID.  The one we want is
+          // currently in progress, so progress_percent between 1 and 99.
+          if (flight.progress_percent > 0 && flight.progress_percent < 100) {
+            // Grab the details we want and save them.
+            const flightDetails = {
+              registration: flight.registration,
+              origin_iata: flight.origin.code_iata,
+              origin_name: flight.origin.name,
+              destination_iata: flight.destination.code_iata,
+              destination_name: flight.destination.name,
+              aircraft_type: flight.aircraft_type,
+              operator_iata: flight.operator_iata,
+              flight_number: flight.flight_number
+            };
+
+            console.log('Save to flight:HEXIDENT');
+            console.log(flightDetails);
+          }
+        }
+
+        // TODO sleep for a couple of seconds...
+      } else {
+        console.log(`Error talking to FlightAware API returned ${flightAwareResponse.status} code.`);
+      }
+    } catch (e) {
+      console.log('Error talking to FlightAware API:');
+      console.log(e);
+    }
+  } else {
+    console.log('No new work to do.');
+  }
+}
