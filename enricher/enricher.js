@@ -8,6 +8,14 @@ const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const FLIGHTAWARE_API_KEY = process.env.FLIGHTAWARE_API_KEY;
 const FLIGHTAWARE_QUEUE = 'flightawarequeue';
 
+// Sleep for 5 seconds... used as a lazy way to avoid
+// rate limiting on the FlightAware API...
+async function sleep() {
+  return new Promise((resolve) => {
+    setTimeout(resolve, 5000);
+  });
+};
+
 const redisClient = createClient({
   url: REDIS_URL
 });
@@ -60,7 +68,6 @@ while (true) {
           }
         }
 
-        // TODO sleep for a couple of seconds...
       } else {
         console.log(`Error talking to FlightAware API returned ${flightAwareResponse.status} code.`);
       }
@@ -68,6 +75,10 @@ while (true) {
       console.log('Error talking to FlightAware API:');
       console.log(e);
     }
+
+    // Sleep to prevent FlightAware rate limiter kicking in (this is a very 
+    // lazy way of dealing with this!).
+    await sleep();
   } else {
     console.log('No new work to do.');
   }
