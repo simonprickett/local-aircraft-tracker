@@ -31,10 +31,13 @@ while (true) {
   );
 
   if (response) {
-    // TODO decode callsign AND hex ident from the JSON in the list payload
-    const flightIdentifier = response.element;
-    console.log(response);
-    const flightAwareAPIURL = `https://aeroapi.flightaware.com/aeroapi/flights/${flightIdentifier}?max_pages=1`;
+    // Response is an object that looks like this:
+    // {
+    //   key: 'flightawarequeue',
+    //   element: '{"hex_ident":"3CEE56","callsign":"AHO241N"}'
+    // }
+    const msgPayload = JSON.parse(response.element);
+    const flightAwareAPIURL = `https://aeroapi.flightaware.com/aeroapi/flights/${msgPayload.callsign}?max_pages=1`;
 
     try {
       const flightAwareResponse = await fetch(flightAwareAPIURL, {
@@ -46,6 +49,7 @@ while (true) {
 
       if (flightAwareResponse.status === 200) {
         const flightData = await flightAwareResponse.json();
+
         for (const flight of flightData.flights) {
           // The response contains an array of recent past, current and
           // planned future flights with this ID.  The one we want is
@@ -59,17 +63,24 @@ while (true) {
               destination_iata: flight.destination.code_iata,
               destination_name: flight.destination.name,
               aircraft_type: flight.aircraft_type,
+              // Consider resolving operator_iata using another FlightAware call
+              //  and cache those responses forever?  e.g. U2 -> EASYJET UK LIMITED	
+              // Or just get this data from a list online and store it in Redis as
+              // static data. https://en.wikipedia.org/wiki/List_of_airline_codes
+              // FlightAware URL: https://aeroapi.flightaware.com/aeroapi/operators/U2
               operator_iata: flight.operator_iata,
               flight_number: flight.flight_number
             };
 
-            console.log('Save to flight:HEXIDENT');
+            const flightKey = `flight:${msgPayload.hex_ident}`;
+            console.log(`Saving details to ${flightKey}:`);
             console.log(flightDetails);
+            redisClient.hSet(flightKey, flightDetails);
           }
         }
 
       } else {
-        console.log(`Error talking to FlightAware API returned ${flightAwareResponse.status} code.`);
+        console.log(`Error: FlightAware API returned ${flightAwareResponse.status} code.`);
       }
     } catch (e) {
       console.log('Error talking to FlightAware API:');
@@ -78,7 +89,9 @@ while (true) {
 
     // Sleep to prevent FlightAware rate limiter kicking in (this is a very 
     // lazy way of dealing with this!).
+    console.log('Entering rate limiter sleep.');
     await sleep();
+    console.log('Exited rate limiter sleep.');
   } else {
     console.log('No new work to do.');
   }
