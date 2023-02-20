@@ -4,6 +4,8 @@ This is the radio receiver component.  It uses the [SBS1 module](https://www.npm
 
 Whenever it receives a message, this component writes some of the data to [Redis Hashes](https://redis.io/docs/data-types/hashes/), updates the last updated timestamp field and resets the time to live on the flight in Redis to an hour.  This ensures that flights that have passed by and aren't in range of the radio any more naturally disappear from the dataset in Redis.
 
+If a flight callsign is detected, this component also adds information about this flight to a queue.  The queue is implemented as a [Redis List](https://redis.io/docs/data-types/lists/), and is used to pass requests to the "enricher" component which gets more information about the flight using the FlightAware API.  This is a paid API, so to make sure that we don't call it repeatedly for the same flight, this component sets a Redis key for each flight ID that it puts in the queue.  These keys expire after a time, and if subsequent requests to get information for that flight occure in this period, they aren't added to the queue.
+
 ## Setup
 
 To set this up you'll need the following:
@@ -64,22 +66,22 @@ The there are different types of message (`transmission_type` will vary) but all
 Verify that data appears in Redis using [RedisInsight](https://redis.com/redis-enterprise/redis-insight/) or the redis-cli.  You should see Hashes appear in Redis whose keys begin with `flight:`.  Here's an example:
 
 ```
-hgetall flight:AA3417
+ > hgetall flight:405456
 1) "hex_ident"
-2) "AA3417"
-3) "aircraft_id"
-4) "11111"
-5) "last_updated"
-6) "1676554148264"
-7) "altitude"
-8) "30725"
+2) "405456"
+3) "last_updated"
+4) "1676913496856"
+5) "altitude"
+6) "27025"
+7) "callsign"
+8) "SHT13K"
 9) "lat"
-10) "52.97786"
+10) "52.67772"
 11) "lon"
-12) "-1.48933"
+12) "-1.77076"
 ```
 
-Some fields may be missing, this means that those data items haven't been received for that flight yet.
+Some fields may be missing, this means that those data items haven't been received for that flight yet.  When a `callsign` field is seen for a given flight, it is also stored in the Hash.  The `callsign` and `hex_ident` are then put on the Redis List whose key is `flightawarequeue`.  This acts as a queue of requests for the "enricher" component to go get additional flight data from the FlightAware API.  To ensure that we don't flood the FlightAware API with requests for a flight that we recently got the data for, a Redis key `flightaware:recent:<callsign>` is set.  This has an expiry of one hour, and if this key is present for a given flight, we don't add the request to the queue.
 
 ## How it Works
 
