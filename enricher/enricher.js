@@ -37,6 +37,8 @@ while (true) {
     //   element: '{"hex_ident":"3CEE56","callsign":"AHO241N"}'
     // }
     const msgPayload = JSON.parse(response.element);
+    console.log(`Asking FlightAware for data on ${msgPayload.callsign} (${msgPayload.hex_ident})`);
+
     const flightAwareAPIURL = `https://aeroapi.flightaware.com/aeroapi/flights/${msgPayload.callsign}?max_pages=1`;
 
     try {
@@ -73,7 +75,7 @@ while (true) {
             };
 
             const flightKey = `flight:${msgPayload.hex_ident}`;
-            console.log(`Saving details to ${flightKey}:`);
+            console.log(`Saving details to ${flightKey}...`);
             console.log(flightDetails);
             redisClient.hSet(flightKey, flightDetails);
           }
