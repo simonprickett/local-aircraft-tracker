@@ -31,12 +31,13 @@ sbs1Client.on('message', async (msg) => {
     last_updated: Date.now()
   };
 
-  if (msg.lat) {
+  if (msg.lat && msg.lon) {
     msgData.lat = msg.lat;
-  }
-
-  if (msg.lon) {
     msgData.lon = msg.lon;
+
+    // Also add a field in the format that search expects geo fields in:
+    // longitude,latitude
+    msgData.position = `${msg.lon},${msg.lat}`;
   }
 
   if (msg.altitude) {
