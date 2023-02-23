@@ -1,0 +1,1 @@
+FT.CREATE idx:flights ON HASH PREFIX 1 flight: SCHEMA last_updated NUMERIC altitude NUMERIC callsign TAG position GEO registration TAG origin_iata TAG origin_name TEXT destination_iata TAG destination_name TEXT aircraft_type TAG operator_iata TAG flight_number TEXT
