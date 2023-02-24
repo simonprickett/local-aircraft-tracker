@@ -8,7 +8,8 @@ The videos for this project can be found on YouTube:
 
 * Episode 1: [Project introduction, live coding the radio receiver component](https://www.youtube.com/watch?v=TCTej1uihG4).
 * Episode 2: [Enriching the flight data with the FlightAware API](https://www.youtube.com/watch?v=Qu-_wvSJrdE)
-* Episode 3 (Friday 24th Feb): [YouTube](https://www.youtube.com/watch?v=IEx2WgWdhIA)
+* Episode 3: [Searching the data with Redis Stack's Search capability](https://www.youtube.com/watch?v=IEx2WgWdhIA)
+* Episode 4 (Thursday 2nd Mar): Building the notifier component [YouTube](https://www.youtube.com/watch?v=fYnrNqSgqR4)
 * Further episodes coming soon, watch the [Redis Developer Relations Streaming Schedule](https://developer.redis.com/redis-live/) for details!
 
 ## Project Overview
