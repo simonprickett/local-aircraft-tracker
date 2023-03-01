@@ -211,3 +211,25 @@ Example response:
    4) "4"
 ...
 ```
+
+Find the closest "interesting" aircraft that passed by most recently.  Interesting is defined as "it's a widebody aircraft, or some other types such as a 757".  Check out [Wikipedia's table of aircraft type codes](https://en.wikipedia.org/wiki/List_of_aircraft_type_designators).
+
+```
+ft.aggregate idx:flights "*" load 4 @__key @position @aircraft_type @last_updated filter "exists(@position)" filter "exists(@aircraft_type)" filter "@aircraft_type=='A388' || @aircraft_type=='A35K' || @aircraft_type=='A359' || @aircraft_type=='A346' || @aircraft_type=='A343' || @aircraft_type=='A332' || @aircraft_type=='A333' || @aircraft_type=='A339' || @aircraft_type=='A337' || @aircraft_type=='A306' || @aircraft_type=='A30B' || @aircraft_type=='A3ST' || @aircraft_type=='B788' || @aircraft_type=='B789' || @aircraft_type=='B78X' || @aircraft_type=='B744' || @aircraft_type=='B748' || @aircraft_type=='B752' || @aircraft_type=='B753' || @aircraft_type=='B762' || @aircraft_type=='B763' || @aircraft_type=='B764' || @aircraft_type=='B772' || @aircraft_type=='B773' || @aircraft_type=='B77W' || @aircraft_type=='B77L'" apply "geodistance(@position, \"-1.148369,52.953150\")" as dist filter "@dist < 20000" sortby 2 @last_updated desc limit 0 1
+```
+
+Example response:
+
+```
+1) "102"
+2) 1) "__key"
+   2) "flight:405BFD"
+   3) "position"
+   4) "-1.30989,53.01416"
+   5) "aircraft_type"
+   6) "B772"
+   7) "last_updated"
+   8) "1677087696405"
+   9) "dist"
+   10) "12768.43"
+```
