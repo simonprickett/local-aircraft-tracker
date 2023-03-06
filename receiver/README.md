@@ -4,7 +4,7 @@ This is the radio receiver component.  It uses the [SBS1 module](https://www.npm
 
 Whenever it receives a message, this component writes some of the data to [Redis Hashes](https://redis.io/docs/data-types/hashes/), updates the last updated timestamp field and resets the time to live on the flight in Redis to an hour.  This ensures that flights that have passed by and aren't in range of the radio any more naturally disappear from the dataset in Redis.
 
-If a flight callsign is detected, this component also adds information about this flight to a queue.  The queue is implemented as a [Redis List](https://redis.io/docs/data-types/lists/), and is used to pass requests to the "enricher" component which gets more information about the flight using the FlightAware API.  This is a paid API, so to make sure that we don't call it repeatedly for the same flight, this component sets a Redis key for each flight ID that it puts in the queue.  These keys expire after a time, and if subsequent requests to get information for that flight occure in this period, they aren't added to the queue.
+If a flight callsign is detected, this component also adds information about this flight to a queue.  The queue is implemented as a [Redis List](https://redis.io/docs/data-types/lists/), and is used to pass requests to the "enricher" component which gets more information about the flight using the FlightAware API.  This is a paid API, so to make sure that we don't call it repeatedly for the same flight, this component sets a Redis key for each flight ID that it puts in the queue.  These keys expire after a time, and if subsequent requests to get information for that flight occur in this period, they aren't added to the queue.
 
 ## Setup
 
@@ -15,7 +15,7 @@ To set this up you'll need the following:
 * An appropriate aerial for your software defined radio.  I use [this one](https://www.ebay.co.uk/itm/284156504809), but others are available.
 * [Node.js](https://nodejs.org/) version 14.5.0 or higher (I've tested this with version 16.5.1).
 * A [Redis Stack](https://redis.io/docs/stack/get-started/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)) or use the Docker compose file at the root of this repository.
-* Optional but useful, a copy of RedisInsight so that you can inspect the data in Redis.
+* Optional but useful, a copy of [RedisInsight](https://redis.com/redis-enterprise/redis-insight/) so that you can inspect the data in Redis.
 
 Before running the code, connect to your Redis Stack instance using eiher redis-cli or RedisInsight and run the Redis command contained in the file `index.redis`.  When run, this command should return `OK` and will create a search index for the flight data that we'll query from another component of the system.
 
@@ -88,4 +88,67 @@ Some fields may be missing, this means that those data items haven't been receiv
 
 ## How it Works
 
-TODO... proper README!
+Here's a high level run through of how the code works...
+
+First, two connections are established:
+
+* One is to the "SBS" data port wherever dump1090 is running (hostname and port are configurable in the `.env` file - see `SBS_HOST` and `SBS_PORT`).  
+* The other is a Redis connection, connecting to Redis with the credentials provided in the `REDIS_URL` setting in the `.env` file.
+
+Messages from dump1090 are received as events, so the code listens for these with the SBS client instance:
+
+```javascript
+sbs1Client.on('message', async (msg) => {
+  console.log(msg);
+  // Do stuff, msg is a flat name/value pair JSON object with flight data...
+};
+```
+
+Whenever a message is received, the code uses the `hex_ident` property to identify the aircraft, and that is used as part of the key to store data about the flight in a Redis hash.
+
+The code then checks for the presence of various fields in the received `msg` object, building up a `msgData` object containing key/value pairs to persist to a Redis hash.
+
+This data is persisted to Redis using the [`HSET`](https://redis.io/commands/hset/) and [`EXPIRE`](https://redis.io/commands/expire/) commands:
+
+```javascript
+await redisClient.hSet(flightKey, msgData);
+redisClient.expire(flightKey, FLIGHT_RETENTION_PERIOD);
+```
+
+The hash is also set to expire after a time period, unless further messages about the aircraft are received (these will update the expiry time).
+
+If the message data contains a `callsign` (the field that identifies the flight, rather than the aircraft (identified by `hex_ident`)), then the receiver will also put this flight in the queue for the [enricher](../enricher) component to work on.  However, it will only add the flight to the queue if it hasn't previously done so in the last hour.  This is to prevent duplicate lookups of a flight in FlightAware as their API costs money to use after a certain level of usage.
+
+The code checks if a flight's details have been requested before using the Redis [`SET`](https://redis.io/commands/set/) command, with some modifiers:
+
+```javascript
+const response = await redisClient.set(
+  `flightaware:recent:${msgData.callsign}`, 
+  msgData.last_updated, 
+  {
+    NX: true,
+    EX: FLIGHTAWARE_MAX_REQUEST_AGE
+  }
+);
+
+if (response) {
+  // We haven't seen a FlightAware API request for this identifier recently, 
+  // so send the hex_ident and callsign values to the enricher
+  // component - it needs callsign to pass to the FlightAware API and
+  // hex_ident to create the correct Redis key to store the data in...
+  const msgPayload = {
+    hex_ident: msgData.hex_ident,
+    callsign: msgData.callsign
+  };
+
+  console.log(`Pushed Flightaware request for ${msgData.callsign}`);
+  redisClient.lPush(FLIGHTAWARE_QUEUE, JSON.stringify(msgPayload));
+}
+```
+
+Here's how it works:
+
+* First, we attempt to set a key in Redis named `flightaware:recent:<callsign>` which is used to remember that we've recently requested this flight.  We set the value of this key to be the last updated timestamp for the flight, but it could be any value as we're using the presence or absence of the key to indicate what to do next, we never actually use the value.
+* When calling `SET`, we pass in a couple of modifiers: `NX: true` means only set the key if it doesn't exist already.  `EX: <duration>` tells Redis to expire the key (essentially consider it deleted) after a certain number of seconds have passed.
+* We store the value of this command in `response` -- this will either be `OK` (the key was created, so we're asking for this flight for the first time recently) or `null` (the key already exists, so we have asked for this flight recently).
+* If we haven't asked for this flight recently, the `hex_ident` and `callsign` are placed in an object that is then stringified and put on the queue for the enricher component to pick up, using the Redis [LPUSH](https://redis.io/commands/lpush/) command.
