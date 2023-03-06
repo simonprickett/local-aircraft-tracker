@@ -19,10 +19,19 @@ npm install
 
 ## Running the Notifier
 
-Start the enricher component like this:
+Start the notifier component like this:
 
 ```
 npm start
 ```
 
-TODO what happens...
+Every so often (currently 30 seconds hard coded, might make this configurable in future) the notifier wakes up and runs a `FT.AGGREGATE` query against the flight data stored in Redis Hashes.  This query searches for the most recently updated flight that's within a given distance of a location (distance and location currently hard coded to be 20,000 metres and central Nottingham, England - may make these configurable in future).  The flight must also be "interesting" which means that the aircraft type needs to be one that I am interested in.  These types are also hard coded (at the moment) but I may make them configurable in future.  The values are ICAO codes - [list here on Wikipedia](https://en.wikipedia.org/wiki/List_of_aircraft_type_designators).
+
+Whenever the query returns a flight, its data is published on a [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/) channel called `interestingflights`.  The payload looks like this (stringified JSON):
+
+```
+TODO
+```
+
+The idea is that interested front ends will subscribe to the `interestingflights` channel, and display the information received in a way appropriate to the front end.
+
