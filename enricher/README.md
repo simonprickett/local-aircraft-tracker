@@ -26,4 +26,40 @@ Start the enricher component like this:
 npm start
 ```
 
-TODO what happens...
+The enricher will mostly do nothing, until the [receiver component](../receiver) places a message on the list that the enricher monitors (this list is stored in Redis at key `flightawarequeue`).  When nothing is happening, expect the output to look like this:
+
+```
+No new work to do.
+No new work to do.
+No new work to do.
+...
+```
+
+Once the receiver has enough data about a flight, it'll place a message on the queue for the enricher to pick up.  This message contains a stringified JSON object that looks like this:
+
+```
+{"hex_ident":"3CEE56","callsign":"AHO241N"}'
+```
+
+The enricher then passes the `callsign` to the FlightAware API, using the `hex_ident` to identify the Redis hash containing the flight's details.  Additional detail about the flight from FlightAware is then stored in this hash.  
+
+Here's an example of the expected output from the enricher when it has a queue entry to work on:
+
+```
+Asking FlightAware for data on SHT4D (400942)
+Saving details to flight:400942...
+{
+  registration: 'G-EUOF',
+  origin_iata: 'LHR',
+  origin_name: 'London Heathrow',
+  destination_iata: 'BHD',
+  destination_name: 'George Best Belfast City',
+  aircraft_type: 'A319',
+  operator_iata: 'BA',
+  flight_number: '1420'
+}
+Entering rate limiter sleep.
+Exited rate limiter sleep.
+```
+
+Note that after looking up a flight, the enricher sleeps for a couple of seconds.  This is a lazy implementation by me that avoids dealing with FlightAware's API rate limiter by just making sure that the component shouldn't make more than the allowed number of requests per minute.
