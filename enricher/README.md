@@ -1,6 +1,8 @@
 # Enricher Component
 
-TODO introduction...
+This is the "enricher" component.  It pulls entries from a Redis List that is being used as a queue between this component and the [receiver](../receiver) component.  Each entry represents a flight that needs additional data fetching from the [FlightAware Aero API](https://flightaware.com/commercial/aeroapi/).  
+
+This component calls the API to fetch that data, storing it back in the Redis Hash representing the flight.
 
 ## Setup
 
