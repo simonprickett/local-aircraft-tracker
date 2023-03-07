@@ -1,0 +1,28 @@
+{
+  "name": "hanover-flipdot",
+  "version": "0.0.1",
+  "description": "Front End for Local Aircraft Tracker Project: Hanover Flip Dot",
+  "main": "flipdot-flights.js",
+  "scripts": {
+    "start": "node flipdot-flights.js"
+  },
+  "type": "module",
+  "author": "Simon Prickett",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonprickett/local-aircraft-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/simonprickett/local-aircraft-tracker/issues"
+  },
+  "homepage": "https://github.com/simonprickett/local-aircraft-tracker#readme",
+  "engines": {
+    "node": ">= 14.5.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "flipdot-display": "^1.2.0",
+    "redis": "^4.6.5"
+  }
+}
