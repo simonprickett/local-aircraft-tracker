@@ -1,6 +1,10 @@
 # Notifier Component
 
-TODO introduction...
+This is the "nofifier" component.  Its role in the system is to periodically run a query over the flight data stored in Redis hashes and indexed by the search capability of Redis Stack.  It aims to find the most recently updated flight that is within a given distance of the user's location, and which is considered "interesting".
+
+The current definition of an "interesting" flight is one that's operated by a widebody aircraft.  These are identified using the `aircraft_type` field stored for each flight (this is populated by the [enricher component](../enricher) using the [FlightAware Aero API](https://flightaware.com/commercial/aeroapi/)).  The query that this component runs contains many [ICAO codes](https://en.wikipedia.org/wiki/List_of_aircraft_type_designators) for widebody aircraft variants.
+
+Whenever an "interesting" flight is detected, this component publishes its details on a [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/) channel, so that interested subscribers may receive these details and do with them as they please - without any knowledge of how the rest of the aircraft tracking system is implemented.
 
 ## Setup
 
