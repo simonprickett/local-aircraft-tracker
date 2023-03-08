@@ -36,6 +36,10 @@ flippy.on('error', (err) => {
   console.error(err);
 });
 
+flippy.once('open', () => {
+  console.log(`Connected to flip dot device at ${SIGN_DEVICE}.`);
+});
+
 console.log('Listening for flights...');
 await redisClient.subscribe('interestingflights', (msg) => {
   const flightData = JSON.parse(msg);
