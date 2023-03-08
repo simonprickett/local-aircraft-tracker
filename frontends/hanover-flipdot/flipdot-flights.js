@@ -1,6 +1,7 @@
 import FlipDot from 'flipdot-display';
 import * as dotenv from 'dotenv';
 import { createClient } from 'redis';
+import { Mutex} from 'async-mutex';
 
 dotenv.config();
 
@@ -40,20 +41,24 @@ flippy.once('open', () => {
   console.log(`Connected to flip dot device at ${SIGN_DEVICE}.`);
 });
 
-async function displayData(lines) {
-  for (let n = 0; n < SIGN_REPEATS; n++) {
-    for (const line of lines) {
-      const xOffset = Math.floor((SIGN_COLS - calculatePixelWidth(line)) / 2);
-      flippy.writeText(line, { font: 'Banner3' }, [0, xOffset], false, true);
-      flippy.send();
-      await sleep(SIGN_FLIP_INTERVAL);
-    }
+const signMutex = new Mutex();
 
-    flippy.fill(0xFF);
-    if (n < SIGN_REPEATS) {
-      await sleep(SIGN_FLIP_INTERVAL);
+async function displayData(lines) {
+  await signMutex.runExclusive(async () => {
+    for (let n = 0; n < SIGN_REPEATS; n++) {
+      for (const line of lines) {
+        const xOffset = Math.floor((SIGN_COLS - calculatePixelWidth(line)) / 2);
+        flippy.writeText(line, { font: 'Banner3' }, [0, xOffset], false, true);
+        flippy.send();
+        await sleep(SIGN_FLIP_INTERVAL);
+      }
+
+      flippy.fill(0xFF);
+      if (n < SIGN_REPEATS) {
+        await sleep(SIGN_FLIP_INTERVAL);
+      }
     }
-  }
+  });
 }
 
 const redisClient = createClient({

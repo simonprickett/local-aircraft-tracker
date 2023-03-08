@@ -21,6 +21,7 @@
     "node": ">= 14.5.0"
   },
   "dependencies": {
+    "async-mutex": "^0.4.0",
     "dotenv": "^16.0.3",
     "flipdot-display": "^1.2.0",
     "redis": "^4.6.5"
