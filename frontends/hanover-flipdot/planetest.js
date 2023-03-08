@@ -52,5 +52,5 @@ flippy.once('open', async function() {
     }, 1500);
   };
 
-  displayData([ 'BA287', 'A388', 'LHR - SFO', '30924FT' ]);
+  displayData([ 'BA287', 'A388', 'G-XLEA', 'LHR - SFO', '30924FT' ]);
 });

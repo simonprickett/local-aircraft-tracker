@@ -12,11 +12,11 @@ const SIGN_ADDRESS = parseInt(process.env.SIGN_ADDRESS, 10);
 const SIGN_FLIP_INTERVAL = parseInt(process.env.SIGN_FLIP_INTERVAL, 10);
 const SIGN_REPEATS = parseInt(process.env.SIGN_REPEATS, 10);
 
-const redisClient = createClient({
-  url: REDIS_URL
-});
-
-await redisClient.connect();
+async function sleep(millis) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, millis);
+  });
+}
 
 function calculatePixelWidth(msg) {
   let pixelCount = 0;
@@ -40,8 +40,30 @@ flippy.once('open', () => {
   console.log(`Connected to flip dot device at ${SIGN_DEVICE}.`);
 });
 
-console.log('Listening for flights...');
-await redisClient.subscribe('interestingflights', (msg) => {
+async function displayData(lines) {
+  for (let n = 0; n < SIGN_REPEATS; n++) {
+    for (const line of lines) {
+      const xOffset = Math.floor((SIGN_COLS - calculatePixelWidth(line)) / 2);
+      flippy.writeText(line, { font: 'Banner3' }, [0, xOffset], false, true);
+      flippy.send();
+      await sleep(SIGN_FLIP_INTERVAL);
+    }
+
+    flippy.fill(0xFF);
+    if (n < SIGN_REPEATS) {
+      await sleep(SIGN_FLIP_INTERVAL);
+    }
+  }
+}
+
+const redisClient = createClient({
+  url: REDIS_URL
+});
+
+await redisClient.connect();
+console.log('Connected to Redis, listening for flights...');
+
+await redisClient.subscribe('interestingflights', async (msg) => {
   const flightData = JSON.parse(msg);
   console.log(flightData);
 
@@ -53,6 +75,6 @@ await redisClient.subscribe('interestingflights', (msg) => {
     `${flightData.altitude}FT`
   ];
 
-  // TODO send this to the Hanover sign!
-  console.log(dataToDisplay);
+  // TODO: Consider queuing these long operations...
+  await displayData(dataToDisplay);
 });
