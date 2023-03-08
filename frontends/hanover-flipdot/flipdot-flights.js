@@ -41,6 +41,9 @@ flippy.once('open', () => {
   console.log(`Connected to flip dot device at ${SIGN_DEVICE}.`);
 });
 
+// The sign takes a long time to update, so let's use a Mutex in case subsequent
+// flight details arrive while we are showing one...
+// https://www.npmjs.com/package/async-mutex
 const signMutex = new Mutex();
 
 async function displayData(lines) {
@@ -80,6 +83,5 @@ await redisClient.subscribe('interestingflights', async (msg) => {
     `${flightData.altitude}FT`
   ];
 
-  // TODO: Consider queuing these long operations...
   await displayData(dataToDisplay);
 });
