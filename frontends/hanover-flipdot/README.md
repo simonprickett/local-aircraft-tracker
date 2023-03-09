@@ -1,14 +1,13 @@
 # Hanover Flip Dot Sign Front End Component
 
+![demo](flipdot_demo.gif)
+
 This is a very specific type of front end for the local aircraft tracking project - it requires an old [Hanover Displays flip dot bus sign](https://www.hanoverdisplays.com/about-us/our-history/).  Flip dots are a kind of electromagnetic pixel that have on and off states.  When in one state, the black side of the dot is showing, in the other state it shows the other side of the dot which has been finished in a bright colour.  Put a load of these together and you have a matrix that can be used to display messages.  It makes a fantastic sound when updating and uses no power to hold its current state.  At the end of the day, this is a gloriously over-engineered pub/sub subscriber :)
 
 These are a little hard to get, but I happened to find one on eBay from a reputable bus parts seller.  Due to the magic of the Node.js community ecosystem, there's [a driver for them](https://www.npmjs.com/package/flipdot-display) that just works and handles the peculiar protocol for us!  There's also good support for using these with Python - maybe we'll look at that in a future project.
 
-Here's an example of the sign working:
 
-TODO EMBED GIF
-
-If you want the glorious sound too, check out the YouTube video.  I wish GitHub would do proper embedding of YouTube videos in README files...
+If you want to hear the GIF demo above with glorious sound too, check out the [YouTube video](https://www.youtube.com/watch?v=iHm3GZCyKmE).  I wish GitHub would do proper embedding of YouTube videos in README files...
 
 I don't expect anyone else to ever run this code (if you do [I'd love to hear from you](https://simonprickett.dev/contact/)), due to the specific hardware requirements.  In addition to the sign, you need a USB to RS-485 adapter (these are easy to get - [see here](https://www.amazon.co.uk/MODOVER-Converter-Adapter-Supports-Window/dp/B0BS48G5QZ/)) and to wire up the sign's two data lines to it.  Some of these have 2 wire connectors, others 3.  You can use either, but you only need 2 wires.  You'll also need a 20v power supply to power the sign, I initially used a 1A supply and found that wasn't enough - the sign was really sluggish.  It's much happier with 20v/5A.  I just got a laptop type power supply off of eBay and wired a barrel jack connector to the sign.
 
