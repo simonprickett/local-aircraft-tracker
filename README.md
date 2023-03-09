@@ -4,6 +4,8 @@ This repository contains the code used for the Plane Spotting with Redis shows t
 
 ![demo](frontends/hanover-flipdot/flipdot_demo.gif)
 
+If you want to hear the GIF demo above with glorious sound too, check out the [YouTube video](https://www.youtube.com/watch?v=iHm3GZCyKmE).  I wish GitHub would do proper embedding of YouTube videos in README files...
+
 ## Watch the Videos
 
 The videos for this project can be found on YouTube:
