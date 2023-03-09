@@ -21,7 +21,7 @@ This component must run on the machine that has the RS485 adapter that's wired t
 To set this up you'll need the following software (I'll assume you have the sign, RS-485 adapter and appropriate data and power wiring sorted!):
 
 * A [Redis Stack](https://redis.io/docs/stack/get-started/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)) or use the Docker compose file at the root of this repository.
-* Fully set up and working instances of both the notifier component ([read about this here](../../receiver/README.md)) and the other components of this system that it relies on (covered in the notifier README).
+* Fully set up and working instances of both the notifier component ([read about this here](../../notifier/README.md)) and the other components of this system that it relies on (covered in the notifier README).
 
 Before running the code, configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).
 
