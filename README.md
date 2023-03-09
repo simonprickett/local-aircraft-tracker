@@ -21,6 +21,8 @@ TODO
 
 TODO
 
+Almost all components of this project are written in Node.js.  They use features of JavaScript that require a recent version of Node.  I've tested them all with Node 16.15.1 on both macOS Ventura and Raspberry Pi OS (Debian 11 - "bullseye" version).
+
 ## Example Search Queries from redis-cli
 
 TODO describe these properly...
