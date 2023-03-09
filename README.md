@@ -2,6 +2,8 @@
 
 This repository contains the code used for the Plane Spotting with Redis shows that are part of my [Things on Thursdays live streaming series](https://simonprickett.dev/things-on-thursdays-livestreams/).
 
+![demo](frontends/hanover-flipdot/flipdot_demo.gif)
+
 ## Watch the Videos
 
 The videos for this project can be found on YouTube:
