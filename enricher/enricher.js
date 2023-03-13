@@ -70,7 +70,7 @@ while (true) {
               // Or just get this data from a list online and store it in Redis as
               // static data. https://en.wikipedia.org/wiki/List_of_airline_codes
               // FlightAware URL: https://aeroapi.flightaware.com/aeroapi/operators/U2
-              operator_iata: flight.operator_iata,
+              operator_iata: flight.operator_iata || '',
               flight_number: flight.flight_number
             };
 
