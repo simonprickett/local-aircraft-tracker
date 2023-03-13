@@ -39,6 +39,7 @@ flippy.on('error', (err) => {
 
 flippy.once('open', () => {
   console.log(`Connected to flip dot device at ${SIGN_DEVICE}.`);
+  flippy.fill(0xFF);
 });
 
 // The sign takes a long time to update, so let's use a Mutex in case subsequent
