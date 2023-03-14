@@ -14,7 +14,7 @@ The videos for this project can be found on YouTube:
 * Episode 2: [Enriching the flight data with the FlightAware API](https://www.youtube.com/watch?v=Qu-_wvSJrdE)
 * Episode 3: [Searching the data with Redis Stack's Search capability](https://www.youtube.com/watch?v=IEx2WgWdhIA)
 * Episode 4: [Building the notifier component](https://www.youtube.com/watch?v=fYnrNqSgqR4)
-* Episode 5: [Building notification devices](https://www.youtube.com/watch?v=i8grA5fsbdM) (Scheduled: March 14 1pm UTC)
+* Episode 5: [Building a notification device with a flip dot sign](https://www.youtube.com/watch?v=i8grA5fsbdM)
 * Further episodes coming soon, watch the [Redis Developer Relations Streaming Schedule](https://developer.redis.com/redis-live/) for details!
 
 ## Project Overview
