@@ -19,7 +19,9 @@ The videos for this project can be found on YouTube:
 
 ## Project Overview
 
-TODO
+![Architecture Overview](local_aircraft_tracker_architecture.png)
+
+TODO description...
 
 ## Running it Yourself
 
