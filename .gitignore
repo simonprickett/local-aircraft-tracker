@@ -7,3 +7,5 @@
 .vscode/
 .idea/
 node_modules/
+WIFI_CONFIG.py
+secrets.py
