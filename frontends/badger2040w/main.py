@@ -11,13 +11,13 @@ def clear_screen():
     badger.set_pen(15)
     badger.clear()
 
-def write_text(text):
+def write_text(text, x, y, s):
     badger.set_pen(0)
-    badger.text(text, 20, 20, scale=3)
+    badger.text(text, x, y, scale=s)
 
 def show_waiting_message():
     clear_screen()
-    write_text("Waiting for flights!")
+    write_text("Waiting for flights!", 20, 20, 3)
     badger.update()
 
 clear_screen()
@@ -27,14 +27,14 @@ badger.connect()
 
 # TODO deal with when it doesn't work...
 clear_screen()
-write_text("Connected to wifi!")
+write_text("Connected to wifi!", 20, 20, 3)
 badger.update()
 
 r = Redis(host=secrets.REDIS_HOST, port=secrets.REDIS_PORT)
 r.auth(secrets.REDIS_PASSWORD)
 
 clear_screen()
-write_text("Connected to Redis!")
+write_text("Connected to Redis!", 20, 20, 3)
 badger.update()
 
 show_waiting_message()
@@ -63,8 +63,8 @@ while True:
         print(flight_data)
 
         clear_screen()
-        write_text("got data")
-        #write_text(f"{msg['origin_iata']} - {msg['destination_iata']}, {msg['registration']}")
+        write_text("got data", 20, 20, 3)
+        #write_text(f"{msg['origin_iata']} - {msg['destination_iata']}, {msg['registration']}", 20, 20, 3)
         badger.update()
         
         screen_updated = True
