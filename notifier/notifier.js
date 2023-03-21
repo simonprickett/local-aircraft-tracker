@@ -46,7 +46,17 @@ while(true) {
       ...flightDetails
     };
 
+    // Notify pub/sub subscribers...
     redisClient.publish('interestingflights', JSON.stringify(payload));
+
+    // Add flight to time limited stream, trimming anything over an hour
+    // old from the stream... 3600 = 1hr in seconds.
+    redisClient.xAdd('interestingstream', '*', payload, {
+      TRIM: {
+        strategy: 'MINID',
+        threshold: new Date().getTime() - 3600 * 1000
+      }
+    });
   } else {
     console.log('No new matches.');
   }
