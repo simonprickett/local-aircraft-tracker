@@ -17,7 +17,7 @@ def write_text(text):
 
 def show_waiting_message():
     clear_screen()
-    write_text("Waiting for a flight!")
+    write_text("Waiting for flights!")
     badger.update()
 
 clear_screen()
@@ -41,19 +41,27 @@ show_waiting_message()
 
 screen_updated = False
 
+# Begin at the start of the stream...
+last_read_id = "0"
+
 while True:
-    payload = r.rpop("badger2040w:flights")
-        
+    payload = r.xread("count", "1", "streams", "interestingstream", last_read_id)
+    print("Payload received:")
+    print(payload)
     if not payload is None:
-        msg = json.loads(payload)
-        print(payload)
+        this_flight = payload[0][1][0]
+        print(this_flight)
         
         clear_screen()
-        write_text(f"{msg['origin_iata']} - {msg['destination_iata']}, {msg['registration']}")
+        write_text("got data")
+        #write_text(f"{msg['origin_iata']} - {msg['destination_iata']}, {msg['registration']}")
         badger.update()
         
         screen_updated = True
         time.sleep(5)
+
+        # Update our place in the stream.
+        last_read_id = str(this_flight[0].decode("utf-8"))
     else:
         # Nothing to do...
         if screen_updated == True:
