@@ -46,12 +46,22 @@ last_read_id = "0"
 
 while True:
     payload = r.xread("count", "1", "streams", "interestingstream", last_read_id)
-    print("Payload received:")
-    print(payload)
+
     if not payload is None:
         this_flight = payload[0][1][0]
-        print(this_flight)
+        print(this_flight[1])
+
+        # Convert this list of key then value byte arrays into a dict with strings.
+        flight_keys = this_flight[1][::2]
+        flight_values = this_flight[1][1::2]
         
+        flight_data = dict()
+
+        for n in range(len(flight_keys)):
+            flight_data[flight_keys[n].decode('utf-8')] = flight_values[n].decode('utf-8')
+        
+        print(flight_data)
+
         clear_screen()
         write_text("got data")
         #write_text(f"{msg['origin_iata']} - {msg['destination_iata']}, {msg['registration']}")
