@@ -11,13 +11,13 @@ def clear_screen():
     badger.set_pen(15)
     badger.clear()
 
-def write_text(text, x, y, s):
-    badger.set_pen(0)
+def write_text(text, x, y, s, c):
+    badger.set_pen(c)
     badger.text(text, x, y, scale=s)
 
 def show_waiting_message():
     clear_screen()
-    write_text("Waiting for flights!", 20, 40, 3)
+    write_text("Waiting for flights!", 20, 40, 3, 0)
     badger.update()
 
 clear_screen()
@@ -26,14 +26,14 @@ badger.update()
 badger.connect()
 
 clear_screen()
-write_text("Connected to wifi!", 20, 40, 3)
+write_text("Connected to wifi!", 20, 40, 3, 0)
 badger.update()
 
 r = Redis(host=secrets.REDIS_HOST, port=secrets.REDIS_PORT)
 r.auth(secrets.REDIS_PASSWORD)
 
 clear_screen()
-write_text("Connected to Redis!", 20, 40, 3)
+write_text("Connected to Redis!", 20, 40, 3, 0)
 badger.update()
 
 show_waiting_message()
@@ -62,12 +62,16 @@ while True:
         print(flight_data)
 
         clear_screen()
-        write_text(flight_data["aircraft_type"], 10, 10, 7)
-        write_text(flight_data["registration"], 10, 70, 3)
-        write_text(f"{flight_data['altitude']}FT", 10, 100, 2)
-        write_text(f"{flight_data['operator_iata']}{flight_data['flight_number']}", 180, 10, 4)
-        write_text(f"{flight_data['origin_iata']}", 190, 50, 5)
-        write_text(f"{flight_data['destination_iata']}", 190, 90, 5)
+        
+        badger.set_pen(0)
+        badger.rectangle(0, 0, 160, 130)
+        write_text(flight_data["aircraft_type"], 10, 10, 7, 15)
+        write_text(flight_data["registration"], 10, 70, 3, 15)
+        write_text(f"{flight_data['altitude']}FT", 10, 100, 2, 15)
+
+        write_text(f"{flight_data['operator_iata']}{flight_data['flight_number']}", 180, 10, 4, 0)
+        write_text(f"{flight_data['origin_iata']}", 190, 50, 5, 0)
+        write_text(f"{flight_data['destination_iata']}", 190, 90, 5, 0)
 
         badger.update()
         
