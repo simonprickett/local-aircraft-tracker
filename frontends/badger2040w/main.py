@@ -65,7 +65,7 @@ while True:
         write_text(flight_data["aircraft_type"], 10, 10, 7)
         write_text(flight_data["registration"], 10, 70, 3)
         write_text(f"{flight_data['altitude']}FT", 10, 100, 2)
-        write_text(f"{flight_data['operator_iata']}{flight_data['flight_number']}", 185, 10, 4)
+        write_text(f"{flight_data['operator_iata']}{flight_data['flight_number']}", 180, 10, 4)
         write_text(f"{flight_data['origin_iata']}", 190, 50, 5)
         write_text(f"{flight_data['destination_iata']}", 190, 90, 5)
 
