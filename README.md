@@ -6,6 +6,10 @@ This repository contains the code used for the Plane Spotting with Redis shows t
 
 If you want to hear the GIF demo above with glorious sound too, check out the [YouTube video](https://www.youtube.com/watch?v=iHm3GZCyKmE).  I wish GitHub would do proper embedding of YouTube videos in README files...
 
+There's also an e-ink front end using a Pimoroni Badger 2040W...
+
+![eink demo](small_badger2040w_with_plane_info.jpg)
+
 ## Watch the Videos
 
 The videos for this project can be found on YouTube:
