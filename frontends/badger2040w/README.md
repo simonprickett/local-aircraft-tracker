@@ -12,6 +12,18 @@ The code for this component is written in [MicroPython](https://micropython.org/
 
 TODO
 
-## Running the Front End
+## How it Works
 
 TODO
+
+## Installing the Code on the Badger 2040W
+
+TODO
+
+## Running the Front End
+
+The Raspberry Pi Pico W is a microcontroller - there's no operating system, so basically your code is the only thing running on it. Once you've installed the code on the Badger 2040W, all you need to do is connect power to it using a USB->Micro USB cable.  It'll then boot up, connect to the wifi first then Redis second, then poll the Redis Stream.  Once a new flight appears in the stream, the display will update with the flight details.
+
+Example boot up sequence:
+
+TODO add a GIF of the boot sequence here.
