@@ -11,10 +11,10 @@ If you want to hear the GIF demo above with glorious sound too, check out the [Y
 The videos for this project can be found on YouTube:
 
 * Episode 1: [Project introduction, live coding the radio receiver component](https://www.youtube.com/watch?v=TCTej1uihG4).
-* Episode 2: [Enriching the flight data with the FlightAware API](https://www.youtube.com/watch?v=Qu-_wvSJrdE)
-* Episode 3: [Searching the data with Redis Stack's Search capability](https://www.youtube.com/watch?v=IEx2WgWdhIA)
-* Episode 4: [Building the notifier component](https://www.youtube.com/watch?v=fYnrNqSgqR4)
-* Episode 5: [Building a notification device with a flip dot sign](https://www.youtube.com/watch?v=i8grA5fsbdM)
+* Episode 2: [Enriching the flight data with the FlightAware API](https://www.youtube.com/watch?v=Qu-_wvSJrdE).
+* Episode 3: [Searching the data with Redis Stack's Search capability](https://www.youtube.com/watch?v=IEx2WgWdhIA).
+* Episode 4: [Building the notifier component](https://www.youtube.com/watch?v=fYnrNqSgqR4).
+* Episode 5: [Building a notification device with a flip dot sign](https://www.youtube.com/watch?v=i8grA5fsbdM).
 * Episode 6: [Building a notification device with MicroPython and an e-ink display](https://www.youtube.com/watch?v=RROQA0QOq0k) - Scheduled for March 23rd 3pm UTC.
 
 ## Project Overview
