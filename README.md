@@ -1,17 +1,20 @@
 # Local Aircraft Tracker with Redis
 
-This repository contains the code used for the Plane Spotting with Redis shows that are part of my [Things on Thursdays live streaming series](https://simonprickett.dev/things-on-thursdays-livestreams/).
+This repository contains the code used for the Plane Spotting with Redis shows that are part of my [Things on Thursdays live streaming series](https://simonprickett.dev/things-on-thursdays-livestreams/).  This project decodes ADS-B messages received via an aerial and software defined radio USB stick, then stores them in Redis where they're enriched using additional data from the FlightAware API.  Flights that are deemed to be "interesting" (flown by a configurable set of aircraft types e.g. an Airbus A340 or a Boeing 747, and within a radius of my location) then have their details broadcast to interested front ends via Redis Pub/Sub and a Redis stream.
+
+I made two example front ends for this project, the first being a Hanover displays flip dot sign that previously served on a bus that was scrapped...
 
 ![demo](frontends/hanover-flipdot/flipdot_demo.gif)
 
 If you want to hear the GIF demo above with glorious sound too, check out the [YouTube video](https://www.youtube.com/watch?v=iHm3GZCyKmE).  I wish GitHub would do proper embedding of YouTube videos in README files...
 
-There's also an e-ink front end using a Pimoroni Badger 2040W...
+There's also an e-ink front end using a [Pimoroni Badger 2040W](https://shop.pimoroni.com/products/badger-2040-w)...
 
 ![eink demo](badger2040w.gif)
 
 ![eink demo](small_badger2040w_with_plane_info.jpg)
 
+The Badger front end is written in [MicroPython](https://micropython.org/). All of the other components are written in [Node.js](https://nodejs.org/). See the "Project Overview" section for a run through of the architecture, or watch the start of the episode 5 or 6 videos for a animated recap.
 
 ## Watch the Videos
 
@@ -39,6 +42,8 @@ All of the components connect to a single [Redis Stack](https://redis.io/docs/st
 Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)) or use the Docker compose file at the root of this repository.
 
 It's also a good idea to download and install [RedisInsight](https://redis.io/docs/ui/insight/), a free tool for managing and visualising data in Redis.  Use this to see what's going on with your Redis Stack instance.
+
+You'll find a README in the folder for each component that describes what it does and how to set it up.
 
 ## Example Search Queries from redis-cli
 
