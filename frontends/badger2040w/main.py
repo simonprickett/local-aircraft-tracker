@@ -70,8 +70,8 @@ while True:
         write_text(f"{flight_data['altitude']}FT", 10, 100, 2, 15)
 
         write_text(f"{flight_data['operator_iata']}{flight_data['flight_number']}", 180, 10, 4, 0)
-        write_text(f"{flight_data['origin_iata']}", 190, 50, 5, 0)
-        write_text(f"{flight_data['destination_iata']}", 190, 90, 5, 0)
+        write_text(f"{flight_data['origin_iata']}", 193, 50, 5, 0)
+        write_text(f"{flight_data['destination_iata']}", 193, 90, 5, 0)
 
         badger.update()
         
