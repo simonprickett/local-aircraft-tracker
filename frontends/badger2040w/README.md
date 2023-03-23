@@ -26,4 +26,4 @@ The Raspberry Pi Pico W is a microcontroller - there's no operating system, so b
 
 Example boot up sequence:
 
-TODO add a GIF of the boot sequence here.
+![eink demo](../../badger2040w.gif)

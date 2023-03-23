@@ -8,7 +8,10 @@ If you want to hear the GIF demo above with glorious sound too, check out the [Y
 
 There's also an e-ink front end using a Pimoroni Badger 2040W...
 
+![eink demo](badger2040w.gif)
+
 ![eink demo](small_badger2040w_with_plane_info.jpg)
+
 
 ## Watch the Videos
 
