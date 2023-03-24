@@ -53,7 +53,9 @@ The Badger2040W front end is the only component that doesn't use Node.js.  It is
 
 ## Example Search Queries from redis-cli
 
-TODO describe these properly...
+This project defines a [search index](https://redis.io/docs/stack/search/) over data in the flight Hashes in Redis.  Instructions for creating the index can be found with the receiver component's documentation.  To learn more about the index, [watch the Episode 3 video](https://www.youtube.com/watch?v=IEx2WgWdhIA&t=26s).
+
+Here are some example queries that can be run using the Redis CLI (with or without RedisInsight)...
 
 Which Easyjet (U2) Airbus 319 aircraft have we seen, and where were they going to/from?:
 
