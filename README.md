@@ -49,6 +49,8 @@ It's also a good idea to download and install [RedisInsight](https://redis.io/do
 
 You'll find a README in the folder for each component that describes what it does and how to set it up.
 
+The Badger2040W front end is the only component that doesn't use Node.js.  It is written in [MicroPython](https://micropython.org/).
+
 ## Example Search Queries from redis-cli
 
 TODO describe these properly...
