@@ -37,7 +37,7 @@ The project is organised as follows:
 
 * An instance of [dump1090](https://github.com/antirez/dump1090) (third party project also written by Salvatore Sanfillipo who created Redis) runs and uses a USB stick software defined radio ([I have this one](https://www.radarbox.com/flightstick1090)) to receive and decode messages from passing planes.  The USB stick requires an aerial ([I have this one](https://www.ebay.co.uk/itm/284156504809?var=585644446714)).
 * The receiver component receives messages from dump1090 by listening on a port.  It decodes these messages into JavaScript name/value pair objects and stores the data in a Redis Hash.  Each passing flight is identified using the aircraft transponder's hex ID.
-* Once sufficient information about a given flight has been received (this may come in multiple separate messages), the receiver places the flight's callsign into a Redis List.  This acts as a queue between the receiver and enricher components.
+* Once sufficient information about a given flight has been received (this may come in multiple separate messages), the receiver places the flight's callsign into a Redis List.  This acts as a queue between the receiver and enricher components.  The receiver stores the IDs of flights that were recently placed into the list as string values in Redis, setting a time to live on them.  This stops the receiver from asking the enricher about the same flight more than once in a given time period.
 * TODO enricher info...
 
 ## Running it Yourself
