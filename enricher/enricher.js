@@ -59,19 +59,19 @@ while (true) {
           if (flight.progress_percent > 0 && flight.progress_percent < 100) {
             // Grab the details we want and save them.
             const flightDetails = {
-              registration: flight.registration,
-              origin_iata: flight.origin.code_iata,
-              origin_name: flight.origin.name,
-              destination_iata: flight.destination.code_iata,
-              destination_name: flight.destination.name,
-              aircraft_type: flight.aircraft_type,
+              registration: flight.registration || '',
+              origin_iata: flight.origin.code_iata || '',
+              origin_name: flight.origin.name || '',
+              destination_iata: flight.destination.code_iata || '',
+              destination_name: flight.destination.name || '',
+              aircraft_type: flight.aircraft_type || '',
               // Consider resolving operator_iata using another FlightAware call
               //  and cache those responses forever?  e.g. U2 -> EASYJET UK LIMITED	
               // Or just get this data from a list online and store it in Redis as
               // static data. https://en.wikipedia.org/wiki/List_of_airline_codes
               // FlightAware URL: https://aeroapi.flightaware.com/aeroapi/operators/U2
               operator_iata: flight.operator_iata || '',
-              flight_number: flight.flight_number
+              flight_number: flight.flight_number || ''
             };
 
             const flightKey = `flight:${msgPayload.hex_ident}`;
