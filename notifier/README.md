@@ -4,7 +4,7 @@ This is the "nofifier" component.  Its role in the system is to periodically run
 
 The current definition of an "interesting" flight is one that's operated by a widebody aircraft.  These are identified using the `aircraft_type` field stored for each flight (this is populated by the [enricher component](../enricher) using the [FlightAware Aero API](https://flightaware.com/commercial/aeroapi/)).  The query that this component runs contains many [ICAO codes](https://en.wikipedia.org/wiki/List_of_aircraft_type_designators) for widebody aircraft variants.
 
-Whenever an "interesting" flight is detected, this component publishes its details on a [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/) channel, so that interested subscribers may receive these details and do with them as they please - without any knowledge of how the rest of the aircraft tracking system is implemented.
+Whenever an "interesting" flight is detected, this component publishes its details on a [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/) channel, so that interested subscribers may receive these details and do with them as they please - without any knowledge of how the rest of the aircraft tracking system is implemented.  It also publishes the same details to a [Redis Stream](https://redis.io/docs/data-types/streams/) that is capped to contain only entries from the last hour.  This gives front ends a choice of how they want to consume the data, and the ability to get an hour's history from the stream if they wish.
 
 ## Setup
 
