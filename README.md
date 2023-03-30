@@ -41,7 +41,9 @@ The project is organised as follows:
 * The enricher component reads from the Redis List and uses the data in it to call the FlightAware API.  This returns more information about the flight than is available from just the radio messages, notably the aircraft operator code, origin and destination airports and the aircraft type.  The enricher writes this information into each flight's Redis Hash, "enriching" the data stored about the flight.
 * There is a RediSearch index configured in the Redis Stack instance.  This monitors and indexes data in all Hashes whose key begins with `flight:`.  It allows us to write SQL like queries to find flights that match multiple criteria.  This is used by...
 * The notifier component runs a search query periodically to find the latest "interesting" flights (ones that match a set of criteria for disance from me, aircraft type etc).  When it finds matching flights, it puts the details from the flight's Hash into a Redis Stream and also publishes them on a Redis Pub/Sub topic.  These can be used by front ends to the system to receive flight details to display.
-* TODO front ends...
+* I implemented two different front ends for the system (so far, I may add more!):
+  * Hanover Flip Dot Sign: TODO
+  * Pimoroni Badger 2040W: TODO
 
 ## Running it Yourself
 
