@@ -4,7 +4,7 @@ This is the "nofifier" component.  Its role in the system is to periodically run
 
 The current definition of an "interesting" flight is one that's operated by a widebody aircraft.  These are identified using the `aircraft_type` field stored for each flight (this is populated by the [enricher component](../enricher) using the [FlightAware Aero API](https://flightaware.com/commercial/aeroapi/)).  The query that this component runs contains many [ICAO codes](https://en.wikipedia.org/wiki/List_of_aircraft_type_designators) for widebody aircraft variants.
 
-Whenever an "interesting" flight is detected, this component publishes its details on a [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/) channel, so that interested subscribers may receive these details and do with them as they please - without any knowledge of how the rest of the aircraft tracking system is implemented.  It also publishes the same details to a [Redis Stream](https://redis.io/docs/data-types/streams/) that is capped to contain only entries from the last hour.  This gives front ends a choice of how they want to consume the data, and the ability to get an hour's history from the stream if they wish.
+Whenever an "interesting" flight is detected, this component publishes its details on a [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/) channel, so that interested subscribers may receive these details and do with them as they please - without any knowledge of how the rest of the aircraft tracking system is implemented.  It also publishes the same details to a [Redis Stream](https://redis.io/docs/data-types/streams/) that is capped to contain only entries from the last hour (configurable: edit `STREAM_RETENTION_PERIOD` in the `.env` file - this is in seconds).  This gives front ends a choice of how they want to consume the data, and the ability to get an hour's history from the stream if they wish.
 
 ## Setup
 
@@ -15,7 +15,7 @@ To set this up you'll need the following:
 
 First, configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).
 
-If you want to change the interval at which this component checks Redis for interesting flights, adjust the value of `QUERY_INTERVAL` in `.env` to be the number of milliseconds you want to use.  The default is 30,000 (30 seconds).
+If you want to change the interval at which this component checks Redis for interesting flights, adjust the value of `QUERY_INTERVAL` in `.env` to be the number of milliseconds you want to use.  The default is 30,000 (30 seconds).  To change the default stream data retention period (from an hour - 3600 seconds), edit the value in `STREAM_RETENTION_PERIOD` to be the number of seconds you want to use.
 
 By default, this component checks for flights within a 20,000 metre radius of a latitude/longitude point in central Nottingham, England. If you want to change these values, edit `POSITION_RADIUS`, `POSITION_LATITUDE` and `POSITION_LONGITUDE` in `.env` and save your changes.
 

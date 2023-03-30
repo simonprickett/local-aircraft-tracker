@@ -5,6 +5,7 @@ dotenv.config();
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const QUERY_INTERVAL = parseInt(process.env.QUERY_INTERVAL, 10);
+const STREAM_RETENTION_PERIOD = 1000 * (parseInt(process.env.STREAM_RETENTION_PERIOD, 10));
 const { POSITION_LONGITUDE, POSITION_LATITUDE, POSITION_RADIUS} = process.env;
 
 // aircraft_type values are from the ICAO code column here:
@@ -54,7 +55,7 @@ while(true) {
     redisClient.xAdd('interestingstream', '*', payload, {
       TRIM: {
         strategy: 'MINID',
-        threshold: new Date().getTime() - 3600 * 1000
+        threshold: new Date().getTime() - STREAM_RETENTION_PERIOD
       }
     });
   } else {
