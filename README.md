@@ -39,7 +39,9 @@ The project is organised as follows:
 * The receiver component receives messages from dump1090 by listening on a port.  It decodes these messages into JavaScript name/value pair objects and stores the data in a Redis Hash.  Each passing flight is identified using the aircraft transponder's hex ID.
 * Once sufficient information about a given flight has been received (this may come in multiple separate messages), the receiver places the flight's callsign into a Redis List.  This acts as a queue between the receiver and enricher components.  The receiver stores the IDs of flights that were recently placed into the list as string values in Redis, setting a time to live on them.  This stops the receiver from asking the enricher about the same flight more than once in a given time period.
 * The enricher component reads from the Redis List and uses the data in it to call the FlightAware API.  This returns more information about the flight than is available from just the radio messages, notably the aircraft operator code, origin and destination airports and the aircraft type.  The enricher writes this information into each flight's Redis Hash, "enriching" the data stored about the flight.
-* TODO notifier
+* There is a RediSearch index configured in the Redis Stack instance.  This monitors and indexes data in all Hashes whose key begins with `flight:`.  It allows us to write SQL like queries to find flights that match multiple criteria.  This is used by...
+* The notifier component runs a search query periodically to find the latest "interesting" flights (ones that match a set of criteria for disance from me, aircraft type etc).  When it finds matching flights, it puts the details from the flight's Hash into a Redis Stream and also publishes them on a Redis Pub/Sub topic.  These can be used by front ends to the system to receive flight details to display.
+* TODO front ends...
 
 ## Running it Yourself
 
