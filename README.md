@@ -16,7 +16,7 @@ There's also an e-ink front end using a [Pimoroni Badger 2040W](https://shop.pim
 
 The Badger front end is written in [MicroPython](https://micropython.org/). All of the other components are written in [Node.js](https://nodejs.org/). See the "Project Overview" section for a run through of the architecture, or watch the start of the episode 5 or 6 videos for an animated recap.
 
-Someone else decided to try this project on their own Hanover sign and let me know about it... Check out the resulting [short video here on Twitter](https://twitter.com/jaket91/status/1644128357175504896).
+Someone else decided to try this project on their own Hanover sign and let me know about it... Check out the resulting [short video here on Twitter](https://twitter.com/jaket91/status/1644128357175504896).  I also learned from them that you can buy used Hanover flip dot displays from [psvautomobilia.com](https://psvautomobilia.com/?product_cat=hanover-flip-dots) in the UK.
 
 ## Watch the Videos
 

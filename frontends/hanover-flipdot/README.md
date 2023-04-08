@@ -4,7 +4,9 @@
 
 This is a very specific type of front end for the local aircraft tracking project - it requires an old [Hanover Displays flip dot bus sign](https://www.hanoverdisplays.com/about-us/our-history/).  Flip dots are a kind of electromagnetic pixel that have on and off states.  When in one state, the black side of the dot is showing, in the other state it shows the other side of the dot which has been finished in a bright colour.  Put a load of these together and you have a matrix that can be used to display messages.  It makes a fantastic sound when updating and uses no power to hold its current state.  At the end of the day, this is a gloriously over-engineered pub/sub subscriber :)
 
-These are a little hard to get, but I happened to find one on eBay from a reputable bus parts seller.  Due to the magic of the Node.js community ecosystem, there's [a driver for them](https://www.npmjs.com/package/flipdot-display) that just works and handles the peculiar protocol for us!  There's also good support for using these with Python - maybe we'll look at that in a future project.
+These are a little hard to get, but I happened to find one on eBay from a reputable bus parts seller.  I subequently learned that you can also buy used Hanover flip dot displays from [psvautomobilia.com](https://psvautomobilia.com/?product_cat=hanover-flip-dots) in the UK.
+
+Due to the magic of the Node.js community ecosystem, there's [a driver for them](https://www.npmjs.com/package/flipdot-display) that just works and handles the peculiar protocol for us!  There's also good support for using these with Python - maybe we'll look at that in a future project.
 
 
 If you want to hear the GIF demo above with glorious sound too, check out the [YouTube video](https://www.youtube.com/watch?v=iHm3GZCyKmE).  I wish GitHub would do proper embedding of YouTube videos in README files...
