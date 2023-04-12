@@ -51,6 +51,7 @@ while (true) {
 
       if (flightAwareResponse.status === 200) {
         const flightData = await flightAwareResponse.json();
+        let updatedFlight = false;
 
         for (const flight of flightData.flights) {
           // The response contains an array of recent past, current and
@@ -78,7 +79,12 @@ while (true) {
             console.log(`Saving details to ${flightKey}...`);
             console.log(flightDetails);
             redisClient.hSet(flightKey, flightDetails);
+            updatedFlight = true;
           }
+        }
+
+        if (! updatedFlight) {
+          console.log(`FlightAware has nothing in flight for ${msgPayload.hex_ident} / ${msgPayload.callsign} right now.`);
         }
 
       } else {
