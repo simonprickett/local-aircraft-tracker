@@ -30,7 +30,13 @@ while(true) {
   const response = await redisClient.sendCommand(AGGREGATE_COMMAND);
   console.log(response);
 
-  if (response.length === 2) {
+  // Need to check that we didn't get this sort of response, which 
+  // is possibly where a matching flight was missing some indexed data:
+  // [
+  //   1,
+  //   [ [ErrorReply: Value was not found in result (not a hard error)] ]
+  // ]
+  if (response.length === 2 && response[1].length > 1) {
     // Update the timestamp for next time...
     const updatedTimestamp = response[1][7];
     AGGREGATE_COMMAND[10] = `@last_updated > ${updatedTimestamp}`;
