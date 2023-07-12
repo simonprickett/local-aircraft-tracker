@@ -30,7 +30,8 @@ write_text("Connected to wifi!", 20, 40, 3, 0)
 badger.update()
 
 r = Redis(host=secrets.REDIS_HOST, port=secrets.REDIS_PORT)
-r.auth(secrets.REDIS_PASSWORD)
+if len(secrets.REDIS_PASSWORD) > 0:
+    r.auth(secrets.REDIS_PASSWORD)
 
 clear_screen()
 write_text("Connected to Redis!", 20, 40, 3, 0)
