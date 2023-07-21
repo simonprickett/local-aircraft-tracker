@@ -22,7 +22,18 @@ const redisClient = createClient({
 
 await redisClient.connect();
 
+// Set up the topk for aircraft type tracking - this will
+// throw an exception if it already exists.
+try {
+  await redisClient.topK.reserve('stats:aircrafttypes', 10);
+  console.log('Created TopK for aircraft type stats.');
+} catch (e) {
+  console.log('TopK for aircraft type stats already exists.');
+}
+
 // Loop over entries in the queue, and wait when there are none...
+console.log('Checking for work...');
+
 while (true) {
   const response = await redisClient.brPop(
     commandOptions({ isolated: true }),
@@ -80,6 +91,13 @@ while (true) {
               console.log(`Saving details to ${flightKey}...`);
               console.log(flightDetails);
               redisClient.hSet(flightKey, flightDetails);
+              redisClient.sAdd('stats:planesseen', flight.registration);
+              redisClient.pfAdd('stats:planesapprox', flight.registration);
+              redisClient.zIncrBy('stats:operators', 1, flight.operator_iata);
+              redisClient.topK.incrBy('stats:aircrafttypes', {
+                item: flight.aircraft_type,
+                incrementBy: 1
+              });
               updatedFlight = true;
             }
           }
