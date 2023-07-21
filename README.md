@@ -28,6 +28,7 @@ The videos for this project can be found on YouTube:
 * Episode 4: [Building the notifier component](https://www.youtube.com/watch?v=fYnrNqSgqR4).
 * Episode 5: [Building a notification device with a flip dot sign](https://www.youtube.com/watch?v=i8grA5fsbdM).
 * Episode 6: [Building a notification device with MicroPython and an e-ink display](https://www.youtube.com/watch?v=RROQA0QOq0k).
+* Bonus Episode: [Counting aircraft - adding some statistics using probabilistic data structures](https://www.youtube.com/watch?v=ttXq_E4Galw).
 
 ## Project Overview
 
