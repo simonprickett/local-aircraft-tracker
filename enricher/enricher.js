@@ -91,13 +91,22 @@ while (true) {
               console.log(`Saving details to ${flightKey}...`);
               console.log(flightDetails);
               redisClient.hSet(flightKey, flightDetails);
-              redisClient.sAdd('stats:planesseen', flight.registration);
-              redisClient.pfAdd('stats:planesapprox', flight.registration);
-              redisClient.zIncrBy('stats:operators', 1, flight.operator_iata);
-              redisClient.topK.incrBy('stats:aircrafttypes', {
-                item: flight.aircraft_type,
-                incrementBy: 1
-              });
+
+              if (flight.registration.length > 0) {
+                redisClient.sAdd('stats:planesseen', flight.registration);
+                redisClient.pfAdd('stats:planesapprox', flight.registration);
+              }
+
+              if (flight.operator_iata.length > 0) {
+                redisClient.zIncrBy('stats:operators', 1, flight.operator_iata);
+              }
+
+              if (flight.aircraft_type.length > 0) {
+                redisClient.topK.incrBy('stats:aircrafttypes', {
+                  item: flight.aircraft_type,
+                  incrementBy: 1
+                });
+              }
               updatedFlight = true;
             }
           }
