@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv';
-import { createClient, commandOptions } from 'redis';
-import fetch from 'node-fetch';
+import { createClientPool } from 'redis';
 
 dotenv.config();
 
@@ -16,7 +15,7 @@ async function sleep() {
   });
 };
 
-const redisClient = createClient({
+const redisClient = createClientPool({
   url: REDIS_URL
 });
 
@@ -35,11 +34,7 @@ try {
 console.log('Checking for work...');
 
 while (true) {
-  const response = await redisClient.brPop(
-    commandOptions({ isolated: true }),
-    FLIGHTAWARE_QUEUE,
-    5
-  );
+  const response = await redisClient.brPop(FLIGHTAWARE_QUEUE, 5);
 
   if (response) {
     // Response is an object that looks like this:
