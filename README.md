@@ -50,7 +50,7 @@ The project is organised as follows:
 
 ## Running it Yourself
 
-Almost all components of this project are written in Node.js.  They use features of JavaScript that require a recent version of Node.  I've tested them all with Node 16.15.1 on both macOS Ventura and Raspberry Pi OS (Debian 11 - "bullseye" version).
+Almost all components of this project are written in Node.js.  They use features of JavaScript that require a recent version of Node.  I've tested them all with Node 24.6.0 on both macOS Sequoia 15.7 and Raspberry Pi OS (Debian 11 - "bullseye" version).
 
 All of the components connect to a single [Redis Stack](https://redis.io/docs/stack/) database.  This is where they store data and communicate with each other in a variety of ways.
 

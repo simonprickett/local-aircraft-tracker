@@ -13,7 +13,7 @@ To set this up you'll need the following:
 * A running copy of [dump1090](https://github.com/MalcolmRobb/dump1090) (start it with `dump1090 --net --interactive`).  You'll have to compile this from source.
 * An appropriate software defined radio USB stick connected to your machine.  I use [this one](https://www.radarbox.com/flightstick1090), but others are available.
 * An appropriate aerial for your software defined radio.  I use [this one](https://www.ebay.co.uk/itm/284156504809), but others are available.
-* [Node.js](https://nodejs.org/) version 14.5.0 or higher (I've tested this with version 16.5.1).
+* [Node.js](https://nodejs.org/) version 24.6.0 or higher (I've tested this with version 24.6.0).
 * A [Redis Stack](https://redis.io/docs/stack/get-started/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)) or use the Docker compose file at the root of this repository.
 * Optional but useful, a copy of [RedisInsight](https://redis.com/redis-enterprise/redis-insight/) so that you can inspect the data in Redis.
 
