@@ -24,9 +24,15 @@ await redisClient.connect();
 // Set up the topk for aircraft type tracking - this will
 // throw an exception if it already exists.
 try {
-  await redisClient.topK.reserve('stats:aircrafttypes', 10);
+  await redisClient.topK.reserve('stats:aircrafttypes', 10, {
+    width: 400,
+    depth: 10,
+    decay: 0.9
+  });
   console.log('Created TopK for aircraft type stats.');
 } catch (e) {
+  // TODO this is lazy, check that it really already exists with EXISTS
+  // then use this exception catch to report that Bloom might not be installed.
   console.log('TopK for aircraft type stats already exists.');
 }
 
