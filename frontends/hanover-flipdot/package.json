@@ -21,9 +21,9 @@
     "node": ">= 14.5.0"
   },
   "dependencies": {
-    "async-mutex": "^0.4.0",
-    "dotenv": "^16.0.3",
+    "async-mutex": "^0.5.0",
+    "dotenv": "^17.2.1",
     "flipdot-display": "^1.2.0",
-    "redis": "^4.6.5"
+    "redis": "^5.8.2"
   }
 }
