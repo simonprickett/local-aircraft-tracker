@@ -277,3 +277,66 @@ Example response:
    9) "dist"
    10) "12768.43"
 ```
+
+## Running the System on a Raspberry Pi
+
+TODO intro...
+
+### Install an Operating System
+
+TODO
+
+### Install Software Requirements
+
+First, get everything that the operating system installed up to date:
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+Install a few useful things:
+
+```bash
+sudo apt install git curl
+```
+
+You'll need Node.js to run any of the components, so go ahead and install nvm (Node Version Manager) using the instructions [here](https://github.com/nvm-sh/nvm).
+
+Now, use nvm to install the latest stable Node.js:
+
+```bash
+nvm install stable
+```
+
+And check that you have version 24.x or higher:
+
+```
+node --version
+```
+
+Which should output something like:
+
+```
+v24.7.0
+```
+
+### Install Redis
+
+If you want to run the entire system on the Pi, you'll also need to install Redis.
+
+TODO
+
+### Install dump1090
+
+Again, if you want to run the entire system on the Pi, you'll need to install dump1090.
+
+TODO
+
+### Install the Project Components
+
+TODO git command...
+
+TODO getting Redis to start on bootup.
+
+TODO running receiver, enricher, notifier, flip dot front end on the Pi.
