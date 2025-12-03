@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 import { createClient } from 'redis';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const QUERY_INTERVAL = parseInt(process.env.QUERY_INTERVAL, 10);

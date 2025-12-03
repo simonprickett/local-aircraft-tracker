@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 import { createClientPool } from 'redis';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const FLIGHTAWARE_API_KEY = process.env.FLIGHTAWARE_API_KEY;

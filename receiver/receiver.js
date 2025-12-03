@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import { createClient } from 'redis';
 import * as sbs1 from 'sbs1';
 
-dotenv.config()
+dotenv.config({ quiet: true });
 
 const FLIGHT_RETENTION_PERIOD = 60 * 60; // 60 mins.
 const FLIGHTAWARE_MAX_REQUEST_AGE = 60 * 60; // 60 mins.
