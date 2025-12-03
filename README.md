@@ -309,7 +309,7 @@ Now, use nvm to install the latest stable Node.js:
 nvm install stable
 ```
 
-And check that you have version 24.x or higher:
+And check that you have version 24.11.1 or higher:
 
 ```
 node --version
@@ -318,7 +318,7 @@ node --version
 Which should output something like:
 
 ```
-v24.7.0
+v24.11.1
 ```
 
 ### Install Redis
