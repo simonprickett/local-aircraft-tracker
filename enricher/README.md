@@ -25,6 +25,8 @@ Finally, install the dependencies:
 npm install
 ```
 
+TODO Redis data setup...
+
 ## Running the Enricher
 
 Start the enricher component like this:

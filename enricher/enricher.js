@@ -88,6 +88,12 @@ while (true) {
                 flight_number: flight.flight_number || ''
               };
 
+              // TODO look up the operator name from the IATA code and log if there is a miss.
+              // e.g. HGET operator:VS name -> Virgin Atlantic
+              //      HGET operator:VX name -> null            Sadly no more Virgin America :/
+              //
+              // Store result as operator_name
+
               const flightKey = `flight:${msgPayload.hex_ident}`;
               console.log(`Saving details to ${flightKey}...`);
               console.log(flightDetails);
@@ -99,6 +105,7 @@ while (true) {
               }
 
               if (flight.operator_iata.length > 0) {
+                // TODO consider updating this to use the full operator_name if present.
                 redisClient.zIncrBy('stats:operators', 1, flight.operator_iata);
               }
 
