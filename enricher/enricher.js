@@ -87,7 +87,12 @@ while (true) {
               // e.g. HGET operator:VS name -> Virgin Atlantic
               //      HGET operator:VX name -> null            Sadly no more Virgin America :/
               //
-              // Store result as operator_name
+              const operatorName = await redisClient.hGet(`operator:${flight.operator_iata}`, 'name');
+              if (operatorName) {
+                flightDetails.operator_name = operatorName;
+              } else {
+                console.log(`MISSING OPERATOR NAME FOR IATA: ${flight.operator_iata}`);
+              }
 
               const flightKey = `flight:${msgPayload.hex_ident}`;
               console.log(`Saving details to ${flightKey}...`);
@@ -99,9 +104,8 @@ while (true) {
                 redisClient.pfAdd('stats:planesapprox', flight.registration);
               }
 
-              if (flight.operator_iata.length > 0) {
-                // TODO consider updating this to use the full operator_name if present.
-                redisClient.zIncrBy('stats:operators', 1, flight.operator_iata);
+              if (flightDetails.operator_name && flightDetails.operator_name.length > 0) {
+                redisClient.zIncrBy('stats:operators', 1, flightDetails.operator_name);
               }
 
               if (flight.aircraft_type.length > 0) {
