@@ -92,6 +92,7 @@ while (true) {
                 flightDetails.operator_name = operatorName;
               } else {
                 console.log(`MISSING OPERATOR NAME FOR IATA: ${flight.operator_iata}`);
+                // TODO log this to an error set for manual review later.
               }
 
               const flightKey = `flight:${msgPayload.hex_ident}`;
