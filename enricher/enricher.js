@@ -101,7 +101,7 @@ while (true) {
               redisClient.hSet(flightKey, flightDetails);
 
               if (flight.registration && flight.registration.length > 0) {
-                redisClient.sAdd('stats:planesseen', flight.registration);
+                redisClient.zIncrBy('stats:planesseen', 1, flight.registration);
                 redisClient.pfAdd('stats:planesapprox', flight.registration);
               }
 
