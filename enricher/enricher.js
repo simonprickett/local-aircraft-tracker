@@ -100,7 +100,7 @@ while (true) {
               console.log(flightDetails);
               redisClient.hSet(flightKey, flightDetails);
 
-              if (flight.registration.length > 0) {
+              if (flight.registration && flight.registration.length > 0) {
                 redisClient.sAdd('stats:planesseen', flight.registration);
                 redisClient.pfAdd('stats:planesapprox', flight.registration);
               }
