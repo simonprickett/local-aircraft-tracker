@@ -92,7 +92,9 @@ while (true) {
                 flightDetails.operator_name = operatorName;
               } else {
                 console.log(`Missing operator name for IATA: ${flight.operator_iata}`);
-                redisClient.sAdd('errors:missingoperators', flight.operator_iata);
+                if (flight.operator_iata && flight.operator_iata.length > 0) {
+                  redisClient.sAdd('errors:missingoperators', flight.operator_iata);
+                }
               }
 
               const flightKey = `flight:${msgPayload.hex_ident}`;
