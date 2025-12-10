@@ -24,7 +24,7 @@ await redisClient.connect();
 // Set up the topk for aircraft type tracking - this will
 // throw an exception if it already exists.
 try {
-  await redisClient.topK.reserve('stats:aircrafttypes', 10, {
+  await redisClient.topK.reserve('stats:aircrafttypesapprox', 10, {
     width: 400,
     depth: 10,
     decay: 0.9
@@ -91,8 +91,8 @@ while (true) {
               if (operatorName) {
                 flightDetails.operator_name = operatorName;
               } else {
-                console.log(`MISSING OPERATOR NAME FOR IATA: ${flight.operator_iata}`);
-                // TODO log this to an error set for manual review later.
+                console.log(`Missing operator name for IATA: ${flight.operator_iata}`);
+                redisClient.sAdd('errors:missingoperators', flight.operator_iata);
               }
 
               const flightKey = `flight:${msgPayload.hex_ident}`;
@@ -109,12 +109,20 @@ while (true) {
                 redisClient.zIncrBy('stats:operators', 1, flightDetails.operator_name);
               }
 
+              if (flightDetails.origin_iata.length > 0 && flightDetails.destination_iata.length > 0) {
+                redisClient.zIncrBy('stats:routes', 1, `${flightDetails.origin_iata}-${flightDetails.destination_iata}`);
+                redisClient.zIncrBy('stats:origins', 1, flightDetails.origin_iata);
+                redisClient.zIncrBy('stats:destinations', 1, flightDetails.destination_iata);
+              }
+
               if (flight.aircraft_type.length > 0) {
-                redisClient.topK.incrBy('stats:aircrafttypes', {
+                redisClient.zIncrBy('stats:aircrafttypes', 1, flight.aircraft_type);
+                redisClient.topK.incrBy('stats:aircrafttypesapprox', {
                   item: flight.aircraft_type,
                   incrementBy: 1
                 });
               }
+
               updatedFlight = true;
             }
           }
