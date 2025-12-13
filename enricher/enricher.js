@@ -79,11 +79,9 @@ while (true) {
                 destination_iata: flight.destination.code_iata || '',
                 destination_name: flight.destination.name || '',
                 aircraft_type: flight.aircraft_type || '',
-                operator_iata: flight.operator_iata || '',
-                flight_number: flight.flight_number || ''
+                operator_iata: flight.operator_iata || '??',
+                flight_number: flight.flight_number || '????'
               };
-
-              // TODO what to do when operator_iata is ''?
 
               // TODO look up the operator name from the IATA code and log if there is a miss.
               // e.g. HGET operator:VS name -> Virgin Atlantic
