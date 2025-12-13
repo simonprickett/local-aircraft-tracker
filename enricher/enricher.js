@@ -83,6 +83,8 @@ while (true) {
                 flight_number: flight.flight_number || ''
               };
 
+              // TODO what to do when operator_iata is ''?
+
               // TODO look up the operator name from the IATA code and log if there is a miss.
               // e.g. HGET operator:VS name -> Virgin Atlantic
               //      HGET operator:VX name -> null            Sadly no more Virgin America :/
