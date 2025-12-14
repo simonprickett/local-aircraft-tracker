@@ -73,7 +73,7 @@ while (true) {
             if (flight.progress_percent > 0 && flight.progress_percent < 100) {
               // Grab the details we want and save them.
               const flightDetails = {
-                registration: flight.registration || '',
+                registration: flight.registration || '??',
                 origin_iata: flight.origin.code_iata || '',
                 origin_name: flight.origin.name || '',
                 destination_iata: flight.destination.code_iata || '',
