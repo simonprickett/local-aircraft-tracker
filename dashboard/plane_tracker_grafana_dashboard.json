@@ -1,0 +1,2503 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_LOCAL-REDIS",
+      "label": "local-redis",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "redis-datasource",
+      "pluginName": "Redis"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "12.3.0"
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "redis-datasource",
+      "name": "Redis",
+      "version": "2.2.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "",
+          "query": "ZCARD stats:planesseen",
+          "refId": "A",
+          "type": "cli",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Aircraft Tracked",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 2,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "",
+          "query": "ZCARD stats:aircrafttypes",
+          "refId": "A",
+          "type": "cli",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Aircraft Types",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 4,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "",
+          "query": "ZCARD stats:operators",
+          "refId": "A",
+          "type": "cli",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Operators",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 6,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "",
+          "keyName": "stats:origins",
+          "max": "-1",
+          "min": "-1",
+          "query": "zrange stats:origins -1 -1",
+          "refId": "A",
+          "type": "cli",
+          "zrangeQuery": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Most Popular Origin",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 8,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "",
+          "keyName": "stats:origins",
+          "max": "-1",
+          "min": "-1",
+          "query": "zrange stats:destinations -1 -1",
+          "refId": "A",
+          "type": "cli",
+          "zrangeQuery": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Most Popular Destination",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 10,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "",
+          "keyName": "stats:origins",
+          "max": "-1",
+          "min": "-1",
+          "query": "zrange stats:routes -1 -1",
+          "refId": "A",
+          "type": "cli",
+          "zrangeQuery": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Most Popular Route",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 13,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/^aircraft_type$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 10,
+          "refId": "A",
+          "withTransforms": true
+        }
+      ],
+      "title": "Most Seen Widebody",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 15,
+        "y": 0
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/^aircraft_type$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 11,
+          "refId": "A",
+          "withTransforms": true
+        }
+      ],
+      "title": "Most Seen Narrowbody",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 17,
+        "y": 0
+      },
+      "id": 17,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/^Total$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:aircrafttypes",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "747s Seen",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "aircraft_type",
+            "restFieldsName": "num_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "B74"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "aircraft_type": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "transpose",
+          "options": {}
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "1",
+                "2",
+                "3"
+              ],
+              "reducer": "sum"
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 19,
+        "y": 0
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/^Total$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:aircrafttypes",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "A380s Seen",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "aircraft_type",
+            "restFieldsName": "num_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A388"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "aircraft_type": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "transpose",
+          "options": {}
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "1",
+                "2",
+                "3"
+              ],
+              "reducer": "sum"
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 0
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/^Total$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:aircrafttypes",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "A340s Seen",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "aircraft_type",
+            "restFieldsName": "num_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "A34"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "aircraft_type": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "transpose",
+          "options": {}
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "1",
+                "2",
+                "3"
+              ],
+              "reducer": "sum"
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "orange",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 13,
+        "x": 0,
+        "y": 4
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": true
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "",
+          "query": "ft.aggregate idx:flights * load 6 @operator_name @flight_number @origin_iata @destination_iata @aircraft_type @last_updated filter exists(@aircraft_type) sortby 2 @last_updated desc limit 0 1",
+          "refId": "A",
+          "type": "cli",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Most Recently Seen",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "rownum",
+            "mode": "index",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "0"
+                  }
+                },
+                "fieldName": "rownum"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "half_rownum",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "rownum"
+                }
+              },
+              "operator": "/",
+              "right": {
+                "fixed": "2"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "[\\.]"
+                  }
+                },
+                "fieldName": "half_rownum"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "6"
+                  }
+                },
+                "fieldName": "half_rownum"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "field_identifier": true,
+              "half_rownum": true,
+              "rownum": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "Value": 3,
+              "field_identifier": 0,
+              "half_rownum": 2,
+              "rownum": 1
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 11,
+        "x": 13,
+        "y": 4
+      },
+      "id": 8,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.9,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "vertical",
+        "showValue": "never",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:planesseen",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "Top 10 Most Seen Aircraft",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "aircraft",
+            "restFieldsName": "sightings"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "sightings 1": "sightings",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "sightings"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "10"
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 7,
+        "x": 0,
+        "y": 10
+      },
+      "id": 1,
+      "options": {
+        "displayMode": "lcd",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "left",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "text"
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:operators",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "Top 15 Operators",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "Operator",
+            "restFieldsName": "planes_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "planes_seen 1": "planes_seen"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "planes_seen"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "15"
+          }
+        },
+        {
+          "id": "transpose",
+          "options": {}
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 6,
+        "x": 7,
+        "y": 10
+      },
+      "id": 9,
+      "options": {
+        "displayLabels": [
+          "name"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "sort": "desc",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:routes",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "Top 5 Routes",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "route",
+            "restFieldsName": "planes_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "planes_seen 1": "planes_seen"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "planes_seen"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "5"
+          }
+        },
+        {
+          "id": "transpose",
+          "options": {}
+        }
+      ],
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 34,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 11,
+        "x": 13,
+        "y": 14
+      },
+      "id": 21,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.9,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "never",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:aircrafttypes",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "Top 20 Aircraft Types",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "aircraft_type",
+            "restFieldsName": "num_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "num_seen"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "20"
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 23,
+        "w": 7,
+        "x": 0,
+        "y": 23
+      },
+      "id": 13,
+      "options": {
+        "displayMode": "lcd",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "left",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "text"
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:origins",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "Top 15 Origins",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "destination",
+            "restFieldsName": "num_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "num_seen"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "15"
+          }
+        },
+        {
+          "id": "transpose",
+          "options": {}
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 23,
+        "w": 6,
+        "x": 7,
+        "y": 23
+      },
+      "id": 12,
+      "options": {
+        "displayMode": "lcd",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "left",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "text"
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:destinations",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "Top 15 Destinations",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "destination",
+            "restFieldsName": "num_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "num_seen"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "15"
+          }
+        },
+        {
+          "id": "transpose",
+          "options": {}
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 34,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 11,
+        "x": 13,
+        "y": 23
+      },
+      "id": 10,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.9,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "never",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:aircrafttypes",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "Top 15 Widebodies",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "aircraft_type",
+            "restFieldsName": "num_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A388"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A35K"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A359"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A346"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A343"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A339"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A338"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A333"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A332"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B748"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B744"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B78X"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B789"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B788"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B772"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B77L"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B77W"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B764"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B763"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "B762"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "A306"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "num_seen"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "15"
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 34,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 11,
+        "x": 13,
+        "y": 33
+      },
+      "id": 11,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.9,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "never",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.3.0",
+      "targets": [
+        {
+          "command": "zrange",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
+          "keyName": "stats:aircrafttypes",
+          "max": "-1",
+          "min": "0",
+          "query": "",
+          "refId": "A",
+          "streaming": false,
+          "type": "command",
+          "zrangeQuery": ""
+        }
+      ],
+      "title": "Top 15 Narrowbodies",
+      "transformations": [
+        {
+          "id": "transpose",
+          "options": {
+            "firstFieldName": "aircraft_type",
+            "restFieldsName": "num_seen"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "num_seen 1": "num_seen",
+              "planes_seen 1": "planes_seen",
+              "types_seen 1": "num_seen"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "B73"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "B75"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "A32"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "A31"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "A2"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "E1"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "E2"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "AT"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              },
+              {
+                "config": {
+                  "id": "substring",
+                  "options": {
+                    "value": "BCS"
+                  }
+                },
+                "fieldName": "aircraft_type"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "num_seen"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": "15"
+          }
+        }
+      ],
+      "type": "barchart"
+    }
+  ],
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Redis Plane Tracker",
+  "uid": "adgnl86",
+  "version": 27,
+  "weekStart": "",
+  "id": null
+}
