@@ -65,6 +65,10 @@ while (true) {
         const flightData = await flightAwareResponse.json();
         let updatedFlight = false;
 
+        // TODO Log that an API call was made for stats purposes.
+        // TODO work out current YYYYMMDD date...
+        // redisClient.hIncrBy('stats:flightawareapicalls', msg.logged_date.replaceAll('/', ''), 1);
+
         if (flightData.flights) {
           for (const flight of flightData.flights) {
             // The response contains an array of recent past, current and
