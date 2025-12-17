@@ -76,4 +76,7 @@ sbs1Client.on('message', async (msg) => {
       redisClient.lPush(FLIGHTAWARE_QUEUE, JSON.stringify(msgPayload));
     }
   }
+
+  // Log all messages for stats purposes.
+  redisClient.hIncrBy('stats:messagecounts', msg.logged_date.replaceAll('/', ''), 1);
 });
