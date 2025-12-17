@@ -101,7 +101,7 @@
       "id": 2,
       "options": {
         "colorMode": "background",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
@@ -122,6 +122,8 @@
           "command": "",
           "query": "ZCARD stats:planesseen",
           "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
           "type": "cli",
           "datasource": {
             "type": "redis-datasource",
@@ -185,6 +187,8 @@
           "command": "",
           "query": "ZCARD stats:aircrafttypes",
           "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
           "type": "cli",
           "datasource": {
             "type": "redis-datasource",
@@ -248,6 +252,9 @@
           "command": "",
           "query": "ZCARD stats:operators",
           "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "cli",
           "datasource": {
             "type": "redis-datasource",
@@ -314,6 +321,9 @@
           "min": "-1",
           "query": "zrange stats:origins -1 -1",
           "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "cli",
           "zrangeQuery": "",
           "datasource": {
@@ -381,6 +391,9 @@
           "min": "-1",
           "query": "zrange stats:destinations -1 -1",
           "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "cli",
           "zrangeQuery": "",
           "datasource": {
@@ -448,6 +461,9 @@
           "min": "-1",
           "query": "zrange stats:routes -1 -1",
           "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "cli",
           "zrangeQuery": "",
           "datasource": {
@@ -648,7 +664,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -791,7 +809,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -934,7 +954,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -1065,6 +1087,8 @@
           "command": "",
           "query": "ft.aggregate idx:flights * load 6 @operator_name @flight_number @origin_iata @destination_iata @aircraft_type @last_updated filter exists(@aircraft_type) sortby 2 @last_updated desc limit 0 1",
           "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
           "type": "cli",
           "datasource": {
             "type": "redis-datasource",
@@ -1269,7 +1293,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -1386,7 +1412,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -1502,7 +1530,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -1638,7 +1668,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -1753,7 +1785,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -1872,7 +1906,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -2011,7 +2047,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -2343,7 +2381,9 @@
           "min": "0",
           "query": "",
           "refId": "A",
-          "streaming": false,
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
           "type": "command",
           "zrangeQuery": ""
         }
@@ -2490,14 +2530,14 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Redis Plane Tracker",
   "uid": "adgnl86",
-  "version": 27,
+  "version": 30,
   "weekStart": "",
   "id": null
 }
