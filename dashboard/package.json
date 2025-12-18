@@ -1,0 +1,27 @@
+{
+  "name": "dashboard-asistant",
+  "version": "0.0.1",
+  "description": "Dashboard data assistant for the local aircraft tracker Redis project.",
+  "main": "dashboard_assistant.js",
+  "scripts": {
+    "start": "node dashboard_assistant.js"
+  },
+  "type": "module",
+  "author": "Simon Prickett",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonprickett/local-aircraft-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/simonprickett/local-aircraft-tracker/issues"
+  },
+  "homepage": "https://github.com/simonprickett/local-aircraft-tracker#readme",
+  "engines": {
+    "node": ">= 24.11.1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "redis": "^5.10.0"
+  }
+}

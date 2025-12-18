@@ -152,6 +152,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 2,
           "mappings": [],
           "max": 20,
           "min": 0,
@@ -1663,14 +1664,14 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "fixed"
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "orange",
+                "color": "purple",
                 "value": 0
               }
             ]
@@ -1684,7 +1685,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 20,
+      "id": 28,
       "options": {
         "colorMode": "background_solid",
         "graphMode": "area",
@@ -1705,12 +1706,14 @@
       "pluginVersion": "12.3.0",
       "targets": [
         {
-          "command": "",
-          "query": "ft.aggregate idx:flights * load 6 @operator_name @flight_number @origin_iata @destination_iata @aircraft_type @last_updated filter exists(@aircraft_type) sortby 2 @last_updated desc limit 0 1",
+          "command": "hgetall",
+          "keyName": "lookup:latest_enriched_flight",
+          "query": "",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
-          "type": "cli",
+          "streamingInterval": 2000,
+          "type": "command",
           "datasource": {
             "type": "redis-datasource",
             "uid": "${DS_LOCAL-REDIS}"
@@ -1720,105 +1723,50 @@
       "title": "Most Recently Seen",
       "transformations": [
         {
-          "id": "calculateField",
+          "id": "configFromData",
           "options": {
-            "alias": "rownum",
-            "mode": "index",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "equal",
-                  "options": {
-                    "value": "0"
-                  }
-                },
-                "fieldName": "rownum"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "half_rownum",
-            "binary": {
-              "left": {
-                "matcher": {
-                  "id": "byName",
-                  "options": "rownum"
-                }
-              },
-              "operator": "/",
-              "right": {
-                "fixed": "2"
-              }
+            "applyTo": {
+              "id": "byFrameRefID",
+              "options": "A"
             },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
+            "configRefId": "A",
+            "mappings": [
               {
-                "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "[\\.]"
-                  }
-                },
-                "fieldName": "half_rownum"
+                "fieldName": "operator_color",
+                "handlerKey": "color",
+                "reducerId": "first"
               }
-            ],
-            "match": "any",
-            "type": "exclude"
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "equal",
-                  "options": {
-                    "value": "6"
-                  }
-                },
-                "fieldName": "half_rownum"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
+            ]
           }
         },
         {
           "id": "organize",
           "options": {
             "excludeByName": {
-              "field_identifier": true,
-              "half_rownum": true,
-              "rownum": true
+              "altitude": true,
+              "callsign": true,
+              "destination_name": true,
+              "hex_ident": true,
+              "last_updated": true,
+              "lat": true,
+              "lon": true,
+              "operator_color": true,
+              "operator_iata": true,
+              "origin_name": true,
+              "position": true,
+              "registration": true
             },
             "includeByName": {},
             "indexByName": {
-              "Value": 3,
-              "field_identifier": 0,
-              "half_rownum": 2,
-              "rownum": 1
+              "aircraft_type": 7,
+              "destination_iata": 3,
+              "destination_name": 6,
+              "flight_number": 1,
+              "operator_iata": 8,
+              "operator_name": 0,
+              "origin_iata": 2,
+              "origin_name": 5,
+              "registration": 4
             },
             "renameByName": {}
           }
@@ -3005,21 +2953,21 @@
     }
   ],
   "preload": false,
-  "refresh": "",
+  "refresh": "auto",
   "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Redis Plane Tracker",
   "uid": "adgnl86",
-  "version": 44,
+  "version": 51,
   "weekStart": "",
   "id": null
 }
