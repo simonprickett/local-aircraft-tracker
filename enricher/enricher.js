@@ -97,7 +97,7 @@ while (true) {
                 flight_number: flight.flight_number || '????'
               };
 
-              // TODO look up the operator name from the IATA code and log if there is a miss.
+              // TODO look up the operator name and color from the IATA code and log if there is a miss.
               // e.g. HGET operator:VS name -> Virgin Atlantic
               //      HGET operator:VX name -> null            Sadly no more Virgin America :/
               //
@@ -109,6 +109,14 @@ while (true) {
                 if (flight.operator_iata && flight.operator_iata.length > 0) {
                   redisClient.sAdd('errors:missingoperators', flight.operator_iata);
                 }
+              }
+
+              // TODO improve this... get it in the same round trip to Redis as the name.
+              const operatorColor = await redisClient.hGet(`operator:${flight.operator_iata}`, 'color');
+              if (operatorColor) {
+                flightDetails.operator_color = operatorColor;
+              } else {
+                console.log(`Missing operator color for IATA: ${flight.operator_iata}`);
               }
 
               const flightKey = `flight:${msgPayload.hex_ident}`;
