@@ -7,6 +7,17 @@ const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const FLIGHTAWARE_API_KEY = process.env.FLIGHTAWARE_API_KEY;
 const FLIGHTAWARE_QUEUE = 'flightawarequeue';
 
+// Utility function to get current date in YYYYMMDD format.
+function getCurrentDateYYYYMMDD() {
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const day = String(now.getDate()).padStart(2, '0');
+
+  return `${year}${month}${day}`;
+}
+
 // Sleep for 5 seconds... used as a lazy way to avoid
 // rate limiting on the FlightAware API...
 async function sleep() {
@@ -65,9 +76,8 @@ while (true) {
         const flightData = await flightAwareResponse.json();
         let updatedFlight = false;
 
-        // TODO Log that an API call was made for stats purposes.
-        // TODO work out current YYYYMMDD date...
-        // redisClient.hIncrBy('stats:flightawareapicalls', msg.logged_date.replaceAll('/', ''), 1);
+        // Log that an API call was made for stats purposes.
+        redisClient.hIncrBy('stats:flightawareapicalls', getCurrentDateYYYYMMDD(), 1);
 
         if (flightData.flights) {
           for (const flight of flightData.flights) {
