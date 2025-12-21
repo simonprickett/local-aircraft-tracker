@@ -72,3 +72,5 @@ Exited rate limiter sleep.
 ```
 
 Note that after looking up a flight, the enricher sleeps for a couple of seconds.  This is a lazy implementation by me that avoids dealing with FlightAware's API rate limiter by just making sure that the component shouldn't make more than the allowed number of requests per minute.
+
+Stop the enricher by pressing `Ctrl-C`.

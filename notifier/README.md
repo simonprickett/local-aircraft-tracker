@@ -42,3 +42,5 @@ Whenever the query returns a flight, its data is published on a [Redis Pub/Sub](
 ```
 
 The idea is that interested front ends will subscribe to the `interestingflights` channel, and display the information received in a way appropriate to the front end.  If the front end needs more information than that contained in the pub/sub message, it can use the value of `redisKey` to obtain the key name of the Redis hash containing the data in Redis, and directly access this.  In the above example, the key is `flight:406D1A`.
+
+Stop the notifier by pressing `Ctrl-C`.

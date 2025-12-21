@@ -152,3 +152,5 @@ Here's how it works:
 * When calling `SET`, we pass in a couple of modifiers: `NX: true` means only set the key if it doesn't exist already.  `EX: <duration>` tells Redis to expire the key (essentially consider it deleted) after a certain number of seconds have passed.
 * We store the value of this command in `response` -- this will either be `OK` (the key was created, so we're asking for this flight for the first time recently) or `null` (the key already exists, so we have asked for this flight recently).
 * If we haven't asked for this flight recently, the `hex_ident` and `callsign` are placed in an object that is then stringified and put on the queue for the enricher component to pick up, using the Redis [LPUSH](https://redis.io/commands/lpush/) command.
+
+Stop the notifier by pressing `Ctrl-C`.
