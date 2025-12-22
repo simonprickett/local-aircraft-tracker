@@ -59,9 +59,14 @@ while(true) {
       delete flightObj.position; // No need to store this in the stream.
 
       flightObj['description'] = `${flightObj.operator_iata}${flightObj.flight_number}: ${flightObj.origin_iata}-${flightObj.destination_iata}`;
+      flightObj['description_short'] = `${flightObj.operator_iata}${flightObj.flight_number}`;
 
       // TODO: Consider operator color, aircraft type.
 
+      // TODO: Consider updating a stats key for the most distant plane seen.
+      // TODO: Consider updating a stats key for the highest altitude seen.
+
+      // TODO: Don't need to log this when we are happy with the data.
       console.log(flightObj);
 
       // Add to stream, no need to await this as the order doesn't matter.
