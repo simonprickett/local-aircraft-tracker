@@ -11,6 +11,20 @@ const SBS_PORT = process.env.SBS_PORT || 30003;
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const FLIGHTAWARE_QUEUE = 'flightawarequeue';
 
+// Lua script to update a key only if the new value is greater than the current value.
+const getLuaSource = () => `
+  local key = KEYS[1]
+  local new = ARGV[1]
+  local current = redis.call('GET', key)
+
+  if (current == false) or (tonumber(new) > tonumber(current)) then
+    redis.call('SET', key, new)
+    return 1
+  else
+    return 0
+  end;
+`;
+
 const sbs1Client = sbs1.createClient({
   host: SBS_HOST,
   port: SBS_PORT
@@ -21,6 +35,7 @@ const redisClient = createClient({
 });
 
 await redisClient.connect();
+const updateIfGreaterSha = await redisClient.scriptLoad(getLuaSource());
 
 sbs1Client.on('message', async (msg) => {
   console.log(msg);
@@ -79,4 +94,12 @@ sbs1Client.on('message', async (msg) => {
 
   // Log all messages for stats purposes.
   redisClient.hIncrBy('stats:messagecounts', msg.logged_date.replaceAll('/', ''), 1);
+
+  // Log max altitude seen.
+  if (msgData.altitude) {
+    redisClient.evalSha(updateIfGreaterSha, {
+      keys: ['stats:maxaltitude'],
+      arguments: [msgData.altitude.toString()]
+    });
+  }
 });
