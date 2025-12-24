@@ -82,6 +82,8 @@ Verify that data appears in Redis using [RedisInsight](https://redis.com/redis-e
 10) "52.67772"
 11) "lon"
 12) "-1.77076"
+13) "track"
+14) 276
 ```
 
 Some fields may be missing, this means that those data items haven't been received for that flight yet.  When a `callsign` field is seen for a given flight, it is also stored in the Hash.  The `callsign` and `hex_ident` are then put on the Redis List whose key is `flightawarequeue`.  This acts as a queue of requests for the "enricher" component to go get additional flight data from the FlightAware API.  To ensure that we don't flood the FlightAware API with requests for a flight that we recently got the data for, a Redis key `flightaware:recent:<callsign>` is set.  This has an expiry of one hour, and if this key is present for a given flight, we don't add the request to the queue.
