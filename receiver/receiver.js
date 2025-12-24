@@ -63,6 +63,10 @@ sbs1Client.on('message', async (msg) => {
     msgData.callsign = msg.callsign.trim();
   }
 
+  if (msg.track) {
+    msgData.track = msg.track;
+  }
+
   await redisClient.hSet(flightKey, msgData);
   redisClient.expire(flightKey, FLIGHT_RETENTION_PERIOD);
 
