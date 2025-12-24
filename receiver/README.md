@@ -119,6 +119,8 @@ redisClient.expire(flightKey, FLIGHT_RETENTION_PERIOD);
 
 The hash is also set to expire after a time period, unless further messages about the aircraft are received (these will update the expiry time).
 
+* **TODO** Document the `stats:messagecounts` and `stats:maxaltitude` keys.
+
 If the message data contains a `callsign` (the field that identifies the flight, rather than the aircraft (identified by `hex_ident`)), then the receiver will also put this flight in the queue for the [enricher](../enricher) component to work on.  However, it will only add the flight to the queue if it hasn't previously done so in the last hour.  This is to prevent duplicate lookups of a flight in FlightAware as their API costs money to use after a certain level of usage.
 
 The code checks if a flight's details have been requested before using the Redis [`SET`](https://redis.io/commands/set/) command, with some modifiers:
