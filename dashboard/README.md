@@ -1,6 +1,6 @@
 # Dashboard Assistant and Grafana Dashboard
 
-TODO overview...
+This is the Dashboard Assistant component. TODO overview...
 
 ## Setup (Dashboard Assistant Component)
 
@@ -28,3 +28,7 @@ npm start
 TODO example output...
 
 Stop the dashboard assistant by pressing `Ctrl-C`.
+
+## Setup (Grafana)
+
+TODO
