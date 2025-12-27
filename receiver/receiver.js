@@ -59,6 +59,10 @@ sbs1Client.on('message', async (msg) => {
     msgData.altitude = msg.altitude;
   }
 
+  if (msg.ground_speed) {
+    msgData.ground_speed = msg.ground_speed;
+  }
+
   if (msg.callsign) {
     msgData.callsign = msg.callsign.trim();
   }
@@ -104,6 +108,14 @@ sbs1Client.on('message', async (msg) => {
     redisClient.evalSha(updateIfGreaterSha, {
       keys: ['stats:maxaltitude'],
       arguments: [msgData.altitude.toString()]
+    });
+  }
+
+  // Log fastest ground speed seen.
+  if (msgData.ground_speed) {
+    redisClient.evalSha(updateIfGreaterSha, {
+      keys: ['stats:fastestgroundspeed'],
+      arguments: [msgData.ground_speed.toString()]
     });
   }
 });
