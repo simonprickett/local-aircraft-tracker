@@ -86,197 +86,6 @@
             "mode": "thresholds"
           },
           "mappings": [],
-          "max": 400,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 2,
-        "x": 0,
-        "y": 0
-      },
-      "id": 24,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "command": "hget",
-          "field": "${__from:date:YYYYMMDD}",
-          "keyName": "stats:flightawareapicalls",
-          "query": "",
-          "refId": "A",
-          "streaming": true,
-          "streamingDataType": "DataFrame",
-          "type": "command",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
-        }
-      ],
-      "title": "API Calls",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "redis-datasource",
-        "uid": "${DS_LOCAL-REDIS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 2,
-          "mappings": [],
-          "max": 20,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "#EAB839",
-                "value": 7.5
-              },
-              {
-                "color": "orange",
-                "value": 10
-              },
-              {
-                "color": "red",
-                "value": 15
-              }
-            ]
-          },
-          "unit": "currencyUSD"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 2,
-        "x": 2,
-        "y": 0
-      },
-      "id": 26,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "first"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "command": "hget",
-          "field": "${__from:date:YYYYMMDD}",
-          "keyName": "stats:flightawareapicalls",
-          "query": "",
-          "refId": "A",
-          "streaming": true,
-          "streamingDataType": "DataFrame",
-          "type": "command",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
-        }
-      ],
-      "title": "API Costs",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "binary": {
-              "left": {
-                "matcher": {
-                  "id": "byType",
-                  "options": "number"
-                }
-              },
-              "operator": "*",
-              "right": {
-                "fixed": "0.05"
-              }
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "includeByName": {},
-            "indexByName": {},
-            "orderBy": [
-              {
-                "desc": true,
-                "type": "name"
-              }
-            ],
-            "orderByMode": "auto",
-            "renameByName": {}
-          }
-        },
-        {
-          "id": "transpose",
-          "options": {}
-        }
-      ],
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "redis-datasource",
-        "uid": "${DS_LOCAL-REDIS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -293,7 +102,7 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 4,
+        "x": 0,
         "y": 0
       },
       "id": 22,
@@ -360,7 +169,7 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 6,
+        "x": 2,
         "y": 0
       },
       "id": 2,
@@ -425,7 +234,7 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 8,
+        "x": 4,
         "y": 0
       },
       "id": 4,
@@ -490,7 +299,7 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 10,
+        "x": 6,
         "y": 0
       },
       "id": 3,
@@ -540,7 +349,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -550,18 +358,17 @@
                 "value": 0
               }
             ]
-          },
-          "unit": "lengthft"
+          }
         },
         "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 2,
-        "x": 12,
+        "w": 3,
+        "x": 8,
         "y": 0
       },
-      "id": 23,
+      "id": 5,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -572,7 +379,7 @@
           "calcs": [
             "first"
           ],
-          "fields": "/^stats:maxaltitude$/",
+          "fields": "/.*/",
           "values": false
         },
         "showPercentChange": false,
@@ -582,24 +389,94 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
-          "command": "get",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          },
-          "keyName": "stats:maxaltitude",
+          "command": "",
+          "keyName": "stats:origins",
           "max": "-1",
-          "min": "0",
-          "query": "",
+          "min": "-1",
+          "query": "zrange stats:origins -1 -1",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
           "streamingInterval": 2000,
-          "type": "command",
-          "zrangeQuery": ""
+          "type": "cli",
+          "zrangeQuery": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
         }
       ],
-      "title": "Highest Seen",
+      "title": "Most Popular Origin",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 11,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "command": "",
+          "keyName": "stats:origins",
+          "max": "-1",
+          "min": "-1",
+          "query": "zrange stats:destinations -1 -1",
+          "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
+          "type": "cli",
+          "zrangeQuery": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Most Popular Destination",
       "type": "stat"
     },
     {
@@ -1184,15 +1061,178 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 400,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "purple",
+                "color": "green",
                 "value": 0
               }
             ]
           }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 0,
+        "y": 4
+      },
+      "id": 24,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "command": "hget",
+          "field": "${__from:date:YYYYMMDD}",
+          "keyName": "stats:flightawareapicalls",
+          "query": "",
+          "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "type": "command",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "API Calls",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 7
+              },
+              {
+                "color": "orange",
+                "value": 15
+              },
+              {
+                "color": "red",
+                "value": 20
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 2,
+        "y": 4
+      },
+      "id": 34,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "command": "llen",
+          "field": "${__from:date:YYYYMMDD}",
+          "keyName": "flightawarequeue",
+          "query": "",
+          "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "type": "command",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "API Backlog",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 20,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 7.5
+              },
+              {
+                "color": "orange",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 15
+              }
+            ]
+          },
+          "unit": "currencyUSD"
         },
         "overrides": []
       },
@@ -1202,46 +1242,84 @@
         "x": 4,
         "y": 4
       },
-      "id": 5,
+      "id": 26,
       "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
-        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "first"
           ],
-          "fields": "/.*/",
+          "fields": "",
           "values": false
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
       "pluginVersion": "12.3.1",
       "targets": [
         {
-          "command": "",
-          "keyName": "stats:origins",
-          "max": "-1",
-          "min": "-1",
-          "query": "zrange stats:origins -1 -1",
+          "command": "hget",
+          "field": "${__from:date:YYYYMMDD}",
+          "keyName": "stats:flightawareapicalls",
+          "query": "",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
-          "streamingInterval": 2000,
-          "type": "cli",
-          "zrangeQuery": "",
+          "type": "command",
           "datasource": {
             "type": "redis-datasource",
             "uid": "${DS_LOCAL-REDIS}"
           }
         }
       ],
-      "title": "Most Popular Origin",
-      "type": "stat"
+      "title": "API Costs",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byType",
+                  "options": "number"
+                }
+              },
+              "operator": "*",
+              "right": {
+                "fixed": "0.05"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "orderBy": [
+              {
+                "desc": true,
+                "type": "name"
+              }
+            ],
+            "orderByMode": "auto",
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "transpose",
+          "options": {}
+        }
+      ],
+      "type": "gauge"
     },
     {
       "datasource": {
@@ -1253,6 +1331,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1262,7 +1341,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "unit": "lengthft"
         },
         "overrides": []
       },
@@ -1272,7 +1352,7 @@
         "x": 6,
         "y": 4
       },
-      "id": 6,
+      "id": 23,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -1283,7 +1363,7 @@
           "calcs": [
             "first"
           ],
-          "fields": "/.*/",
+          "fields": "/^stats:maxaltitude$/",
           "values": false
         },
         "showPercentChange": false,
@@ -1293,94 +1373,24 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
-          "command": "",
-          "keyName": "stats:origins",
-          "max": "-1",
-          "min": "-1",
-          "query": "zrange stats:destinations -1 -1",
-          "refId": "A",
-          "streaming": true,
-          "streamingDataType": "DataFrame",
-          "streamingInterval": 2000,
-          "type": "cli",
-          "zrangeQuery": "",
+          "command": "get",
           "datasource": {
             "type": "redis-datasource",
             "uid": "${DS_LOCAL-REDIS}"
-          }
-        }
-      ],
-      "title": "Most Popular Destination",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "redis-datasource",
-        "uid": "${DS_LOCAL-REDIS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "purple",
-                "value": 0
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 4
-      },
-      "id": 7,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "first"
-          ],
-          "fields": "/.*/",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "command": "",
-          "keyName": "stats:origins",
+          "keyName": "stats:maxaltitude",
           "max": "-1",
-          "min": "-1",
-          "query": "zrange stats:routes -1 -1",
+          "min": "0",
+          "query": "",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
           "streamingInterval": 2000,
-          "type": "cli",
-          "zrangeQuery": "",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "command",
+          "zrangeQuery": ""
         }
       ],
-      "title": "Most Popular Route",
+      "title": "Highest Seen",
       "type": "stat"
     },
     {
@@ -1411,7 +1421,7 @@
       "gridPos": {
         "h": 4,
         "w": 2,
-        "x": 12,
+        "x": 8,
         "y": 4
       },
       "id": 29,
@@ -1453,6 +1463,76 @@
         }
       ],
       "title": "Fastest Seen",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "redis-datasource",
+        "uid": "${DS_LOCAL-REDIS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 10,
+        "y": 4
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "command": "",
+          "keyName": "stats:origins",
+          "max": "-1",
+          "min": "-1",
+          "query": "zrange stats:routes -1 -1",
+          "refId": "A",
+          "streaming": true,
+          "streamingDataType": "DataFrame",
+          "streamingInterval": 2000,
+          "type": "cli",
+          "zrangeQuery": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          }
+        }
+      ],
+      "title": "Most Popular Route",
       "type": "stat"
     },
     {
@@ -3542,7 +3622,7 @@
     }
   ],
   "preload": false,
-  "refresh": "auto",
+  "refresh": "",
   "schemaVersion": 42,
   "tags": [],
   "templating": {
@@ -3556,7 +3636,7 @@
   "timezone": "browser",
   "title": "Redis Plane Tracker",
   "uid": "adgnl86",
-  "version": 54,
+  "version": 55,
   "weekStart": "",
   "id": null
 }
