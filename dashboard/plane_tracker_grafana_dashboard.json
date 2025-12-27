@@ -2267,6 +2267,7 @@
               "altitude": true,
               "callsign": true,
               "destination_name": true,
+              "ground_speed": true,
               "hex_ident": true,
               "last_updated": true,
               "lat": true,
@@ -2275,7 +2276,8 @@
               "operator_iata": true,
               "origin_name": true,
               "position": true,
-              "registration": true
+              "registration": true,
+              "track": true
             },
             "includeByName": {},
             "indexByName": {
@@ -3636,7 +3638,7 @@
   "timezone": "browser",
   "title": "Redis Plane Tracker",
   "uid": "adgnl86",
-  "version": 55,
+  "version": 56,
   "weekStart": "",
   "id": null
 }
