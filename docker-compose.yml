@@ -1,10 +1,9 @@
 services:
   redis:
     container_name: redisaircrafttracker
-    image: "redis/redis-stack:latest"
+    image: "redis:latest"
     ports:
       - 6379:6379
-      - 8001:8001
     deploy:
       replicas: 1
       restart_policy:
