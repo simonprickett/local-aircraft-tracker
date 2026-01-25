@@ -24,7 +24,7 @@ The videos for this project can be found on YouTube:
 
 * Episode 1: [Project introduction, live coding the radio receiver component](https://www.youtube.com/watch?v=TCTej1uihG4).
 * Episode 2: [Enriching the flight data with the FlightAware API](https://www.youtube.com/watch?v=Qu-_wvSJrdE).
-* Episode 3: [Searching the data with Redis Stack's Search capability](https://www.youtube.com/watch?v=IEx2WgWdhIA).
+* Episode 3: [Searching the data with Redis' Search capability](https://www.youtube.com/watch?v=IEx2WgWdhIA).
 * Episode 4: [Building the notifier component](https://www.youtube.com/watch?v=fYnrNqSgqR4).
 * Episode 5: [Building a notification device with a flip dot sign](https://www.youtube.com/watch?v=i8grA5fsbdM).
 * Episode 6: [Building a notification device with MicroPython and an e-ink display](https://www.youtube.com/watch?v=RROQA0QOq0k).
@@ -42,7 +42,7 @@ The project is organised as follows:
 * The receiver component receives messages from dump1090 by listening on a port.  It decodes these messages into JavaScript name/value pair objects and stores the data in a Redis Hash.  Each passing flight is identified using the aircraft transponder's hex ID.
 * Once sufficient information about a given flight has been received (this may come in multiple separate messages), the receiver places the flight's callsign into a Redis List.  This acts as a queue between the receiver and enricher components.  The receiver stores the IDs of flights that were recently placed into the list as string values in Redis, setting a time to live on them.  This stops the receiver from asking the enricher about the same flight more than once in a given time period.
 * The enricher component reads from the Redis List and uses the data in it to call the FlightAware API.  This returns more information about the flight than is available from just the radio messages, notably the aircraft operator code, origin and destination airports and the aircraft type.  The enricher writes this information into each flight's Redis Hash, "enriching" the data stored about the flight.
-* There is a RediSearch index configured in the Redis Stack instance.  This monitors and indexes data in all Hashes whose key begins with `flight:`.  It allows us to write SQL like queries to find flights that match multiple criteria.  This is used by...
+* There is a RediSearch index configured in the Redis instance.  This monitors and indexes data in all Hashes whose key begins with `flight:`.  It allows us to write SQL like queries to find flights that match multiple criteria.  This is used by...
 * The notifier component runs a search query periodically to find the latest "interesting" flights (ones that match a set of criteria for disance from me, aircraft type etc).  When it finds matching flights, it puts the details from the flight's Hash into a Redis Stream and also publishes them on a Redis Pub/Sub topic.  These can be used by front ends to the system to receive flight details to display.  Resources used by the Stream are kept in check by capping the stream to contain only entries from the last hour.
 * I implemented two different front ends for the system (so far, I may add more!):
   * Hanover Flip Dot Sign: The flip dot sign came from a bus that was scrapped, and used to serve as the destination sign on the side of it.  It's controlled by RS485 using Node.js software running on a Raspberry Pi 3 that's embedded in the sign.  This acts as a Redis Pub/Sub subscriber.  It receives the interesting flight data and shows it one item at a time on the flip dot display.  Updating the display makes a very satisfying sound as each pixel is a magnetic mechanical component.
@@ -52,11 +52,11 @@ The project is organised as follows:
 
 Almost all components of this project are written in Node.js.  They use features of JavaScript that require a recent version of Node.  I've tested them all with Node 24.6.0 on both macOS Sequoia 15.7 and Raspberry Pi OS (Debian 11 - "bullseye" version).
 
-All of the components connect to a single [Redis Stack](https://redis.io/docs/stack/) database.  This is where they store data and communicate with each other in a variety of ways.
+All of the components connect to a single [Redis](https://redis.io/downloads/) database.  This is where they store data and communicate with each other in a variety of ways.
 
-Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)) or use the Docker compose file at the root of this repository.
+Get a free cloud hosted Redis instance [here](https://redis.com/try-free), or use the redis Docker image ([here](https://hub.docker.com/_/redis)) or use the Docker Compose file at the root of this repository.
 
-It's also a good idea to download and install [RedisInsight](https://redis.io/docs/ui/insight/), a free tool for managing and visualising data in Redis.  Use this to see what's going on with your Redis Stack instance.
+It's also a good idea to download and install [RedisInsight](https://redis.io/docs/ui/insight/), a free tool for managing and visualising data in Redis.  Use this to see what's going on with your Redis instance.
 
 You'll find a README in the folder for each component that describes what it does and how to set it up.
 
@@ -64,7 +64,7 @@ The Badger2040W front end is the only component that doesn't use Node.js.  It is
 
 ## Example Search Queries from redis-cli
 
-This project defines a [search index](https://redis.io/docs/stack/search/) over data in the flight Hashes in Redis.  Instructions for creating the index can be found with the receiver component's documentation.  To learn more about the index, [watch the Episode 3 video](https://www.youtube.com/watch?v=IEx2WgWdhIA&t=26s).
+This project defines a [search index](https://redis.io/docs/latest/develop/ai/search-and-query/) over data in the flight Hashes in Redis.  Instructions for creating the index can be found with the receiver component's documentation.  To learn more about the index, [watch the Episode 3 video](https://www.youtube.com/watch?v=IEx2WgWdhIA&t=26s).
 
 Here are some example queries that can be run using the Redis CLI (with or without RedisInsight)...
 
