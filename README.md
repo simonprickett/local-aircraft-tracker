@@ -20,7 +20,7 @@ Someone else decided to try this project on their own Hanover sign and let me kn
 
 ## Watch the Videos
 
-The videos for this project can be found on YouTube:
+The videos for this project can be found on YouTube.  **Note that these are old now and refer to the original version of the project which used Redis Stack**:
 
 * Episode 1: [Project introduction, live coding the radio receiver component](https://www.youtube.com/watch?v=TCTej1uihG4).
 * Episode 2: [Enriching the flight data with the FlightAware API](https://www.youtube.com/watch?v=Qu-_wvSJrdE).
