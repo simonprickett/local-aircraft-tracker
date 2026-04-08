@@ -33,7 +33,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "12.3.1"
+      "version": "12.4.1"
     },
     {
       "type": "panel",
@@ -123,7 +123,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "hget",
@@ -190,7 +190,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "",
@@ -255,7 +255,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "",
@@ -320,7 +320,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "",
@@ -386,7 +386,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "",
@@ -456,7 +456,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "",
@@ -526,7 +526,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "datasource": {
@@ -552,6 +552,7 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "noValue": "No data",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -588,7 +589,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -667,7 +668,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -812,7 +813,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -957,7 +958,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -1097,7 +1098,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "hget",
@@ -1177,7 +1178,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "llen",
@@ -1258,7 +1259,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "hget",
@@ -1370,7 +1371,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "get",
@@ -1442,7 +1443,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "get",
@@ -1512,7 +1513,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "",
@@ -1582,7 +1583,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "datasource": {
@@ -1649,7 +1650,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -1794,7 +1795,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -1939,7 +1940,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -2084,7 +2085,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -2224,7 +2225,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "hgetall",
@@ -2372,7 +2373,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -2491,7 +2492,7 @@
         "sizing": "auto",
         "valueMode": "text"
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -2609,7 +2610,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -2747,7 +2748,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -2884,7 +2885,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -3208,7 +3209,7 @@
         "sizing": "auto",
         "valueMode": "text"
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -3329,7 +3330,7 @@
         "sizing": "auto",
         "valueMode": "text"
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -3469,7 +3470,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.1",
       "targets": [
         {
           "command": "zrange",
@@ -3624,7 +3625,7 @@
     }
   ],
   "preload": false,
-  "refresh": "",
+  "refresh": "auto",
   "schemaVersion": 42,
   "tags": [],
   "templating": {
@@ -3638,7 +3639,6 @@
   "timezone": "browser",
   "title": "Redis Plane Tracker",
   "uid": "adgnl86",
-  "version": 56,
-  "weekStart": "",
-  "id": null
+  "version": 57,
+  "weekStart": ""
 }
