@@ -101,9 +101,10 @@ sbs1Client.on('message', async (msg) => {
   }
 
   // Log all messages with dates for stats purposes.
-  if (msg.logged_date && msg.logged_date.length > 0) {
-    redisClient.hIncrBy('stats:messagecounts', msg.logged_date.replaceAll('/', ''), 1);
-  }
+  const dateValue = (msg.logged_date && msg.logged_date.length > 0) 
+    ? msg.logged_date.replaceAll('/', '') 
+    : new Date().toISOString().slice(0, 10).replaceAll('-', '');
+  redisClient.hIncrBy('stats:messagecounts', dateValue, 1);
 
   // Log max altitude seen.
   if (msgData.altitude) {
