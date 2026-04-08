@@ -35,6 +35,8 @@ const simpleKeys = [
   'stats:destinations',
   'stats:flightawareapicalls',
   'stats:planesseen',
+  'stats:planesapprox',
+  'stats:aircrafttypesapprox',
   'stats:operators',
   'stats:routes',
   'stats:fastestgroundspeed',
