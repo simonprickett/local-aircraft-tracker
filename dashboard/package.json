@@ -4,7 +4,8 @@
   "description": "Dashboard data assistant for the local aircraft tracker Redis project.",
   "main": "dashboard_assistant.js",
   "scripts": {
-    "start": "node dashboard_assistant.js"
+    "start": "node dashboard_assistant.js",
+    "cleanup": "node cleanup.js"
   },
   "type": "module",
   "author": "Simon Prickett",
