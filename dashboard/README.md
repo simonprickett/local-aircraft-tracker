@@ -1,6 +1,6 @@
 # Dashboard Assistant and Grafana Dashboard
 
-This is the Dashboard Assistant component. TODO overview...
+This is the Dashboard Assistant component. TODO overview and information about `cleanup.js`...
 
 ## Setup (Dashboard Assistant Component)
 
