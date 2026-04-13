@@ -196,6 +196,55 @@
           "type": "command"
         }
       ],
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "dist_km",
+            "binary": {
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "dist"
+                }
+              },
+              "operator": "/",
+              "right": {
+                "fixed": "1000"
+              }
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "dist": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "$streamId": 0,
+              "$time": 1,
+              "description": 10,
+              "description_short": 11,
+              "destination_iata": 7,
+              "dist": 9,
+              "dist_km": 8,
+              "flight_number": 5,
+              "lat": 2,
+              "lon": 3,
+              "operator_iata": 4,
+              "origin_iata": 6
+            },
+            "renameByName": {}
+          }
+        }
+      ],
       "type": "geomap"
     }
   ],
@@ -213,6 +262,6 @@
   "timezone": "browser",
   "title": "Redis Plane Mapper",
   "uid": "adqmjrg",
-  "version": 7,
+  "version": 8,
   "weekStart": ""
 }
