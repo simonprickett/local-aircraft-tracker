@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "12.4.1"
+      "version": "12.4.2"
     },
     {
       "type": "datasource",
@@ -91,11 +91,14 @@
       "id": 1,
       "options": {
         "basemap": {
-          "config": {},
+          "config": {
+            "showLabels": true,
+            "theme": "light"
+          },
           "name": "Layer 2",
           "noRepeat": true,
-          "opacity": 0.4,
-          "type": "osm-standard"
+          "opacity": 0.6,
+          "type": "carto"
         },
         "controls": {
           "mouseWheelZoom": true,
@@ -139,8 +142,8 @@
                   "mode": "field"
                 },
                 "textConfig": {
-                  "fontSize": 20,
-                  "offsetX": 20,
+                  "fontSize": 14,
+                  "offsetX": 10,
                   "offsetY": 0,
                   "textAlign": "left",
                   "textBaseline": "middle"
@@ -151,6 +154,7 @@
               "id": "byRefId",
               "options": "A"
             },
+            "layer-tooltip": true,
             "location": {
               "mode": "auto"
             },
@@ -163,15 +167,17 @@
           "mode": "details"
         },
         "view": {
-          "allLayers": true,
+          "allLayers": false,
           "id": "fit",
+          "lastOnly": false,
           "lat": 0,
+          "layer": "Layer 1",
           "lon": 0,
           "noRepeat": true,
           "zoom": 15
         }
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "xrange",
@@ -206,6 +212,6 @@
   "timezone": "browser",
   "title": "Redis Plane Mapper",
   "uid": "adqmjrg",
-  "version": 3,
+  "version": 5,
   "weekStart": ""
 }
