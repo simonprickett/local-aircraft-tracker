@@ -5,13 +5,14 @@ dotenv.config({ quiet: true });
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const QUERY_INTERVAL = parseInt(process.env.QUERY_INTERVAL, 10);
+const LOCATION_LON = process.env.LOCATION_LON || '-1.148369';
+const LOCATION_LAT = process.env.LOCATION_LAT || '52.953150';
 const PLANE_POSITIONS_STREAM_KEY = "mappableflights";
 const LATEST_UPDATED_COMMAND = [
   'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '2', '__key', '@aircraft_type', 'FILTER', 'exists(@aircraft_type)', 'SORTBY', '2', '@last_updated', 'DESC', 'LIMIT', '0', '1'
 ];
-// TODO remove location hard coding!
 const PLANE_POSITIONS_COMMAND = [
-  'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '7', '@position', '@lat', '@lon', '@operator_iata', '@flight_number', '@origin_iata', '@destination_iata', 'FILTER', 'exists(@position)', 'FILTER', 'exists(@operator_iata)', 'FILTER', 'exists(@origin_iata)', 'FILTER', 'exists(@destination_iata)', 'APPLY', 'geodistance(@position, "-1.148369,52.953150")', 'AS', 'dist', 'LIMIT', '0', '9999', 'SORTBY', '2', '@dist', 'ASC'
+  'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '7', '@position', '@lat', '@lon', '@operator_iata', '@flight_number', '@origin_iata', '@destination_iata', 'FILTER', 'exists(@position)', 'FILTER', 'exists(@operator_iata)', 'FILTER', 'exists(@origin_iata)', 'FILTER', 'exists(@destination_iata)', 'APPLY', `geodistance(@position, "${LOCATION_LON},${LOCATION_LAT}")`, 'AS', 'dist', 'LIMIT', '0', '9999', 'SORTBY', '2', '@dist', 'ASC'
 ];
 
 // Sleep for QUERY_INTERVAL milliseconds.

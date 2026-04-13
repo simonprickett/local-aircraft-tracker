@@ -9,7 +9,7 @@ To set this up you'll need the following:
 * A [Redis 8](https://redis.io/tutorials/howtos/quick-start/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis Docker image ([here](https://hub.docker.com/_/redis)) or use the Docker Compose file at the root of this repository.
 * Fully set up and working instances of the receiver and enricher components ([reciever instructions](../receiver/README.md), [enricher instructions](../enricher/README.md)) which are also connected to the same Redis instance you are using for this component.
 
-First, configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).  Optionally, you can also change the value of `QUERY_INTERVAL` - this is how long the dashboard assistant sleeps between running Redis commands.  The default is 1 second, which should be fine for everyday use.
+First, configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).  Optionally, you can also change the value of `QUERY_INTERVAL` - this is how long the dashboard assistant sleeps between running Redis commands.  The default is 1 second, which should be fine for everyday use.  Finally, change the values of `LOCATION_LAT` and `LOCATION_LON` to match your location.  These values are used in calculating the distance that the plane is from your destination.
 
 Finally, install the dependencies:
 
