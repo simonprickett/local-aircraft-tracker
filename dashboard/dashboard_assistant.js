@@ -12,7 +12,7 @@ const LATEST_UPDATED_COMMAND = [
   'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '2', '__key', '@aircraft_type', 'FILTER', 'exists(@aircraft_type)', 'SORTBY', '2', '@last_updated', 'DESC', 'LIMIT', '0', '1'
 ];
 const PLANE_POSITIONS_COMMAND = [
-  'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '7', '@position', '@lat', '@lon', '@operator_iata', '@flight_number', '@origin_iata', '@destination_iata', 'FILTER', 'exists(@position)', 'FILTER', 'exists(@operator_iata)', 'FILTER', 'exists(@origin_iata)', 'FILTER', 'exists(@destination_iata)', 'APPLY', `geodistance(@position, "${LOCATION_LON},${LOCATION_LAT}")`, 'AS', 'dist', 'LIMIT', '0', '9999', 'SORTBY', '2', '@dist', 'ASC'
+  'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '8', '@position', '@lat', '@lon', '@operator_iata', '@flight_number', '@origin_iata', '@destination_iata', '@last_updated', 'FILTER', 'exists(@position)', 'FILTER', 'exists(@operator_iata)', 'FILTER', 'exists(@origin_iata)', 'FILTER', 'exists(@destination_iata)', 'APPLY', `geodistance(@position, "${LOCATION_LON},${LOCATION_LAT}")`, 'AS', 'dist', 'LIMIT', '0', '9999', 'SORTBY', '2', '@dist', 'ASC'
 ];
 
 // Sleep for QUERY_INTERVAL milliseconds.
@@ -70,15 +70,11 @@ while(true) {
       // TODO: Don't need to log this when we are happy with the data.
       console.log(flightObj);
 
-      // Add to stream, no need to await this as the order doesn't matter.
-      // Trim entries older than 5 minutes using MINID strategy.
-      redisClient.xAdd(PLANE_POSITIONS_STREAM_KEY, '*', flightObj, {
-        TRIM: {
-          strategy: 'MINID',
-          strategyModifier: '~',
-          threshold: Date.now() - (5 * 60 * 1000)
-        }
-      });
+      // Only add flights updated within the last 5 minutes.
+      if (parseInt(flightObj.last_updated) >= Date.now() - (5 * 60 * 1000)) {
+        // Add to stream, no need to await this as the order doesn't matter.
+        redisClient.xAdd(PLANE_POSITIONS_STREAM_KEY, '*', flightObj);
+      }
     }  
   }
 
