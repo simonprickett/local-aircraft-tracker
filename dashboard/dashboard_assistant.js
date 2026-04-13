@@ -70,7 +70,14 @@ while(true) {
       console.log(flightObj);
 
       // Add to stream, no need to await this as the order doesn't matter.
-      redisClient.xAdd(PLANE_POSITIONS_STREAM_KEY, '*', flightObj);
+      // Trim entries older than 5 minutes using MINID strategy.
+      redisClient.xAdd(PLANE_POSITIONS_STREAM_KEY, '*', flightObj, {
+        TRIM: {
+          strategy: 'MINID',
+          strategyModifier: '~',
+          threshold: Date.now() - (5 * 60 * 1000)
+        }
+      });
     }  
   }
 
