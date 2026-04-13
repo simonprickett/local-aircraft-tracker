@@ -130,7 +130,7 @@
                   "min": 2
                 },
                 "symbol": {
-                  "fixed": "img/icons/marker/circle.svg",
+                  "fixed": "img/icons/marker/plane.svg",
                   "mode": "fixed"
                 },
                 "symbolAlign": {
@@ -213,6 +213,6 @@
   "timezone": "browser",
   "title": "Redis Plane Mapper",
   "uid": "adqmjrg",
-  "version": 6,
+  "version": 7,
   "weekStart": ""
 }
