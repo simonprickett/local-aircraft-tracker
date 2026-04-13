@@ -33,7 +33,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "12.4.1"
+      "version": "12.4.2"
     },
     {
       "type": "panel",
@@ -123,21 +123,21 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "hget",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "field": "${__from:date:YYYYMMDD}",
           "keyName": "stats:messagecounts",
           "query": "",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
-          "type": "command",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "command"
         }
       ],
       "title": "Messages Decoded",
@@ -190,19 +190,19 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "query": "ZCARD stats:planesseen",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
-          "type": "cli",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "cli"
         }
       ],
       "title": "Aircraft Tracked",
@@ -255,19 +255,19 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "query": "ZCARD stats:aircrafttypes",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
-          "type": "cli",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "cli"
         }
       ],
       "title": "Aircraft Types",
@@ -320,20 +320,20 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "query": "ZCARD stats:operators",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
           "streamingInterval": 2000,
-          "type": "cli",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "cli"
         }
       ],
       "title": "Operators",
@@ -386,10 +386,14 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "keyName": "stats:origins",
           "max": "-1",
           "min": "-1",
@@ -399,11 +403,7 @@
           "streamingDataType": "DataFrame",
           "streamingInterval": 2000,
           "type": "cli",
-          "zrangeQuery": "",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "zrangeQuery": ""
         }
       ],
       "title": "Most Popular Origin",
@@ -456,10 +456,14 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "keyName": "stats:origins",
           "max": "-1",
           "min": "-1",
@@ -469,11 +473,7 @@
           "streamingDataType": "DataFrame",
           "streamingInterval": 2000,
           "type": "cli",
-          "zrangeQuery": "",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "zrangeQuery": ""
         }
       ],
       "title": "Most Popular Destination",
@@ -526,7 +526,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "datasource": {
@@ -589,7 +589,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -668,7 +668,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -813,7 +813,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -958,7 +958,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -1098,21 +1098,21 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "hget",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "field": "${__from:date:YYYYMMDD}",
           "keyName": "stats:flightawareapicalls",
           "query": "",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
-          "type": "command",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "command"
         }
       ],
       "title": "API Calls",
@@ -1178,21 +1178,21 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "llen",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "field": "${__from:date:YYYYMMDD}",
           "keyName": "flightawarequeue",
           "query": "",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
-          "type": "command",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "command"
         }
       ],
       "title": "API Backlog",
@@ -1259,21 +1259,21 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "hget",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "field": "${__from:date:YYYYMMDD}",
           "keyName": "stats:flightawareapicalls",
           "query": "",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
-          "type": "command",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "command"
         }
       ],
       "title": "API Costs",
@@ -1371,7 +1371,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "get",
@@ -1443,7 +1443,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "get",
@@ -1513,10 +1513,14 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "keyName": "stats:origins",
           "max": "-1",
           "min": "-1",
@@ -1526,11 +1530,7 @@
           "streamingDataType": "DataFrame",
           "streamingInterval": 2000,
           "type": "cli",
-          "zrangeQuery": "",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "zrangeQuery": ""
         }
       ],
       "title": "Most Popular Route",
@@ -1583,7 +1583,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "datasource": {
@@ -1650,7 +1650,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -1795,7 +1795,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -1940,7 +1940,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -2085,7 +2085,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -2225,21 +2225,21 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "hgetall",
+          "datasource": {
+            "type": "redis-datasource",
+            "uid": "${DS_LOCAL-REDIS}"
+          },
           "keyName": "lookup:latest_enriched_flight",
           "query": "",
           "refId": "A",
           "streaming": true,
           "streamingDataType": "DataFrame",
           "streamingInterval": 2000,
-          "type": "command",
-          "datasource": {
-            "type": "redis-datasource",
-            "uid": "${DS_LOCAL-REDIS}"
-          }
+          "type": "command"
         }
       ],
       "title": "Most Recently Seen",
@@ -2373,7 +2373,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -2492,7 +2492,7 @@
         "sizing": "auto",
         "valueMode": "text"
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -2610,7 +2610,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -2748,7 +2748,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -2885,7 +2885,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -3209,7 +3209,7 @@
         "sizing": "auto",
         "valueMode": "text"
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -3330,7 +3330,7 @@
         "sizing": "auto",
         "valueMode": "text"
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -3428,6 +3428,7 @@
               "mode": "off"
             }
           },
+          "decimals": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -3470,7 +3471,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "12.4.1",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "command": "zrange",
@@ -3625,7 +3626,7 @@
     }
   ],
   "preload": false,
-  "refresh": "auto",
+  "refresh": "5s",
   "schemaVersion": 42,
   "tags": [],
   "templating": {
@@ -3639,6 +3640,6 @@
   "timezone": "browser",
   "title": "Redis Plane Tracker",
   "uid": "adgnl86",
-  "version": 57,
+  "version": 2,
   "weekStart": ""
 }
