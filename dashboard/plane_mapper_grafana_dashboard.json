@@ -92,8 +92,9 @@
       "options": {
         "basemap": {
           "config": {
+            "server": "streets",
             "showLabels": true,
-            "theme": "light"
+            "theme": "dark"
           },
           "name": "Layer 2",
           "noRepeat": true,
@@ -114,7 +115,7 @@
               "showLegend": false,
               "style": {
                 "color": {
-                  "fixed": "#000000"
+                  "fixed": "orange"
                 },
                 "opacity": 1,
                 "rotation": {
@@ -212,6 +213,6 @@
   "timezone": "browser",
   "title": "Redis Plane Mapper",
   "uid": "adqmjrg",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
