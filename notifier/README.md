@@ -1,6 +1,6 @@
 # Notifier Component
 
-This is the "nofifier" component.  Its role in the system is to periodically run a query over the flight data stored in Redis hashes and indexed by the search capability of Redis Stack.  It aims to find the most recently updated flight that is within a given distance of the user's location, and which is considered "interesting".
+This is the "nofifier" component.  Its role in the system is to periodically run a query over the flight data stored in Redis hashes and indexed by the search capability of Redis.  It aims to find the most recently updated flight that is within a given distance of the user's location, and which is considered "interesting".
 
 The current definition of an "interesting" flight is one that's operated by a widebody aircraft.  These are identified using the `aircraft_type` field stored for each flight (this is populated by the [enricher component](../enricher) using the [FlightAware Aero API](https://flightaware.com/commercial/aeroapi/)).  The query that this component runs contains many [ICAO codes](https://en.wikipedia.org/wiki/List_of_aircraft_type_designators) for widebody aircraft variants.
 
@@ -10,8 +10,8 @@ Whenever an "interesting" flight is detected, this component publishes its detai
 
 To set this up you'll need the following:
 
-* A [Redis Stack](https://redis.io/docs/stack/get-started/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)) or use the Docker compose file at the root of this repository.
-* A fully set up and working instance of both the receiver component ([read about this here](../receiver/README.md)) and the enricher component ([read more about this here](../enricher/README.md)).  Both of these other components need to be connected to the same Redis Stack instance you are using for this component.
+* A [Redis 8](https://redis.io/tutorials/howtos/quick-start/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis Docker image ([here](https://hub.docker.com/_/redis)) or use the Docker Compose file at the root of this repository.
+* A fully set up and working instance of both the receiver component ([read about this here](../receiver/README.md)) and the enricher component ([read more about this here](../enricher/README.md)).  Both of these other components need to be connected to the same Redis instance you are using for this component.
 
 First, configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).
 
@@ -42,3 +42,5 @@ Whenever the query returns a flight, its data is published on a [Redis Pub/Sub](
 ```
 
 The idea is that interested front ends will subscribe to the `interestingflights` channel, and display the information received in a way appropriate to the front end.  If the front end needs more information than that contained in the pub/sub message, it can use the value of `redisKey` to obtain the key name of the Redis hash containing the data in Redis, and directly access this.  In the above example, the key is `flight:406D1A`.
+
+Stop the notifier by pressing `Ctrl-C`.

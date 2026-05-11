@@ -18,11 +18,11 @@
   },
   "homepage": "https://github.com/simonprickett/local-aircraft-tracker#readme",
   "engines": {
-    "node": ">= 14.5.0"
+    "node": ">= 24.11.1"
   },
   "dependencies": {
-    "dotenv": "^16.0.3",
-    "redis": "^4.6.4",
+    "dotenv": "^17.4.1",
+    "redis": "^5.11.0",
     "sbs1": "^0.2.5"
   }
 }

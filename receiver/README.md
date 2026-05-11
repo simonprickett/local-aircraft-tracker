@@ -13,11 +13,11 @@ To set this up you'll need the following:
 * A running copy of [dump1090](https://github.com/MalcolmRobb/dump1090) (start it with `dump1090 --net --interactive`).  You'll have to compile this from source.
 * An appropriate software defined radio USB stick connected to your machine.  I use [this one](https://www.radarbox.com/flightstick1090), but others are available.
 * An appropriate aerial for your software defined radio.  I use [this one](https://www.ebay.co.uk/itm/284156504809), but others are available.
-* [Node.js](https://nodejs.org/) version 14.5.0 or higher (I've tested this with version 16.5.1).
-* A [Redis Stack](https://redis.io/docs/stack/get-started/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis-stack Docker image ([here](https://hub.docker.com/r/redis/redis-stack)) or use the Docker compose file at the root of this repository.
+* [Node.js](https://nodejs.org/) version 24.6.0 or higher (I've tested this with version 24.6.0).
+* A [Redis 8](https://redis.io/tutorials/howtos/quick-start/) database.  Get a free cloud hosted database [here](https://redis.com/try-free), or use the redis Docker image ([here](https://hub.docker.com/_/redis)) or use the Docker Compose file at the root of this repository.
 * Optional but useful, a copy of [RedisInsight](https://redis.com/redis-enterprise/redis-insight/) so that you can inspect the data in Redis.
 
-Before running the code, connect to your Redis Stack instance using eiher redis-cli or RedisInsight and run the Redis command contained in the file `index.redis`.  When run, this command should return `OK` and will create a search index for the flight data that we'll query from another component of the system.
+Before running the code, connect to your Redis instance using eiher redis-cli or RedisInsight and run the Redis command contained in the file `index.redis`.  When run, this command should return `OK` and will create a search index for the flight data that we'll query from another component of the system.
 
 To run the receiver code, first configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).  You shouldn't need to change the values for `SBS_HOST` and `SBS_PORT` so long as dump1090 is running on the same machine as this project runs on.
 
@@ -82,6 +82,8 @@ Verify that data appears in Redis using [RedisInsight](https://redis.com/redis-e
 10) "52.67772"
 11) "lon"
 12) "-1.77076"
+13) "track"
+14) 276
 ```
 
 Some fields may be missing, this means that those data items haven't been received for that flight yet.  When a `callsign` field is seen for a given flight, it is also stored in the Hash.  The `callsign` and `hex_ident` are then put on the Redis List whose key is `flightawarequeue`.  This acts as a queue of requests for the "enricher" component to go get additional flight data from the FlightAware API.  To ensure that we don't flood the FlightAware API with requests for a flight that we recently got the data for, a Redis key `flightaware:recent:<callsign>` is set.  This has an expiry of one hour, and if this key is present for a given flight, we don't add the request to the queue.
@@ -116,6 +118,8 @@ redisClient.expire(flightKey, FLIGHT_RETENTION_PERIOD);
 ```
 
 The hash is also set to expire after a time period, unless further messages about the aircraft are received (these will update the expiry time).
+
+* **TODO** Document the `stats:messagecounts` and `stats:maxaltitude` keys.
 
 If the message data contains a `callsign` (the field that identifies the flight, rather than the aircraft (identified by `hex_ident`)), then the receiver will also put this flight in the queue for the [enricher](../enricher) component to work on.  However, it will only add the flight to the queue if it hasn't previously done so in the last hour.  This is to prevent duplicate lookups of a flight in FlightAware as their API costs money to use after a certain level of usage.
 
@@ -152,3 +156,5 @@ Here's how it works:
 * When calling `SET`, we pass in a couple of modifiers: `NX: true` means only set the key if it doesn't exist already.  `EX: <duration>` tells Redis to expire the key (essentially consider it deleted) after a certain number of seconds have passed.
 * We store the value of this command in `response` -- this will either be `OK` (the key was created, so we're asking for this flight for the first time recently) or `null` (the key already exists, so we have asked for this flight recently).
 * If we haven't asked for this flight recently, the `hex_ident` and `callsign` are placed in an object that is then stringified and put on the queue for the enricher component to pick up, using the Redis [LPUSH](https://redis.io/commands/lpush/) command.
+
+Stop the notifier by pressing `Ctrl-C`.

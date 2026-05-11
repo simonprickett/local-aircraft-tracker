@@ -1,12 +1,22 @@
 import * as dotenv from 'dotenv';
-import { createClient, commandOptions } from 'redis';
-import fetch from 'node-fetch';
+import { createClientPool } from 'redis';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const FLIGHTAWARE_API_KEY = process.env.FLIGHTAWARE_API_KEY;
 const FLIGHTAWARE_QUEUE = 'flightawarequeue';
+
+// Utility function to get current date in YYYYMMDD format.
+function getCurrentDateYYYYMMDD() {
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const day = String(now.getDate()).padStart(2, '0');
+
+  return `${year}${month}${day}`;
+}
 
 // Sleep for 5 seconds... used as a lazy way to avoid
 // rate limiting on the FlightAware API...
@@ -16,7 +26,7 @@ async function sleep() {
   });
 };
 
-const redisClient = createClient({
+const redisClient = createClientPool({
   url: REDIS_URL
 });
 
@@ -25,9 +35,15 @@ await redisClient.connect();
 // Set up the topk for aircraft type tracking - this will
 // throw an exception if it already exists.
 try {
-  await redisClient.topK.reserve('stats:aircrafttypes', 10);
+  await redisClient.topK.reserve('stats:aircrafttypesapprox', 10, {
+    width: 400,
+    depth: 10,
+    decay: 0.9
+  });
   console.log('Created TopK for aircraft type stats.');
 } catch (e) {
+  // TODO this is lazy, check that it really already exists with EXISTS
+  // then use this exception catch to report that Bloom might not be installed.
   console.log('TopK for aircraft type stats already exists.');
 }
 
@@ -35,11 +51,7 @@ try {
 console.log('Checking for work...');
 
 while (true) {
-  const response = await redisClient.brPop(
-    commandOptions({ isolated: true }),
-    FLIGHTAWARE_QUEUE,
-    5
-  );
+  const response = await redisClient.brPop(FLIGHTAWARE_QUEUE, 5);
 
   if (response) {
     // Response is an object that looks like this:
@@ -64,6 +76,9 @@ while (true) {
         const flightData = await flightAwareResponse.json();
         let updatedFlight = false;
 
+        // Log that an API call was made for stats purposes.
+        redisClient.hIncrBy('stats:flightawareapicalls', getCurrentDateYYYYMMDD(), 1);
+
         if (flightData.flights) {
           for (const flight of flightData.flights) {
             // The response contains an array of recent past, current and
@@ -72,41 +87,66 @@ while (true) {
             if (flight.progress_percent > 0 && flight.progress_percent < 100) {
               // Grab the details we want and save them.
               const flightDetails = {
-                registration: flight.registration || '',
+                registration: flight.registration || '??',
                 origin_iata: flight.origin.code_iata || '',
                 origin_name: flight.origin.name || '',
                 destination_iata: flight.destination.code_iata || '',
                 destination_name: flight.destination.name || '',
                 aircraft_type: flight.aircraft_type || '',
-                // Consider resolving operator_iata using another FlightAware call
-                //  and cache those responses forever?  e.g. U2 -> EASYJET UK LIMITED	
-                // Or just get this data from a list online and store it in Redis as
-                // static data. https://en.wikipedia.org/wiki/List_of_airline_codes
-                // FlightAware URL: https://aeroapi.flightaware.com/aeroapi/operators/U2
-                operator_iata: flight.operator_iata || '',
-                flight_number: flight.flight_number || ''
+                operator_iata: flight.operator_iata || '??',
+                flight_number: flight.flight_number || '????'
               };
+
+              // TODO look up the operator name and color from the IATA code and log if there is a miss.
+              // e.g. HGET operator:VS name -> Virgin Atlantic
+              //      HGET operator:VX name -> null            Sadly no more Virgin America :/
+              //
+              const operatorName = await redisClient.hGet(`operator:${flight.operator_iata}`, 'name');
+              if (operatorName) {
+                flightDetails.operator_name = operatorName;
+              } else {
+                console.log(`Missing operator name for IATA: ${flight.operator_iata}`);
+                if (flight.operator_iata && flight.operator_iata.length > 0) {
+                  redisClient.sAdd('errors:missingoperators', flight.operator_iata);
+                }
+              }
+
+              // TODO improve this... get it in the same round trip to Redis as the name.
+              const operatorColor = await redisClient.hGet(`operator:${flight.operator_iata}`, 'color');
+              if (operatorColor) {
+                flightDetails.operator_color = operatorColor;
+              } else {
+                console.log(`Missing operator color for IATA: ${flight.operator_iata}`);
+              }
 
               const flightKey = `flight:${msgPayload.hex_ident}`;
               console.log(`Saving details to ${flightKey}...`);
               console.log(flightDetails);
               redisClient.hSet(flightKey, flightDetails);
 
-              if (flight.registration.length > 0) {
-                redisClient.sAdd('stats:planesseen', flight.registration);
+              if (flight.registration && flight.registration.length > 0) {
+                redisClient.zIncrBy('stats:planesseen', 1, flight.registration);
                 redisClient.pfAdd('stats:planesapprox', flight.registration);
               }
 
-              if (flight.operator_iata.length > 0) {
-                redisClient.zIncrBy('stats:operators', 1, flight.operator_iata);
+              if (flightDetails.operator_name && flightDetails.operator_name.length > 0) {
+                redisClient.zIncrBy('stats:operators', 1, flightDetails.operator_name);
+              }
+
+              if (flightDetails.origin_iata.length > 0 && flightDetails.destination_iata.length > 0) {
+                redisClient.zIncrBy('stats:routes', 1, `${flightDetails.origin_iata}-${flightDetails.destination_iata}`);
+                redisClient.zIncrBy('stats:origins', 1, flightDetails.origin_iata);
+                redisClient.zIncrBy('stats:destinations', 1, flightDetails.destination_iata);
               }
 
               if (flight.aircraft_type.length > 0) {
-                redisClient.topK.incrBy('stats:aircrafttypes', {
+                redisClient.zIncrBy('stats:aircrafttypes', 1, flight.aircraft_type);
+                redisClient.topK.incrBy('stats:aircrafttypesapprox', {
                   item: flight.aircraft_type,
                   incrementBy: 1
                 });
               }
+
               updatedFlight = true;
             }
           }
