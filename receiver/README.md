@@ -19,7 +19,7 @@ To set this up you'll need the following:
 
 Before running the code, connect to your Redis instance using eiher redis-cli or RedisInsight and run the Redis command contained in the file `index.redis`.  When run, this command should return `OK` and will create a search index for the flight data that we'll query from another component of the system.
 
-To run the receiver code, first configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).  You shouldn't need to change the values for `SBS_HOST` and `SBS_PORT` so long as dump1090 is running on the same machine as this project runs on.
+To run the receiver code, first configure the environment by copying `env.example` to `.env`.  Edit this file to contain the Redis connection URL for your Redis instance ([Redis URL format](https://www.iana.org/assignments/uri-schemes/prov/redis)).  You shouldn't need to change the values for `SBS_HOST` and `SBS_PORT` so long as dump1090 is running on the same machine as this project runs on.  Set the values of `LATITUDE` and `LONGITUDE` to the lat/long position that your receiver's located in.  This is then used to calculate the observed range of the receiver in miles.
 
 Finally, install the dependencies:
 
