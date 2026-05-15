@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import { createClient } from 'redis';
+import { distance } from '@turf/distance';
 import * as sbs1 from 'sbs1';
 
 dotenv.config({ quiet: true });
@@ -10,6 +11,8 @@ const SBS_HOST = process.env.SBS_HOST || '127.0.0.1';
 const SBS_PORT = process.env.SBS_PORT || 30003;
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const FLIGHTAWARE_QUEUE = 'flightawarequeue';
+const RECEIVER_LON = parseFloat(process.env.LONGITUDE);
+const RECEIVER_LAT = parseFloat(process.env.LATITUDE);
 
 // Lua script to update a key only if the new value is greater than the current value.
 const getLuaSource = () => `
@@ -119,6 +122,36 @@ sbs1Client.on('message', async (msg) => {
     redisClient.evalSha(updateIfGreaterSha, {
       keys: ['stats:fastestgroundspeed'],
       arguments: [msgData.ground_speed.toString()]
+    });
+  }
+
+  // Log furthest away.
+  if (msg.lat && msg.lon) {
+    // TODO calculate how far away this is...
+    const dist = distance(
+      {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Point',
+          coordinates: [ RECEIVER_LON, RECEIVER_LAT ]
+        }
+      },
+      {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Point',
+          coordinates: [ msg.lon, msg.lat ]
+        }
+      },
+      'miles'
+    );
+
+    console.log(`Range seen: ${dist}`);
+    redisClient.evalSha(updateIfGreaterSha, {
+      keys: ['stats:furthestaway'],
+      arguments: [dist.toString()]
     });
   }
 });

@@ -1,4 +1,4 @@
-# Local Aircraft Tracker with Redis
+# Local Aircraft Tracker with Redis and Grafana
 
 This repository contains the code used for the Plane Spotting with Redis shows that are part of my [Things on Thursdays live streaming series](https://simonprickett.dev/things-on-thursdays-livestreams/).  This project decodes ADS-B messages received via an aerial and software defined radio USB stick, then stores them in Redis where they're enriched using additional data from the FlightAware API.  Flights that are deemed to be "interesting" (flown by a configurable set of aircraft types e.g. an Airbus A340 or a Boeing 747, and within a radius of my location) then have their details broadcast to interested front ends via Redis Pub/Sub and a Redis stream.
 
