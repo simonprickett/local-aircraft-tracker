@@ -64,9 +64,6 @@ while(true) {
 
       // TODO: Consider operator color, aircraft type.
 
-      // TODO: Consider updating a stats key for the most distant plane seen.
-      // TODO: Consider updating a stats key for the highest altitude seen.
-
       // TODO: Don't need to log this when we are happy with the data.
       console.log(flightObj);
 
