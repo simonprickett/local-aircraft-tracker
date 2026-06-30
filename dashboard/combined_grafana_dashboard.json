@@ -3,7 +3,7 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "combined01",
-    "generation": 8,
+    "generation": 10,
     "creationTimestamp": "2026-04-13T20:18:09Z",
     "labels": {},
     "annotations": {}
@@ -522,6 +522,33 @@
                             "id": "equal",
                             "options": {
                               "value": "A337"
+                            }
+                          },
+                          "fieldName": "aircraft_type"
+                        },
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "A342"
+                            }
+                          },
+                          "fieldName": "aircraft_type"
+                        },
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "B743"
+                            }
+                          },
+                          "fieldName": "aircraft_type"
+                        },
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "B742"
                             }
                           },
                           "fieldName": "aircraft_type"
@@ -2733,6 +2760,8 @@
                         "destination_name": true,
                         "ground_speed": true,
                         "hex_ident": true,
+                        "is_quad": true,
+                        "is_widebody": true,
                         "last_updated": true,
                         "lat": true,
                         "lon": true,
