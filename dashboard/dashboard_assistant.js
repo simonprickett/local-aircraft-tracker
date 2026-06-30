@@ -65,7 +65,7 @@ while(true) {
 
       // Check the tracking heading and use 0 as an 'unknown'.
       if (! flightObj.track) {
-        flightObj.track = 0;
+        flightObj.track = '0';
       }
 
       // TODO: Consider operator color, aircraft type - if we can use this in a map.
