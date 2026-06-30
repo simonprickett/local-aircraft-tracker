@@ -3,22 +3,10 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "combined01",
-    "namespace": "default",
-    "uid": "ee5763cf-6320-4634-8a5e-a7a7518c3051",
-    "resourceVersion": "1778834568449007",
-    "generation": 5,
+    "generation": 8,
     "creationTimestamp": "2026-04-13T20:18:09Z",
-    "labels": {
-      "grafana.app/deprecatedInternalID": "3655204612120576"
-    },
-    "annotations": {
-      "grafana.app/createdBy": "user:fexqw336awdtse",
-      "grafana.app/folder": "",
-      "grafana.app/message": "Added furthest panel.",
-      "grafana.app/saved-from-ui": "Grafana v13.0.1-0 (Homebrew)",
-      "grafana.app/updatedBy": "user:fexqw336awdtse",
-      "grafana.app/updatedTimestamp": "2026-05-15T08:42:48Z"
-    }
+    "labels": {},
+    "annotations": {}
   },
   "spec": {
     "annotations": [
@@ -29,10 +17,10 @@
             "kind": "DataQuery",
             "group": "grafana",
             "version": "v0",
-            "datasource": {
-              "name": "-- Grafana --"
-            },
-            "spec": {}
+            "spec": {},
+            "labels": {
+              "grafana.app/export-label": "grafana-1"
+            }
           },
           "enable": true,
           "hide": true,
@@ -63,9 +51,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "xrange",
                         "end": "+",
@@ -75,6 +60,10 @@
                         "streaming": true,
                         "streamingDataType": "DataFrame",
                         "type": "command"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -143,7 +132,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "geomap",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "basemap": {
@@ -171,17 +160,18 @@
                       "showLegend": false,
                       "style": {
                         "color": {
-                          "fixed": "orange"
+                          "fixed": "#000000"
                         },
                         "opacity": 1,
                         "rotation": {
+                          "field": "track",
                           "fixed": 0,
                           "max": 360,
                           "min": -360,
                           "mode": "mod"
                         },
                         "size": {
-                          "fixed": 5,
+                          "fixed": 15,
                           "max": 15,
                           "min": 2
                         },
@@ -199,8 +189,8 @@
                           "mode": "field"
                         },
                         "textConfig": {
-                          "fontSize": 14,
-                          "offsetX": 10,
+                          "fontSize": 12,
+                          "offsetX": 20,
                           "offsetY": 0,
                           "textAlign": "left",
                           "textBaseline": "middle"
@@ -232,6 +222,7 @@
                   "layer": "Layer 1",
                   "lon": 0,
                   "noRepeat": true,
+                  "padding": 30,
                   "zoom": 15
                 }
               },
@@ -282,9 +273,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -296,6 +284,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -571,7 +563,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "barRadius": 0.1,
@@ -581,6 +573,7 @@
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
+                  "overflow": "ellipsis",
                   "placement": "bottom",
                   "showLegend": false
                 },
@@ -656,9 +649,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -670,6 +660,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -828,7 +822,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "barRadius": 0.1,
@@ -838,6 +832,7 @@
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
+                  "overflow": "ellipsis",
                   "placement": "bottom",
                   "showLegend": false
                 },
@@ -913,9 +908,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:destinations",
@@ -927,6 +919,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -999,13 +995,14 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "bargauge",
-            "version": "12.4.2",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "displayMode": "lcd",
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
+                  "overflow": "ellipsis",
                   "placement": "bottom",
                   "showLegend": false
                 },
@@ -1064,9 +1061,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:origins",
@@ -1078,6 +1072,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -1150,13 +1148,14 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "bargauge",
-            "version": "12.4.2",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "displayMode": "lcd",
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
+                  "overflow": "ellipsis",
                   "placement": "bottom",
                   "showLegend": false
                 },
@@ -1215,12 +1214,12 @@
                       "kind": "DataQuery",
                       "group": "datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "-- Dashboard --"
-                      },
                       "spec": {
                         "panelId": 10,
                         "withTransforms": true
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "datasource-1"
                       }
                     },
                     "refId": "A",
@@ -1235,7 +1234,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1294,12 +1293,12 @@
                       "kind": "DataQuery",
                       "group": "datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "-- Dashboard --"
-                      },
                       "spec": {
                         "panelId": 11,
                         "withTransforms": true
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "datasource-1"
                       }
                     },
                     "refId": "A",
@@ -1314,7 +1313,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1372,9 +1371,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -1386,6 +1382,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -1487,7 +1487,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1550,9 +1550,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -1564,6 +1561,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -1665,7 +1666,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1728,9 +1729,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -1742,6 +1740,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -1843,7 +1845,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1906,15 +1908,16 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "",
                         "query": "ZCARD stats:planesseen",
                         "streaming": true,
                         "streamingDataType": "DataFrame",
                         "type": "cli"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -1929,7 +1932,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1987,9 +1990,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -2001,6 +2001,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2066,7 +2070,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "barRadius": 0.1,
@@ -2076,6 +2080,7 @@
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
+                  "overflow": "ellipsis",
                   "placement": "bottom",
                   "showLegend": false
                 },
@@ -2150,9 +2155,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "hget",
                         "field": "${__from:date:YYYYMMDD}",
@@ -2161,6 +2163,10 @@
                         "streaming": true,
                         "streamingDataType": "DataFrame",
                         "type": "command"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2175,7 +2181,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2234,9 +2240,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "get",
                         "keyName": "stats:maxaltitude",
@@ -2248,6 +2251,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2262,7 +2269,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2322,9 +2329,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "hget",
                         "field": "${__from:date:YYYYMMDD}",
@@ -2333,6 +2337,10 @@
                         "streaming": true,
                         "streamingDataType": "DataFrame",
                         "type": "command"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2347,7 +2355,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "gauge",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "barShape": "flat",
@@ -2418,9 +2426,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -2430,6 +2435,10 @@
                         "streaming": true,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2452,7 +2461,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2511,9 +2520,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "hget",
                         "field": "${__from:date:YYYYMMDD}",
@@ -2522,6 +2528,10 @@
                         "streaming": true,
                         "streamingDataType": "DataFrame",
                         "type": "command"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2587,7 +2597,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "gauge",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "barShape": "flat",
@@ -2672,9 +2682,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "hgetall",
                         "keyName": "lookup:latest_enriched_flight",
@@ -2683,6 +2690,10 @@
                         "streamingDataType": "DataFrame",
                         "streamingInterval": 2000,
                         "type": "command"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2755,7 +2766,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background_solid",
@@ -2813,9 +2824,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "get",
                         "keyName": "stats:fastestgroundspeed",
@@ -2827,6 +2835,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2841,7 +2853,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2901,9 +2913,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "",
                         "query": "ZCARD stats:operators",
@@ -2911,6 +2920,10 @@
                         "streamingDataType": "DataFrame",
                         "streamingInterval": 2000,
                         "type": "cli"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -2925,7 +2938,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2983,9 +2996,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -2997,6 +3007,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -3098,7 +3112,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3161,9 +3175,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -3175,6 +3186,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -3276,7 +3291,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3339,9 +3354,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -3353,6 +3365,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -3454,7 +3470,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3517,9 +3533,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:aircrafttypes",
@@ -3531,6 +3544,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -3632,7 +3649,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3695,9 +3712,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "llen",
                         "field": "${__from:date:YYYYMMDD}",
@@ -3706,6 +3720,10 @@
                         "streaming": true,
                         "streamingDataType": "DataFrame",
                         "type": "command"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -3720,7 +3738,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "gauge",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "barShape": "flat",
@@ -3804,9 +3822,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:operators",
@@ -3818,6 +3833,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -3888,13 +3907,14 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "bargauge",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "displayMode": "lcd",
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
+                  "overflow": "ellipsis",
                   "placement": "bottom",
                   "showLegend": false
                 },
@@ -3954,9 +3974,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "get",
                         "keyName": "stats:furthestaway",
@@ -3968,6 +3985,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -3982,7 +4003,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4042,15 +4063,16 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "",
                         "query": "ZCARD stats:aircrafttypes",
                         "streaming": true,
                         "streamingDataType": "DataFrame",
                         "type": "cli"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -4065,7 +4087,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.1-0",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4123,9 +4145,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "",
                         "keyName": "stats:origins",
@@ -4137,6 +4156,10 @@
                         "streamingInterval": 2000,
                         "type": "cli",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -4151,7 +4174,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "12.4.2",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4209,9 +4232,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "",
                         "keyName": "stats:origins",
@@ -4223,6 +4243,10 @@
                         "streamingInterval": 2000,
                         "type": "cli",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -4237,7 +4261,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "12.4.2",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4295,9 +4319,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "",
                         "keyName": "stats:origins",
@@ -4309,6 +4330,10 @@
                         "streamingInterval": 2000,
                         "type": "cli",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -4323,7 +4348,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "12.4.2",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4381,9 +4406,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:planesseen",
@@ -4395,6 +4417,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -4461,7 +4487,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "12.4.2",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "barRadius": 0.1,
@@ -4471,6 +4497,7 @@
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
+                  "overflow": "ellipsis",
                   "placement": "bottom",
                   "showLegend": false
                 },
@@ -4547,9 +4574,6 @@
                       "kind": "DataQuery",
                       "group": "redis-datasource",
                       "version": "v0",
-                      "datasource": {
-                        "name": "ffizhc0hjhp1cb"
-                      },
                       "spec": {
                         "command": "zrange",
                         "keyName": "stats:routes",
@@ -4561,6 +4585,10 @@
                         "streamingInterval": 2000,
                         "type": "command",
                         "zrangeQuery": ""
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "redis-datasource-1",
+                        "grafana.app/export-datasource-name": "local-redis"
                       }
                     },
                     "refId": "A",
@@ -4631,7 +4659,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "piechart",
-            "version": "12.4.2",
+            "version": "13.1.0",
             "spec": {
               "options": {
                 "displayLabels": [
@@ -4639,6 +4667,7 @@
                 ],
                 "legend": {
                   "displayMode": "list",
+                  "overflow": "ellipsis",
                   "placement": "bottom",
                   "showLegend": false
                 },
@@ -4661,7 +4690,8 @@
                 "defaults": {
                   "decimals": 0,
                   "color": {
-                    "mode": "palette-classic"
+                    "mode": "palette-classic",
+                    "fixedColor": "#73BF69"
                   },
                   "custom": {
                     "hideFrom": {
