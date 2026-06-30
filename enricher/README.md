@@ -2,7 +2,9 @@
 
 This is the "enricher" component.  It pulls entries from a Redis List that is being used as a queue between this component and the [receiver](../receiver) component.  Each entry represents a flight that needs additional data fetching from the [FlightAware Aero API](https://flightaware.com/commercial/aeroapi/).  
 
-This component calls the API to fetch that data, storing it back in the Redis Hash representing the flight.  It also records statistics about the aircraft seen in the following Redis data structures ([see the bonus video for details](https://www.youtube.com/watch?v=ttXq_E4Galw)):
+This component calls the API to fetch that data, storing it back in the Redis Hash representing the flight.  It also uses static lookup data in Redis sets `types:widebody` and `types:quad` to add data items to the flight's hash that act as true/false (1/0) flags for whether the aircraft is a widebody and/or quad jet.
+
+The enricher also records statistics about the aircraft seen in the following Redis data structures ([see the bonus video for details](https://www.youtube.com/watch?v=ttXq_E4Galw)):
 
 * [Set](https://redis.io/docs/data-types/sets/): The key for this is `stats:planesseen`.  It is used to record the registrations of each plane seen.  We can use the [`SCARD` command](https://redis.io/commands/scard/) to get the cardinality of the Set (how many different planes have we seen), the [`SISMEMBER` command](https://redis.io/commands/sismember/) to see whether we have seen a given registration, and the [`SSCAN`](https://redis.io/commands/sscan/) or [`SMEMBERS`](https://redis.io/commands/smembers/) commands to retrive all of the registrations seen.  The benefit of using a Set here is that we can do all of these things, the downside is that because we keep all of the data the memory used by the Set will grow over time and may become a problem.
 * [Hyperloglog](https://redis.io/docs/data-types/probabilistic/hyperloglogs/): The key for this is `stats:planesapprox`.  It is used to approximate the number of different plane registrations we have seen.  We use the [`PFCOUNT` command](https://redis.io/commands/pfcount/) to get the approximation.  The benefit of a Hyperloglog is that it allows us to approximate the number of distinct planes seen without storing the data (it's hashed away) and to a reasonable degree of accuracy.  The downsides include inability to retrieve the original data back from the Hyerloglog and loss of absolute accuracy.
@@ -21,17 +23,25 @@ First, configure the environment by copying `env.example` to `.env`.  Edit this 
 
 Finally, install the dependencies:
 
-```
+```bash
 npm install
 ```
 
-TODO Redis data setup...
+Then load the static data files for operator information and widebody / quad jet types into Redis:
+
+```bash
+redis-cli --pipe < operator_iata.redis
+redis-cli --pipe < quads.redis
+redis-cli --pipe < widebodies.redis
+```
+
+If your Redis instance isn't running on `localhost` port 6379, you'll need to use the `-h` and `-p` options to `redis-cli` to specify the host and port you are using.
 
 ## Running the Enricher
 
 Start the enricher component like this:
 
-```
+```bash
 npm start
 ```
 
@@ -46,7 +56,7 @@ No new work to do.
 
 Once the receiver has enough data about a flight, it'll place a message on the queue for the enricher to pick up.  This message contains a stringified JSON object that looks like this:
 
-```
+```json
 {"hex_ident":"3CEE56","callsign":"AHO241N"}'
 ```
 
