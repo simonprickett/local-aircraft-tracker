@@ -12,7 +12,7 @@ const LATEST_UPDATED_COMMAND = [
   'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '2', '__key', '@aircraft_type', 'FILTER', 'exists(@aircraft_type)', 'SORTBY', '2', '@last_updated', 'DESC', 'LIMIT', '0', '1'
 ];
 const PLANE_POSITIONS_COMMAND = [
-  'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '9', '@position', '@lat', '@lon', '@track', '@operator_iata', '@flight_number', '@origin_iata', '@destination_iata', '@last_updated', 'FILTER', 'exists(@position)', 'FILTER', 'exists(@operator_iata)', 'FILTER', 'exists(@origin_iata)', 'FILTER', 'exists(@destination_iata)', 'APPLY', `geodistance(@position, "${LOCATION_LON},${LOCATION_LAT}")`, 'AS', 'dist', 'LIMIT', '0', '9999', 'SORTBY', '2', '@dist', 'ASC'
+  'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '12', '@position', '@lat', '@lon', '@track', '@operator_iata', '@operator_color', '@is_widebody', '@is_quad', '@flight_number', '@origin_iata', '@destination_iata', '@last_updated', 'FILTER', 'exists(@position)', 'FILTER', 'exists(@operator_iata)', 'FILTER', 'exists(@origin_iata)', 'FILTER', 'exists(@destination_iata)', 'APPLY', `geodistance(@position, "${LOCATION_LON},${LOCATION_LAT}")`, 'AS', 'dist', 'LIMIT', '0', '9999', 'SORTBY', '2', '@dist', 'ASC'
 ];
 
 // Sleep for QUERY_INTERVAL milliseconds.
@@ -60,8 +60,8 @@ while(true) {
       delete flightObj.position; // No need to store this in the stream.
 
       // TODO can these be cleaned up to use dot notation?
-      flightObj['description'] = `${flightObj.operator_iata}${flightObj.flight_number}: ${flightObj.origin_iata}-${flightObj.destination_iata}`;
-      flightObj['description_short'] = `${flightObj.operator_iata}${flightObj.flight_number}`;
+      flightObj.description = `${flightObj.operator_iata}${flightObj.flight_number} ${flightObj.origin_iata}-${flightObj.destination_iata}`;
+      flightObj.description_short = `${flightObj.operator_iata}${flightObj.flight_number}`;
 
       // Check the tracking heading and use 0 as an 'unknown'.
       if (! flightObj.track) {

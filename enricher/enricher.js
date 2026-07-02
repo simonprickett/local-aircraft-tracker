@@ -26,6 +26,14 @@ async function sleep() {
   });
 };
 
+// Load all members of a Redis set into a JavaScript Set and return it.
+// Assumes the set is small enough to retrieve in its entirety and that
+// all members are strings.
+async function loadSetFromRedis(keyName) {
+  const members = await redisClient.sMembers(keyName);
+  return new Set(members);
+}
+
 const redisClient = createClientPool({
   url: REDIS_URL
 });
@@ -46,6 +54,10 @@ try {
   // then use this exception catch to report that Bloom might not be installed.
   console.log('TopK for aircraft type stats already exists.');
 }
+
+// Load and cache the sets of widebody and quad aircraft types from Redis.
+const widebodyTypes = await loadSetFromRedis('types:widebody');
+const quadTypes = await loadSetFromRedis('types:quad');
 
 // Loop over entries in the queue, and wait when there are none...
 console.log('Checking for work...');
@@ -96,6 +108,10 @@ while (true) {
                 operator_iata: flight.operator_iata || '??',
                 flight_number: flight.flight_number || '????'
               };
+
+              // Is this a widebody and/or quad?  Using 1 for True, 0 for False.
+              flightDetails.is_widebody = widebodyTypes.has(flight.aircraft_type) ? 1 : 0;
+              flightDetails.is_quad = quadTypes.has(flight.aircraft_type) ? 1 : 0;
 
               // TODO look up the operator name and color from the IATA code and log if there is a miss.
               // e.g. HGET operator:VS name -> Virgin Atlantic

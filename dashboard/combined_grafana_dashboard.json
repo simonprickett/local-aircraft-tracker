@@ -3,7 +3,7 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "combined01",
-    "generation": 8,
+    "generation": 11,
     "creationTimestamp": "2026-04-13T20:18:09Z",
     "labels": {},
     "annotations": {}
@@ -124,6 +124,128 @@
                       "renameByName": {}
                     }
                   }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "calculateField",
+                  "spec": {
+                    "options": {
+                      "alias": "quad_points",
+                      "binary": {
+                        "left": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "is_quad"
+                          }
+                        },
+                        "operator": "*",
+                        "right": {
+                          "fixed": "5"
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "calculateField",
+                  "spec": {
+                    "options": {
+                      "alias": "wide_points",
+                      "binary": {
+                        "left": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "is_widebody"
+                          }
+                        },
+                        "operator": "*",
+                        "right": {
+                          "fixed": "5"
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "calculateField",
+                  "spec": {
+                    "options": {
+                      "alias": "extra_points",
+                      "binary": {
+                        "left": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "quad_points"
+                          }
+                        },
+                        "right": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "wide_points"
+                          }
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      },
+                      "window": {
+                        "reducer": "mean",
+                        "windowAlignment": "trailing",
+                        "windowSize": 0.1,
+                        "windowSizeMode": "percentage"
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "calculateField",
+                  "spec": {
+                    "options": {
+                      "alias": "symbol_size",
+                      "binary": {
+                        "left": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "extra_points"
+                          }
+                        },
+                        "right": {
+                          "fixed": "15"
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "convertFieldType",
+                  "spec": {
+                    "options": {
+                      "conversions": [
+                        {
+                          "destinationType": "string",
+                          "targetField": "symbol_size"
+                        }
+                      ],
+                      "fields": {}
+                    }
+                  }
                 }
               ],
               "queryOptions": {}
@@ -171,9 +293,10 @@
                           "mode": "mod"
                         },
                         "size": {
+                          "field": "symbol_size",
                           "fixed": 15,
-                          "max": 15,
-                          "min": 2
+                          "max": 100,
+                          "min": 1
                         },
                         "symbol": {
                           "fixed": "img/icons/marker/plane.svg",
@@ -522,6 +645,33 @@
                             "id": "equal",
                             "options": {
                               "value": "A337"
+                            }
+                          },
+                          "fieldName": "aircraft_type"
+                        },
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "A342"
+                            }
+                          },
+                          "fieldName": "aircraft_type"
+                        },
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "B743"
+                            }
+                          },
+                          "fieldName": "aircraft_type"
+                        },
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "B742"
                             }
                           },
                           "fieldName": "aircraft_type"
@@ -2733,6 +2883,8 @@
                         "destination_name": true,
                         "ground_speed": true,
                         "hex_ident": true,
+                        "is_quad": true,
+                        "is_widebody": true,
                         "last_updated": true,
                         "lat": true,
                         "lon": true,
