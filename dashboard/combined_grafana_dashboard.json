@@ -3,7 +3,7 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "combined01",
-    "generation": 11,
+    "generation": 12,
     "creationTimestamp": "2026-04-13T20:18:09Z",
     "labels": {},
     "annotations": {}
@@ -254,19 +254,19 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "geomap",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "basemap": {
                   "config": {
                     "server": "streets",
                     "showLabels": true,
-                    "theme": "light"
+                    "theme": "auto"
                   },
                   "name": "Layer 2",
                   "noRepeat": true,
-                  "opacity": 0.6,
-                  "type": "carto"
+                  "opacity": 1,
+                  "type": "osm-standard"
                 },
                 "controls": {
                   "mouseWheelZoom": true,
@@ -713,7 +713,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "barRadius": 0.1,
@@ -972,7 +972,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "barRadius": 0.1,
@@ -1145,7 +1145,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "bargauge",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "displayMode": "lcd",
@@ -1298,7 +1298,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "bargauge",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "displayMode": "lcd",
@@ -1384,7 +1384,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1463,7 +1463,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1637,7 +1637,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1816,7 +1816,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -1995,7 +1995,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2082,7 +2082,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2220,7 +2220,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "barRadius": 0.1,
@@ -2331,7 +2331,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2419,7 +2419,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2505,7 +2505,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "gauge",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "barShape": "flat",
@@ -2611,7 +2611,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2747,7 +2747,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "gauge",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "barShape": "flat",
@@ -2918,7 +2918,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background_solid",
@@ -3005,7 +3005,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3090,7 +3090,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3264,7 +3264,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3443,7 +3443,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3622,7 +3622,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3801,7 +3801,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3890,7 +3890,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "gauge",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "barShape": "flat",
@@ -4059,7 +4059,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "bargauge",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "displayMode": "lcd",
@@ -4155,7 +4155,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4239,7 +4239,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4326,7 +4326,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4413,7 +4413,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4500,7 +4500,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -4639,7 +4639,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "barRadius": 0.1,
@@ -4811,7 +4811,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "piechart",
-            "version": "13.1.0",
+            "version": "13.2.1",
             "spec": {
               "options": {
                 "displayLabels": [
