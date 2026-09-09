@@ -3,7 +3,7 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "combined01",
-    "generation": 12,
+    "generation": 14,
     "creationTimestamp": "2026-04-13T20:18:09Z",
     "labels": {},
     "annotations": {}
@@ -246,6 +246,101 @@
                       "fields": {}
                     }
                   }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "configFromData",
+                  "spec": {
+                    "options": {
+                      "applyTo": {
+                        "id": "byName",
+                        "options": "description"
+                      },
+                      "configRefId": "A",
+                      "mappings": [
+                        {
+                          "fieldName": "description",
+                          "handlerKey": "mappings.value"
+                        },
+                        {
+                          "fieldName": "description_short",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "track",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "is_widebody",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "is_quad",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "last_updated",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "quad_points",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "wide_points",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "extra_points",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "symbol_size",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "$streamId",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "$time",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "lat",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "lon",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "operator_iata",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "flight_number",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "origin_iata",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "destination_iata",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "dist_km",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "operator_color",
+                          "handlerKey": "mappings.color"
+                        }
+                      ]
+                    }
+                  }
                 }
               ],
               "queryOptions": {}
@@ -282,6 +377,7 @@
                       "showLegend": false,
                       "style": {
                         "color": {
+                          "field": "description",
                           "fixed": "#000000"
                         },
                         "opacity": 1,
