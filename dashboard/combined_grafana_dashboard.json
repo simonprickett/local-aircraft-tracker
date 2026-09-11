@@ -3,7 +3,7 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "combined01",
-    "generation": 14,
+    "generation": 17,
     "creationTimestamp": "2026-04-13T20:18:09Z",
     "labels": {},
     "annotations": {}
@@ -354,14 +354,16 @@
               "options": {
                 "basemap": {
                   "config": {
+                    "attribution": "Carto Maps",
                     "server": "streets",
                     "showLabels": true,
-                    "theme": "auto"
+                    "theme": "auto",
+                    "url": "https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_33vl_1_0bc97b963046093da0a1639d"
                   },
                   "name": "Layer 2",
                   "noRepeat": true,
                   "opacity": 1,
-                  "type": "osm-standard"
+                  "type": "xyz"
                 },
                 "controls": {
                   "mouseWheelZoom": true,
@@ -1255,7 +1257,7 @@
                 "maxVizHeight": 300,
                 "minVizHeight": 16,
                 "minVizWidth": 8,
-                "namePlacement": "left",
+                "namePlacement": "top",
                 "orientation": "horizontal",
                 "reduceOptions": {
                   "calcs": [
@@ -1408,7 +1410,7 @@
                 "maxVizHeight": 300,
                 "minVizHeight": 16,
                 "minVizWidth": 8,
-                "namePlacement": "left",
+                "namePlacement": "top",
                 "orientation": "horizontal",
                 "reduceOptions": {
                   "calcs": [
@@ -5447,13 +5449,7 @@
         "5s",
         "10s",
         "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
+        "1m"
       ],
       "hideTimepicker": false,
       "fiscalYearStartMonth": 0
