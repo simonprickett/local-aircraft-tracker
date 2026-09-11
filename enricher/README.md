@@ -62,6 +62,11 @@ Once the receiver has enough data about a flight, it'll place a message on the q
 
 The enricher then passes the `callsign` to the FlightAware API, using the `hex_ident` to identify the Redis hash containing the flight's details.  Additional detail about the flight from FlightAware is then stored in this hash.  
 
+Besides the fields that come directly from the FlightAware API response, the enricher adds a few more of its own to the hash before saving it:
+
+* `is_widebody` and `is_quad`: as described above, these are 1/0 flags calculated by checking whether the flight's `aircraft_type` is a member of the `types:widebody` and `types:quad` Redis sets (loaded during setup, below).  An Airbus A319 like the one in the example below is neither, so both flags come out as `0`.
+* `operator_name` and `operator_color`: looked up from a `operator:<IATA code>` Redis hash (also loaded during setup, from `operator_iata.redis`) using the flight's `operator_iata` value.  If there's no entry for that operator code, the lookup is skipped, a message is logged (e.g. `Missing operator name for IATA: BA`), and the field is simply left out of the hash rather than being set to a default value.
+
 Here's an example of the expected output from the enricher when it has a queue entry to work on:
 
 ```
@@ -75,7 +80,11 @@ Saving details to flight:400942...
   destination_name: 'George Best Belfast City',
   aircraft_type: 'A319',
   operator_iata: 'BA',
-  flight_number: '1420'
+  flight_number: '1420',
+  is_widebody: 0,
+  is_quad: 0,
+  operator_name: 'British Airways',
+  operator_color: '#0035AD'
 }
 Entering rate limiter sleep.
 Exited rate limiter sleep.

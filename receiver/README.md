@@ -62,9 +62,12 @@ If the receiver connects to your dump1090 instance correctly, you should see lot
   spi: null,
   is_on_ground: false
 }
+Range seen: 26.345433146570198
 ```
 
 The there are different types of message (`transmission_type` will vary) but all have the same schema.  Fields that are populated for some message types may not be for others.
+
+That `Range seen: ...` line is logged because the message contains a `lat` and `lon` - it's the distance in miles between the receiver's own location (`LATITUDE`/`LONGITUDE` in `.env`) and the aircraft's position, calculated using [Turf.js](https://turfjs.org/)'s `distance` function.  This value also feeds into the `stats:furthestaway` key described below.
 
 Verify that data appears in Redis using [RedisInsight](https://redis.com/redis-enterprise/redis-insight/) or the redis-cli.  You should see Hashes appear in Redis whose keys begin with `flight:`.  Here's an example:
 
@@ -119,7 +122,10 @@ redisClient.expire(flightKey, FLIGHT_RETENTION_PERIOD);
 
 The hash is also set to expire after a time period, unless further messages about the aircraft are received (these will update the expiry time).
 
-* **TODO** Document the `stats:messagecounts` and `stats:maxaltitude` keys.
+Alongside each flight's own Hash, the receiver also records some running statistics about everything it's seen:
+
+* [Hash](https://redis.io/docs/data-types/hashes/): The key for this is `stats:messagecounts`.  Every message received is counted against the date it was logged on (field `YYYYMMDD`, value a running count), using the [`HINCRBY` command](https://redis.io/commands/hincrby/).  This gives a day-by-day view of how many messages the receiver has processed.
+* [String](https://redis.io/docs/data-types/strings/): The keys for these are `stats:maxaltitude`, `stats:fastestgroundspeed` and `stats:furthestaway`.  Each holds a single number - respectively, the highest altitude, fastest ground speed, and furthest distance (in miles, from the receiver's own location) seen in any message so far.  These are updated using a small Lua script (loaded once at startup with [`SCRIPT LOAD`](https://redis.io/commands/script-load/) and invoked with [`EVALSHA`](https://redis.io/commands/evalsha/)) that only overwrites the key's value if the new reading is greater than what's currently stored - so each key always holds a running maximum, calculated without ever having to read the value back into the application first.
 
 If the message data contains a `callsign` (the field that identifies the flight, rather than the aircraft (identified by `hex_ident`)), then the receiver will also put this flight in the queue for the [enricher](../enricher) component to work on.  However, it will only add the flight to the queue if it hasn't previously done so in the last hour.  This is to prevent duplicate lookups of a flight in FlightAware as their API costs money to use after a certain level of usage.
 
@@ -157,4 +163,4 @@ Here's how it works:
 * We store the value of this command in `response` -- this will either be `OK` (the key was created, so we're asking for this flight for the first time recently) or `null` (the key already exists, so we have asked for this flight recently).
 * If we haven't asked for this flight recently, the `hex_ident` and `callsign` are placed in an object that is then stringified and put on the queue for the enricher component to pick up, using the Redis [LPUSH](https://redis.io/commands/lpush/) command.
 
-Stop the notifier by pressing `Ctrl-C`.
+Stop the receiver by pressing `Ctrl-C`.

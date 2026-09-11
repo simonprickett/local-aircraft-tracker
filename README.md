@@ -2,7 +2,7 @@
 
 This repository contains the code used for the Plane Spotting with Redis shows that are part of my [Things on Thursdays live streaming series](https://simonprickett.dev/things-on-thursdays-livestreams/).  This project decodes ADS-B messages received via an aerial and software defined radio USB stick, then stores them in Redis where they're enriched using additional data from the FlightAware API.  Flights that are deemed to be "interesting" (flown by a configurable set of aircraft types e.g. an Airbus A340 or a Boeing 747, and within a radius of my location) then have their details broadcast to interested front ends via Redis Pub/Sub and a Redis stream.
 
-I made two example front ends for this project, the first being a Hanover displays flip dot sign that previously served on a bus that was scrapped...
+I made three example front ends for this project, the first being a Hanover displays flip dot sign that previously served on a bus that was scrapped...
 
 ![demo](frontends/hanover-flipdot/flipdot_demo.gif)
 
@@ -13,6 +13,8 @@ There's also an e-ink front end using a [Pimoroni Badger 2040W](https://shop.pim
 ![eink demo](badger2040w.gif)
 
 ![eink demo](small_badger2040w_with_plane_info.jpg)
+
+There's also a Grafana dashboard, providing a live map view of tracked flights alongside statistics about aircraft types, operators, routes and more.  See the [dashboard component's README](dashboard/README.md) for details on setting this up.
 
 The Badger front end is written in [MicroPython](https://micropython.org/). All of the other components are written in [Node.js](https://nodejs.org/). See the "Project Overview" section for a run through of the architecture, or watch the start of the episode 5 or 6 videos for an animated recap.
 
@@ -44,9 +46,11 @@ The project is organised as follows:
 * The enricher component reads from the Redis List and uses the data in it to call the FlightAware API.  This returns more information about the flight than is available from just the radio messages, notably the aircraft operator code, origin and destination airports and the aircraft type.  The enricher writes this information into each flight's Redis Hash, "enriching" the data stored about the flight.
 * There is a RediSearch index configured in the Redis instance.  This monitors and indexes data in all Hashes whose key begins with `flight:`.  It allows us to write SQL like queries to find flights that match multiple criteria.  This is used by...
 * The notifier component runs a search query periodically to find the latest "interesting" flights (ones that match a set of criteria for disance from me, aircraft type etc).  When it finds matching flights, it puts the details from the flight's Hash into a Redis Stream and also publishes them on a Redis Pub/Sub topic.  These can be used by front ends to the system to receive flight details to display.  Resources used by the Stream are kept in check by capping the stream to contain only entries from the last hour.
-* I implemented two different front ends for the system (so far, I may add more!):
+* The dashboard assistant component also runs a search query periodically, but rather than looking for a single "interesting" flight, it takes every currently trackable flight and uses the results to rewrite a Redis Stream (`mappableflights`) on each cycle.  This powers the live map in the Grafana dashboard front end.
+* I implemented three different front ends for the system (so far, I may add more!):
   * Hanover Flip Dot Sign: The flip dot sign came from a bus that was scrapped, and used to serve as the destination sign on the side of it.  It's controlled by RS485 using Node.js software running on a Raspberry Pi 3 that's embedded in the sign.  This acts as a Redis Pub/Sub subscriber.  It receives the interesting flight data and shows it one item at a time on the flip dot display.  Updating the display makes a very satisfying sound as each pixel is a magnetic mechanical component.
   * Pimoroni Badger 2040W: Written in MicroPython (every other component in the system is Node.js), the front end for Pimoroni's Badger 2040W e-ink connected badge consumer the Redis Stream of interesting flight data and displays it in an attractive layout on the screen.
+  * Grafana Dashboard: Built in Grafana using the [Redis Data Source plugin](https://github.com/RedisGrafana/grafana-redis-datasource), this dashboard shows a live map of tracked flights (fed by the dashboard assistant component) alongside statistics about aircraft types, operators, routes and more.  See the [dashboard component's README](dashboard/README.md) for setup instructions.
 
 ## Running it Yourself
 
