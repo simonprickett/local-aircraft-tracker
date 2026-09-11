@@ -1,0 +1,2 @@
+HSET types:aircraft:BCS1 display_type "A221"
+HSET types:aircraft:BCS3 display_type "A223"
