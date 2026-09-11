@@ -3,7 +3,7 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "combined01",
-    "generation": 17,
+    "generation": 21,
     "creationTimestamp": "2026-04-13T20:18:09Z",
     "labels": {},
     "annotations": {}
@@ -26,7 +26,10 @@
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
           "name": "Annotations & Alerts",
-          "builtIn": true
+          "builtIn": true,
+          "legacyOptions": {
+            "type": "dashboard"
+          }
         }
       }
     ],
@@ -38,7 +41,6 @@
         "spec": {
           "id": 1,
           "title": "",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -67,186 +69,31 @@
                       }
                     },
                     "refId": "A",
+                    "hidden": true
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "__expr__",
+                      "version": "v0",
+                      "spec": {
+                        "expression": "SELECT\n  `$streamId`,\n  `$time`,\n  lat,\n  lon,\n  track,\n  operator_iata,\n  operator_color,\n  is_widebody,\n  is_quad,\n  flight_number,\n  origin_iata,\n  destination_iata,\n  last_updated,\n  description,\n  description_short,\n  aircraft_type,\n  dist / 1000.0 AS dist_km,\n  CAST((is_quad + is_widebody) * 5 + 15 AS CHAR) AS symbol_size\nFROM A",
+                        "type": "sql"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "__expr__-1",
+                        "grafana.app/export-datasource-name": "Expression"
+                      }
+                    },
+                    "refId": "B",
                     "hidden": false
                   }
                 }
               ],
               "transformations": [
-                {
-                  "kind": "Transformation",
-                  "group": "calculateField",
-                  "spec": {
-                    "options": {
-                      "alias": "dist_km",
-                      "binary": {
-                        "left": {
-                          "matcher": {
-                            "id": "byName",
-                            "options": "dist"
-                          }
-                        },
-                        "operator": "/",
-                        "right": {
-                          "fixed": "1000"
-                        }
-                      },
-                      "mode": "binary",
-                      "reduce": {
-                        "reducer": "sum"
-                      },
-                      "replaceFields": false
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "organize",
-                  "spec": {
-                    "options": {
-                      "excludeByName": {
-                        "dist": true
-                      },
-                      "includeByName": {},
-                      "indexByName": {
-                        "$streamId": 0,
-                        "$time": 1,
-                        "description": 10,
-                        "description_short": 11,
-                        "destination_iata": 7,
-                        "dist": 9,
-                        "dist_km": 8,
-                        "flight_number": 5,
-                        "lat": 2,
-                        "lon": 3,
-                        "operator_iata": 4,
-                        "origin_iata": 6
-                      },
-                      "renameByName": {}
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "calculateField",
-                  "spec": {
-                    "options": {
-                      "alias": "quad_points",
-                      "binary": {
-                        "left": {
-                          "matcher": {
-                            "id": "byName",
-                            "options": "is_quad"
-                          }
-                        },
-                        "operator": "*",
-                        "right": {
-                          "fixed": "5"
-                        }
-                      },
-                      "mode": "binary",
-                      "reduce": {
-                        "reducer": "sum"
-                      }
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "calculateField",
-                  "spec": {
-                    "options": {
-                      "alias": "wide_points",
-                      "binary": {
-                        "left": {
-                          "matcher": {
-                            "id": "byName",
-                            "options": "is_widebody"
-                          }
-                        },
-                        "operator": "*",
-                        "right": {
-                          "fixed": "5"
-                        }
-                      },
-                      "mode": "binary",
-                      "reduce": {
-                        "reducer": "sum"
-                      }
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "calculateField",
-                  "spec": {
-                    "options": {
-                      "alias": "extra_points",
-                      "binary": {
-                        "left": {
-                          "matcher": {
-                            "id": "byName",
-                            "options": "quad_points"
-                          }
-                        },
-                        "right": {
-                          "matcher": {
-                            "id": "byName",
-                            "options": "wide_points"
-                          }
-                        }
-                      },
-                      "mode": "binary",
-                      "reduce": {
-                        "reducer": "sum"
-                      },
-                      "window": {
-                        "reducer": "mean",
-                        "windowAlignment": "trailing",
-                        "windowSize": 0.1,
-                        "windowSizeMode": "percentage"
-                      }
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "calculateField",
-                  "spec": {
-                    "options": {
-                      "alias": "symbol_size",
-                      "binary": {
-                        "left": {
-                          "matcher": {
-                            "id": "byName",
-                            "options": "extra_points"
-                          }
-                        },
-                        "right": {
-                          "fixed": "15"
-                        }
-                      },
-                      "mode": "binary",
-                      "reduce": {
-                        "reducer": "sum"
-                      }
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "convertFieldType",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "string",
-                          "targetField": "symbol_size"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
                 {
                   "kind": "Transformation",
                   "group": "configFromData",
@@ -256,7 +103,7 @@
                         "id": "byName",
                         "options": "description"
                       },
-                      "configRefId": "A",
+                      "configRefId": "B",
                       "mappings": [
                         {
                           "fieldName": "description",
@@ -332,6 +179,10 @@
                         },
                         {
                           "fieldName": "dist_km",
+                          "handlerKey": "__ignore"
+                        },
+                        {
+                          "fieldName": "aircraft_type",
                           "handlerKey": "__ignore"
                         },
                         {
@@ -420,7 +271,7 @@
                     },
                     "filterData": {
                       "id": "byRefId",
-                      "options": "A"
+                      "options": "B"
                     },
                     "layer-tooltip": true,
                     "location": {
@@ -481,7 +332,6 @@
         "spec": {
           "id": 10,
           "title": "Top 15 Widebodies",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -884,7 +734,6 @@
         "spec": {
           "id": 11,
           "title": "Top 15 Narrowbodies",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1143,7 +992,6 @@
         "spec": {
           "id": 12,
           "title": "Top 15 Destinations",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1296,7 +1144,6 @@
         "spec": {
           "id": 13,
           "title": "Top 15 Origins",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1449,7 +1296,6 @@
         "spec": {
           "id": 14,
           "title": "Most Seen Widebody",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1528,7 +1374,6 @@
         "spec": {
           "id": 15,
           "title": "Most Seen Narrowbody",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1606,7 +1451,6 @@
         "spec": {
           "id": 17,
           "title": "747s Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1785,7 +1629,6 @@
         "spec": {
           "id": 18,
           "title": "A380s Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1964,7 +1807,6 @@
         "spec": {
           "id": 19,
           "title": "A340s Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2143,7 +1985,6 @@
         "spec": {
           "id": 2,
           "title": "Aircraft Tracked",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2225,7 +2066,6 @@
         "spec": {
           "id": 21,
           "title": "Top 20 Aircraft Types",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2390,7 +2230,6 @@
         "spec": {
           "id": 22,
           "title": "Messages Decoded",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2475,7 +2314,6 @@
         "spec": {
           "id": 23,
           "title": "Highest",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2564,7 +2402,6 @@
         "spec": {
           "id": 24,
           "title": "API Calls",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2661,7 +2498,6 @@
         "spec": {
           "id": 25,
           "title": "Rarest Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2755,7 +2591,6 @@
         "spec": {
           "id": 26,
           "title": "API Costs",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2917,7 +2752,6 @@
         "spec": {
           "id": 28,
           "title": "Most Recently Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -3061,7 +2895,6 @@
         "spec": {
           "id": 29,
           "title": "Fastest",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -3150,7 +2983,6 @@
         "spec": {
           "id": 3,
           "title": "Operators",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -3233,7 +3065,6 @@
         "spec": {
           "id": 30,
           "title": "757s Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -3412,7 +3243,6 @@
         "spec": {
           "id": 31,
           "title": "A35Ks Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -3591,7 +3421,6 @@
         "spec": {
           "id": 32,
           "title": "A300s Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -3770,7 +3599,6 @@
         "spec": {
           "id": 33,
           "title": "A330 Belugas Seen",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -3949,7 +3777,6 @@
         "spec": {
           "id": 34,
           "title": "API Backlog",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -4059,7 +3886,6 @@
         "spec": {
           "id": 35,
           "title": "Top 15 Operators",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -4211,7 +4037,6 @@
         "spec": {
           "id": 36,
           "title": "Furthest",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -4300,7 +4125,6 @@
         "spec": {
           "id": 4,
           "title": "Aircraft Types",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -4382,7 +4206,6 @@
         "spec": {
           "id": 5,
           "title": "Most Popular Origin",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -4469,7 +4292,6 @@
         "spec": {
           "id": 6,
           "title": "Most Popular Destination",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -4556,7 +4378,6 @@
         "spec": {
           "id": 7,
           "title": "Most Popular Route",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -4643,7 +4464,6 @@
         "spec": {
           "id": 8,
           "title": "Top 10 Most Seen Aircraft",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -4811,7 +4631,6 @@
         "spec": {
           "id": 9,
           "title": "Top 5 Routes",
-          "description": "",
           "links": [],
           "data": {
             "kind": "QueryGroup",

@@ -50,6 +50,7 @@ Found 23 nearby flights with enriched data.
   origin_iata: 'BFS',
   destination_iata: 'SOU',
   last_updated: '1789123411112',
+  aircraft_type: 'A320',
   dist: '15887.82',
   description: 'U22141 BFS-SOU',
   description_short: 'U22141'

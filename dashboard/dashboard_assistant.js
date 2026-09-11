@@ -12,7 +12,7 @@ const LATEST_UPDATED_COMMAND = [
   'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '2', '__key', '@aircraft_type', 'FILTER', 'exists(@aircraft_type)', 'SORTBY', '2', '@last_updated', 'DESC', 'LIMIT', '0', '1'
 ];
 const PLANE_POSITIONS_COMMAND = [
-  'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '12', '@position', '@lat', '@lon', '@track', '@operator_iata', '@operator_color', '@is_widebody', '@is_quad', '@flight_number', '@origin_iata', '@destination_iata', '@last_updated', 'FILTER', 'exists(@position)', 'FILTER', 'exists(@operator_iata)', 'FILTER', 'exists(@origin_iata)', 'FILTER', 'exists(@destination_iata)', 'APPLY', `geodistance(@position, "${LOCATION_LON},${LOCATION_LAT}")`, 'AS', 'dist', 'LIMIT', '0', '9999', 'SORTBY', '2', '@dist', 'ASC'
+  'FT.AGGREGATE', 'idx:flights', '*', 'LOAD', '13', '@position', '@lat', '@lon', '@track', '@operator_iata', '@operator_color', '@is_widebody', '@is_quad', '@flight_number', '@origin_iata', '@destination_iata', '@last_updated', '@aircraft_type', 'FILTER', 'exists(@position)', 'FILTER', 'exists(@operator_iata)', 'FILTER', 'exists(@origin_iata)', 'FILTER', 'exists(@destination_iata)', 'APPLY', `geodistance(@position, "${LOCATION_LON},${LOCATION_LAT}")`, 'AS', 'dist', 'LIMIT', '0', '9999', 'SORTBY', '2', '@dist', 'ASC'
 ];
 
 // Sleep for QUERY_INTERVAL milliseconds.
@@ -67,8 +67,6 @@ while(true) {
       if (! flightObj.track) {
         flightObj.track = '0';
       }
-
-      // TODO: Consider operator color, aircraft type - if we can use this in a map.
 
       // TODO: Don't need to log this when we are happy with the data.
       console.log(flightObj);
