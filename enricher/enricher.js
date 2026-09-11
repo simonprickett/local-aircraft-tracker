@@ -97,6 +97,15 @@ while (true) {
             // planned future flights with this ID.  The one we want is
             // currently in progress, so progress_percent between 1 and 99.
             if (flight.progress_percent > 0 && flight.progress_percent < 100) {
+              // FlightAware sometimes returns a legacy or otherwise non-standard
+              // ICAO type code (e.g. BCS1/BCS3, the old Bombardier CSeries codes
+              // for what are now the Airbus A220-100/A220-300).  Look up a
+              // types:aircraft:<type> hash in Redis to see if we should display
+              // a different type code instead, falling back to the type
+              // FlightAware gave us if there's no override.
+              const displayType = await redisClient.hGet(`types:aircraft:${flight.aircraft_type}`, 'display_type');
+              const aircraftType = displayType || flight.aircraft_type || '';
+
               // Grab the details we want and save them.
               const flightDetails = {
                 registration: flight.registration || '??',
@@ -104,20 +113,16 @@ while (true) {
                 origin_name: flight.origin.name || '',
                 destination_iata: flight.destination.code_iata || '',
                 destination_name: flight.destination.name || '',
-                aircraft_type: flight.aircraft_type || '',
+                aircraft_type: aircraftType,
                 operator_iata: flight.operator_iata || '??',
                 flight_number: flight.flight_number || '????'
               };
 
               // Is this a widebody and/or quad?  Using 1 for True, 0 for False.
-              flightDetails.is_widebody = widebodyTypes.has(flight.aircraft_type) ? 1 : 0;
-              flightDetails.is_quad = quadTypes.has(flight.aircraft_type) ? 1 : 0;
+              flightDetails.is_widebody = widebodyTypes.has(aircraftType) ? 1 : 0;
+              flightDetails.is_quad = quadTypes.has(aircraftType) ? 1 : 0;
 
-              // TODO look up the operator name and color from the IATA code and log if there is a miss.
-              // e.g. HGET operator:VS name -> Virgin Atlantic
-              //      HGET operator:VX name -> null            Sadly no more Virgin America :/
-              //
-              const operatorName = await redisClient.hGet(`operator:${flight.operator_iata}`, 'name');
+              const [operatorName, operatorColor] = await redisClient.hmGet(`operator:${flight.operator_iata}`, ['name', 'color']);
               if (operatorName) {
                 flightDetails.operator_name = operatorName;
               } else {
@@ -127,8 +132,6 @@ while (true) {
                 }
               }
 
-              // TODO improve this... get it in the same round trip to Redis as the name.
-              const operatorColor = await redisClient.hGet(`operator:${flight.operator_iata}`, 'color');
               if (operatorColor) {
                 flightDetails.operator_color = operatorColor;
               } else {
@@ -155,10 +158,10 @@ while (true) {
                 redisClient.zIncrBy('stats:destinations', 1, flightDetails.destination_iata);
               }
 
-              if (flight.aircraft_type.length > 0) {
-                redisClient.zIncrBy('stats:aircrafttypes', 1, flight.aircraft_type);
+              if (aircraftType.length > 0) {
+                redisClient.zIncrBy('stats:aircrafttypes', 1, aircraftType);
                 redisClient.topK.incrBy('stats:aircrafttypesapprox', {
-                  item: flight.aircraft_type,
+                  item: aircraftType,
                   incrementBy: 1
                 });
               }

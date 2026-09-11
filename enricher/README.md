@@ -4,6 +4,8 @@ This is the "enricher" component.  It pulls entries from a Redis List that is be
 
 This component calls the API to fetch that data, storing it back in the Redis Hash representing the flight.  It also uses static lookup data in Redis sets `types:widebody` and `types:quad` to add data items to the flight's hash that act as true/false (1/0) flags for whether the aircraft is a widebody and/or quad jet.
 
+FlightAware doesn't always return the ICAO type code we'd like to display - for example it sometimes reports the Airbus A220-100 and A220-300 using their old Bombardier CSeries codes, `BCS1` and `BCS3`.  Before saving the flight's details, the enricher looks up a `types:aircraft:<type code>` Redis hash (e.g. `types:aircraft:BCS3`) for the type code FlightAware returned.  If one exists, its `display_type` field is used as the flight's `aircraft_type` instead (and everywhere else that type is used, such as the widebody/quad checks and the aircraft type stats below) - if there's no matching hash, the type code from FlightAware is used unchanged.
+
 The enricher also records statistics about the aircraft seen in the following Redis data structures ([see the bonus video for details](https://www.youtube.com/watch?v=ttXq_E4Galw)):
 
 * [Set](https://redis.io/docs/data-types/sets/): The key for this is `stats:planesseen`.  It is used to record the registrations of each plane seen.  We can use the [`SCARD` command](https://redis.io/commands/scard/) to get the cardinality of the Set (how many different planes have we seen), the [`SISMEMBER` command](https://redis.io/commands/sismember/) to see whether we have seen a given registration, and the [`SSCAN`](https://redis.io/commands/sscan/) or [`SMEMBERS`](https://redis.io/commands/smembers/) commands to retrive all of the registrations seen.  The benefit of using a Set here is that we can do all of these things, the downside is that because we keep all of the data the memory used by the Set will grow over time and may become a problem.
@@ -27,12 +29,13 @@ Finally, install the dependencies:
 npm install
 ```
 
-Then load the static data files for operator information and widebody / quad jet types into Redis:
+Then load the static data files for operator information, widebody / quad jet types, and aircraft type display overrides into Redis:
 
 ```bash
 redis-cli --pipe < operator_iata.redis
 redis-cli --pipe < quads.redis
 redis-cli --pipe < widebodies.redis
+redis-cli --pipe < aircraft_types.redis
 ```
 
 If your Redis instance isn't running on `localhost` port 6379, you'll need to use the `-h` and `-p` options to `redis-cli` to specify the host and port you are using.
@@ -64,7 +67,8 @@ The enricher then passes the `callsign` to the FlightAware API, using the `hex_i
 
 Besides the fields that come directly from the FlightAware API response, the enricher adds a few more of its own to the hash before saving it:
 
-* `is_widebody` and `is_quad`: as described above, these are 1/0 flags calculated by checking whether the flight's `aircraft_type` is a member of the `types:widebody` and `types:quad` Redis sets (loaded during setup, below).  An Airbus A319 like the one in the example below is neither, so both flags come out as `0`.
+* `aircraft_type`: usually just passed through from FlightAware unchanged, but as described above this is first checked against the `types:aircraft:<type code>` Redis hashes (loaded during setup, from `aircraft_types.redis`) and replaced with that hash's `display_type` field if a matching entry exists.
+* `is_widebody` and `is_quad`: as described above, these are 1/0 flags calculated by checking whether the flight's (possibly overridden) `aircraft_type` is a member of the `types:widebody` and `types:quad` Redis sets (loaded during setup, below).  An Airbus A319 like the one in the example below is neither, so both flags come out as `0`.
 * `operator_name` and `operator_color`: looked up from a `operator:<IATA code>` Redis hash (also loaded during setup, from `operator_iata.redis`) using the flight's `operator_iata` value.  If there's no entry for that operator code, the lookup is skipped, a message is logged (e.g. `Missing operator name for IATA: BA`), and the field is simply left out of the hash rather than being set to a default value.
 
 Here's an example of the expected output from the enricher when it has a queue entry to work on:
