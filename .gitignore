@@ -4,6 +4,7 @@
 *.swp
 *.log
 .env
+.env.*
 .vscode/
 .idea/
 node_modules/
