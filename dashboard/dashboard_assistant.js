@@ -59,7 +59,6 @@ while(true) {
 
       delete flightObj.position; // No need to store this in the stream.
 
-      // TODO can these be cleaned up to use dot notation?
       flightObj.description = `${flightObj.operator_iata}${flightObj.flight_number} ${flightObj.origin_iata}-${flightObj.destination_iata}`;
       flightObj.description_short = `${flightObj.operator_iata}${flightObj.flight_number}`;
 
