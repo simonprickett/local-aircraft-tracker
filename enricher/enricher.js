@@ -136,6 +136,9 @@ while (true) {
                 flightDetails.operator_color = operatorColor;
               } else {
                 console.log(`Missing operator color for IATA: ${flight.operator_iata}`);
+                if (flight.operator_iata && flight.operator_iata.length > 0) {
+                  redisClient.sAdd('errors:missingoperatorcolors', flight.operator_iata);
+                }
               }
 
               const flightKey = `flight:${msgPayload.hex_ident}`;
