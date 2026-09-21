@@ -97,3 +97,18 @@ Exited rate limiter sleep.
 Note that after looking up a flight, the enricher sleeps for a couple of seconds.  This is a lazy implementation by me that avoids dealing with FlightAware's API rate limiter by just making sure that the component shouldn't make more than the allowed number of requests per minute.
 
 Stop the enricher by pressing `Ctrl-C`.
+
+## Tracking Missing or Incomplete Enrichment Data
+
+Whenever the enricher can't find an entry in the `operator:<IATA code>` Redis hashes for an operator IATA code it encounters (or finds an entry that's missing a `name` or `color` field), it records that IATA code in one of two [Sets](https://redis.io/docs/data-types/sets/) so that the gap can be found and fixed later, rather than silently reprocessing the same lookup failure on every flight:
+
+* `errors:missingoperators`: IATA codes for operators that have no matching `name` field (either because there's no `operator:<IATA code>` hash at all, or because the hash exists but doesn't have a `name`).
+* `errors:missingoperatorcolors`: IATA codes for operators that have no matching `color` field, for the same reasons as above.
+
+Periodically check the contents of these Sets with [`SMEMBERS`](https://redis.io/commands/smembers/) (e.g. `SMEMBERS errors:missingoperators`). For each IATA code that shows up, look up the operator it belongs to (try [Avcodes](https://www.avcodes.co.uk/) for this) and, if you don't already have one, its primary brand color - [brandcolorcode.com](https://brandcolorcode.com) is a good source for these. Add or update the corresponding line in `operator_iata.redis` with the operator's `name` and/or `color` fields, then reload the file into Redis:
+
+```bash
+redis-cli --pipe < operator_iata.redis
+```
+
+Once an operator's `operator:<IATA code>` hash has both fields populated, the enricher will stop adding that IATA code to these Sets on future lookups. Note that reloading `operator_iata.redis` doesn't remove existing entries from `errors:missingoperators` or `errors:missingoperatorcolors` - those entries just won't be added again, so you may want to clear the Sets with [`DEL`](https://redis.io/commands/del/) once you've worked through them.
