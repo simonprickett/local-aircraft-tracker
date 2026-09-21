@@ -21,9 +21,9 @@
     "node": ">= 24.11.1"
   },
   "dependencies": {
-    "@turf/distance": "^7.3.5",
-    "dotenv": "^17.4.1",
-    "redis": "^5.11.0",
+    "@turf/distance": "^7.4.0",
+    "dotenv": "^17.4.2",
+    "redis": "^5.12.1",
     "sbs1": "^0.2.5"
   }
 }
