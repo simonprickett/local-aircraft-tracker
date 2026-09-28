@@ -127,7 +127,7 @@ sbs1Client.on('message', async (msg) => {
 
   // Log furthest away.
   if (msg.lat && msg.lon) {
-    // TODO calculate how far away this is...
+    // Calculate how far away this is...
     const dist = distance(
       {
         type: 'Feature',
